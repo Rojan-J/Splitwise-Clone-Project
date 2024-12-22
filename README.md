@@ -5,3 +5,6 @@
 
 ## Step 2: Basic GUI
 In this step, we create a basic GUI, but it will change in the following steps.
+
+## Step 3: Graph
+Initially, we created a simple graph based on the groups we have, which can be visualized using Matplotlib.
