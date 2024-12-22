@@ -6,6 +6,7 @@ class Groups:
         self.group_name = group_name
         self.members = []
         self.expenses = []
+        self.debts = []
 
     def add_members(self, name, email):
         if Users(name, email) not in self.members:
