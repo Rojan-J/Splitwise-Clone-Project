@@ -1,3 +1,5 @@
+
+    
 from users import Users
 class Groups:
     def __init__(self, group_name):
@@ -14,4 +16,3 @@ class Groups:
 
     def calculate_balances(self):
         pass
-    
