@@ -12,8 +12,11 @@ class Groups:
         if Users(name, email) not in self.members:
             self.members.append(Users(name, email))
 
-    def add_expenses(self, expense):
-        self.expenses.append(expense)
+    def add_expenses(self, expense, payer, contributers):
+        self.expenses.append([expense, payer, contributers])
 
-    def calculate_balances(self):
-        pass
+    def cal_debts(self):
+        for expense in self.expenses:
+            portion = expense[0]/len(expense[2])
+            for contributer in expense[2]:
+                self.debts.append((contributer, expense[1], portion))
