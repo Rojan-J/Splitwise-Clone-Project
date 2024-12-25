@@ -14,6 +14,11 @@ class Graph():
     def __init__(self, group: Groups):
         self.graph = nx.MultiDiGraph()
         self.group =group
+        self.graph_type = "Original"
+        self.graph_name = f"{self.graph_type}{self.group.group_name}"
+        self.simplified_graph = nx.MultiDiGraph()
+        self.CreateGraph()
+
 
     def CreateGraph(self):
         self.graph.add_nodes_from(self.group.members.keys())
@@ -21,24 +26,25 @@ class Graph():
             self.graph.add_edge(u, v, capacity=attributes["capacity"], flow=attributes["flow"])
 
     def plot_graph(self):
-        self.CreateGraph()
-        pos = nx.spring_layout(self.graph)
-        nx.draw_networkx_nodes(self.graph, pos, node_size= 400)
-        nx.draw_networkx_labels(self.graph, pos, font_size= 10)
+        if self.graph_type == "Original": graph = self.graph
+        else: graph = self.simplified_graph
+        pos = nx.spring_layout(graph)
+        nx.draw_networkx_nodes(graph, pos, node_size= 400)
+        nx.draw_networkx_labels(graph, pos, font_size= 10)
         # Draw edges with different connection styles for parallel edges
-        for u, v, data in self.graph.edges(data=True):
+        for u, v, data in graph.edges(data=True):
             capacity = data["capacity"]
             rad = 0.2 if data['capacity'] > 0 else -0.2
 
             nx.draw_networkx_edges(
-                self.graph, pos,
+                graph, pos,
                 edgelist=[(u, v)],
                 connectionstyle=f'arc3,rad={rad}',  # Alternate arcs
                 label=f"w={capacity}"
             )
         edge_label_positions = {}
         edge_labels = {}
-        for i, (u, v, data) in enumerate(self.graph.edges(data=True)):
+        for i, (u, v, data) in enumerate(graph.edges(data=True)):
             label = data['capacity']  # Customize your label
 
             source, target = np.array(pos[u]), np.array(pos[v])
@@ -54,8 +60,7 @@ class Graph():
             edge_label_positions[(u, v)] = arc_midpoint
             edge_labels[(u, v)] = label
             plt.text(arc_midpoint[0], arc_midpoint[1], label, fontsize=10, color='black')
-        print(edge_label_positions)
-        plt.title(f"Financial Graph of group {self.group.group_name}")
+        plt.title(f"Financial Graph of group {self.graph_name}")
         plt.show()
 
 
@@ -69,9 +74,8 @@ group_1.add_expenses(100, "Mohadeseh", ["Rojan"])
 group_1.add_expenses(60, "Niloo", ["Mohadeseh", "Rojan", "Mahshid"])
 group_1.add_expenses(90, "Rojan", ["Mohadeseh", "Niloo", "Mahshid"])
 
-print(group_1.debts)
 
 debts_graph = Graph(group_1)
-debts_graph.plot_graph()
+
 
     
