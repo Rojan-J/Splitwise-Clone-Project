@@ -7,20 +7,19 @@ from users import Users
 
 
 class Debtsimplification:
-    def __init__(self, group:Groups, user:Users):
+    def __init__(self, group:Groups):
         self.group=group
-        self.user=user
         self.simplified_debts=[]
         
         
     def calculate_balances(self):
-        net_balancce={user:0 for user in self.group.members.keys()}
+        net_balance={user:0 for user in self.group.members.keys()}
         
         for(u,v), debt in self.group.debts.items():  #u and v are debtor and creditor
-            self.user.balance[u]-= debt["capacity"]
-            self.user.balance[v]+=debt["capacity"]
+            net_balance[u]-= debt["capacity"]
+            net_balance[v]+=debt["capacity"]
             
-        return net_balancce
+        return net_balance
     
     def split_creditors_and_debtors(self, net_balance):
         creditors=[]
@@ -53,7 +52,7 @@ class Debtsimplification:
     
     
     def upgrade_group_debts(self,simplified_debts):
-        
+        self.group.debts.clear()
         for debtor,creditor,amount in simplified_debts:
             if(debtor,creditor) not in self.group.debts:
                 self.group.debts[(debtor,creditor)]={"capacity":amount,"flow":0}
@@ -85,3 +84,16 @@ group_1.add_members("Mohadeseh", "sdjfjfhskjdfhkjshdfkjahdf")
 group_1.add_expenses(100, "Mohadeseh", ["Rojan"])
 group_1.add_expenses(60, "Niloo", ["Mohadeseh", "Rojan", "Mahshid"])
 group_1.add_expenses(90, "Rojan", ["Mohadeseh", "Niloo", "Mahshid"])
+
+print("Initial debts in the group:")
+for (debtor, creditor), details in group_1.debts.items():
+    print(f"  {debtor} owes {creditor}: {details['capacity']}")
+    
+
+debt_simplification = Debtsimplification(group_1)
+debt_simplification.final_simplifying()
+
+
+print("\nSimplified debts in the group:")
+for (debtor, creditor), details in group_1.debts.items():
+    print(f"  {debtor} owes {creditor}: {details['capacity']}")
