@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1235</width>
-    <height>758</height>
+    <width>1268</width>
+    <height>797</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1390,12 +1390,12 @@ QCalendarWidget QToolButton:hover {
                     <property name="geometry">
                      <rect>
                       <x>0</x>
-                      <y>0</y>
-                      <width>433</width>
+                      <y>-675</y>
+                      <width>466</width>
                       <height>1218</height>
                      </rect>
                     </property>
-                    <layout class="QHBoxLayout" name="horizontalLayout_24">
+                    <layout class="QVBoxLayout" name="verticalLayout_45">
                      <item>
                       <widget class="QWidget" name="widget_2" native="true">
                        <property name="minimumSize">
@@ -1575,7 +1575,7 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>379</width>
+                                <width>412</width>
                                 <height>225</height>
                                </rect>
                               </property>
@@ -1610,7 +1610,7 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>379</width>
+                                <width>412</width>
                                 <height>225</height>
                                </rect>
                               </property>
@@ -1623,6 +1623,11 @@ QCalendarWidget QToolButton:hover {
                                    <verstretch>0</verstretch>
                                   </sizepolicy>
                                  </property>
+                                 <row>
+                                  <property name="text">
+                                   <string>Me</string>
+                                  </property>
+                                 </row>
                                  <column>
                                   <property name="text">
                                    <string>Amount</string>
@@ -1711,13 +1716,141 @@ QCalendarWidget QToolButton:hover {
                          </widget>
                         </item>
                         <item>
-                         <widget class="QWidget" name="widget_5" native="true">
+                         <widget class="QWidget" name="Graphs" native="true">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
                           </property>
+                          <layout class="QVBoxLayout" name="verticalLayout_46">
+                           <item alignment="Qt::AlignTop">
+                            <widget class="QFrame" name="frame_18">
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_24">
+                              <item>
+                               <widget class="QPushButton" name="pushButton">
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                  <pointsize>16</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>Show Debt Graph</string>
+                                </property>
+                                <property name="icon">
+                                 <iconset resource="resource2.qrc">
+                                  <normaloff>:/icons2/icons2/trending-up.svg</normaloff>:/icons2/icons2/trending-up.svg</iconset>
+                                </property>
+                                <property name="iconSize">
+                                 <size>
+                                  <width>32</width>
+                                  <height>32</height>
+                                 </size>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_19">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QVBoxLayout" name="verticalLayout_47">
+                              <item alignment="Qt::AlignTop">
+                               <widget class="QFrame" name="frame_20">
+                                <property name="frameShape">
+                                 <enum>QFrame::StyledPanel</enum>
+                                </property>
+                                <property name="frameShadow">
+                                 <enum>QFrame::Raised</enum>
+                                </property>
+                                <layout class="QHBoxLayout" name="horizontalLayout_28">
+                                 <item alignment="Qt::AlignRight">
+                                  <widget class="QPushButton" name="pushButton_2">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                   <property name="icon">
+                                    <iconset resource="resource2.qrc">
+                                     <normaloff>:/icons2/icons2/x-circle.svg</normaloff>:/icons2/icons2/x-circle.svg</iconset>
+                                   </property>
+                                   <property name="iconSize">
+                                    <size>
+                                     <width>24</width>
+                                     <height>24</height>
+                                    </size>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QFrame" name="frame_25">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="frameShape">
+                                 <enum>QFrame::StyledPanel</enum>
+                                </property>
+                                <property name="frameShadow">
+                                 <enum>QFrame::Raised</enum>
+                                </property>
+                                <layout class="QVBoxLayout" name="verticalLayout_82">
+                                 <item alignment="Qt::AlignTop">
+                                  <widget class="QLabel" name="label_36">
+                                   <property name="font">
+                                    <font>
+                                     <family>Swis721 Blk BT</family>
+                                     <pointsize>14</pointsize>
+                                    </font>
+                                   </property>
+                                   <property name="text">
+                                    <string>Original Graph</string>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QLabel" name="label_37">
+                                   <property name="sizePolicy">
+                                    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                                     <horstretch>0</horstretch>
+                                     <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                   </property>
+                                   <property name="text">
+                                    <string>TextLabel</string>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                          </layout>
                          </widget>
                         </item>
                        </layout>
@@ -1839,7 +1972,7 @@ QCalendarWidget QToolButton:hover {
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>2</number>
+                   <number>1</number>
                   </property>
                   <widget class="QWidget" name="profilePage">
                    <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -1975,7 +2108,7 @@ QCalendarWidget QToolButton:hover {
                         </widget>
                        </item>
                        <item>
-                        <widget class="QCheckBox" name="Equal">
+                        <widget class="QRadioButton" name="Equal">
                          <property name="font">
                           <font>
                            <family>Swis721 Blk BT</family>
@@ -1987,7 +2120,7 @@ QCalendarWidget QToolButton:hover {
                         </widget>
                        </item>
                        <item>
-                        <widget class="QCheckBox" name="Percentage">
+                        <widget class="QRadioButton" name="Percentage">
                          <property name="font">
                           <font>
                            <family>Swis721 Blk BT</family>
@@ -1999,7 +2132,7 @@ QCalendarWidget QToolButton:hover {
                         </widget>
                        </item>
                        <item>
-                        <widget class="QCheckBox" name="Unequal">
+                        <widget class="QRadioButton" name="Unequal">
                          <property name="font">
                           <font>
                            <family>Swis721 Blk BT</family>
@@ -2170,7 +2303,36 @@ QCalendarWidget QToolButton:hover {
                                 <height>69</height>
                                </rect>
                               </property>
-                              <layout class="QHBoxLayout" name="horizontalLayout_28"/>
+                              <layout class="QGridLayout" name="gridLayout_3">
+                               <item row="2" column="1">
+                                <widget class="QCheckBox" name="checkBox">
+                                 <property name="text">
+                                  <string>CheckBox</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QCheckBox" name="checkBox_2">
+                                 <property name="text">
+                                  <string>Me</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="2">
+                                <widget class="QCheckBox" name="checkBox_3">
+                                 <property name="text">
+                                  <string>CheckBox</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="2" column="2">
+                                <widget class="QCheckBox" name="checkBox_4">
+                                 <property name="text">
+                                  <string>CheckBox</string>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
                              </widget>
                             </widget>
                            </item>
@@ -2236,29 +2398,8 @@ QCalendarWidget QToolButton:hover {
                               <enum>QFrame::Raised</enum>
                              </property>
                              <layout class="QGridLayout" name="gridLayout_2">
-                              <item row="0" column="2">
-                               <widget class="QRadioButton" name="radioButton_3">
-                                <property name="text">
-                                 <string>RadioButton</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item row="0" column="0">
-                               <widget class="QRadioButton" name="radioButton">
-                                <property name="text">
-                                 <string>RadioButton</string>
-                                </property>
-                               </widget>
-                              </item>
                               <item row="0" column="1">
                                <widget class="QRadioButton" name="radioButton_2">
-                                <property name="text">
-                                 <string>RadioButton</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item row="1" column="0">
-                               <widget class="QRadioButton" name="radioButton_4">
                                 <property name="text">
                                  <string>RadioButton</string>
                                 </property>
@@ -2273,6 +2414,27 @@ QCalendarWidget QToolButton:hover {
                               </item>
                               <item row="1" column="2">
                                <widget class="QRadioButton" name="radioButton_6">
+                                <property name="text">
+                                 <string>RadioButton</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item row="0" column="2">
+                               <widget class="QRadioButton" name="radioButton_3">
+                                <property name="text">
+                                 <string>RadioButton</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item row="1" column="0">
+                               <widget class="QRadioButton" name="radioButton_4">
+                                <property name="text">
+                                 <string>RadioButton</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item row="0" column="0">
+                               <widget class="QRadioButton" name="radioButton">
                                 <property name="text">
                                  <string>RadioButton</string>
                                 </property>
