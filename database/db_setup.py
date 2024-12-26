@@ -4,7 +4,15 @@ def initialize_database():
     connection=sqlite3.connect("database.db")  #create database file
 
     cursor=connection.cursor()  # to interact with the database
-
+    
+    # Drop tables if they already exist
+    cursor.execute("DROP TABLE IF EXISTS debts;")
+    cursor.execute("DROP TABLE IF EXISTS expense_user;")
+    cursor.execute("DROP TABLE IF EXISTS expenses;")
+    cursor.execute("DROP TABLE IF EXISTS user_group;")
+    cursor.execute("DROP TABLE IF EXISTS groups;")
+    cursor.execute("DROP TABLE IF EXISTS users;")
+    
     # Create users table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
@@ -106,3 +114,4 @@ def initialize_database():
             
     connection.close()
 
+initialize_database()
