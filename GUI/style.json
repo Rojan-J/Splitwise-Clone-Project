@@ -138,7 +138,7 @@
 						{
 							"HomeBtn": "homePage",
 							"ReportsBtn": "reportPage",
-							"GroupIcon": "GroupPage",
+							"GroupIcon": "GroupsPage",
 							"Grp1Btn": "GrpPage"
 						}
 					]
@@ -166,7 +166,7 @@
 				{
 					"navigationButtons":[
 						{
-							"ProfileMenuBtn": "profilePage",
+							"AddMembersBtn_7": "AddNewMemberPage",
 							"addGrpBtn": "AddGrpPage", 
 							"AddExpensesBtn" : "AddExpensePage"
 						}

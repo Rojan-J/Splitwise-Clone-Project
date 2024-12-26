@@ -85,8 +85,8 @@ class MainWindow(QMainWindow):
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
 
         #RightMenuExpanding
-        self.ui.ProfileMenuBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
-        self.ui.ProfileMenuBtn.clicked.connect(lambda: self.ui.label_7.setText("Profile"))
+        self.ui.AddMembersBtn_7.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
+        self.ui.AddMembersBtn_7.clicked.connect(lambda: self.ui.label_7.setText("Add New Member"))
         self.ui.addGrpBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
         self.ui.addGrpBtn.clicked.connect(lambda: self.ui.label_7.setText("New Group"))
         self.ui.AddExpensesBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
