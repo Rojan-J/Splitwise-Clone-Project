@@ -21,7 +21,7 @@ class Groups:
         portion = expense[0]/len(expense[2])
         for contributer in expense[2]:
             if (contributer, expense[1]) not in self.debts.keys():
-                self.debts[(contributer, expense[1])]= {"capacity": portion, "flow": 0}
+                self.debts[(contributer, expense[1])]= {"capacity": portion}
             else:
                 self.debts[(contributer, expense[1])]["capacity"] += portion
 

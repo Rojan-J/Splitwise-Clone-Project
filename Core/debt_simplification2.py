@@ -140,7 +140,8 @@ class GraphSimplification:
 
 
 
-
+debts_graph = Graph(group_1)
+debts_graph.plot_graph()
 graph_simplifier = GraphSimplification(debts_graph)
 graph_simplifier.to_graph()
 debts_graph.graph_type = "simplified"

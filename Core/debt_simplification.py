@@ -4,6 +4,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..","Models")))
 from groups import Groups
 from users import Users
+from graph import Graph
 
 
 class Debtsimplification:
@@ -70,29 +71,26 @@ class Debtsimplification:
         simplified_debts=self.simplify(creditors,debtors)
         
         self.upgrade_group_debts(simplified_debts)
+
+    def creating_simplified_graph(self):
+        debts_graph = Graph(self.group)
+        debts_graph.plot_graph()
+        self.final_simplifying()
+        simplified_graph = Graph(self.group)
+        simplified_graph.plot_graph() 
                
             
+from graph import group_1
 
 
-
-group_1 = Groups("Ronil")
-group_1.add_members("Niloo", "jhjkhkjh")
-group_1.add_members("Rojan", "jdfjhksjjdhf")
-group_1.add_members("Mahshid", "sfjhskjdfhksjhdfkjsh")
-group_1.add_members("Mohadeseh", "sdjfjfhskjdfhkjshdfkjahdf")
-
-group_1.add_expenses(100, "Mohadeseh", ["Rojan"])
-group_1.add_expenses(60, "Niloo", ["Mohadeseh", "Rojan", "Mahshid"])
-group_1.add_expenses(90, "Rojan", ["Mohadeseh", "Niloo", "Mahshid"])
 
 print("Initial debts in the group:")
 for (debtor, creditor), details in group_1.debts.items():
     print(f"  {debtor} owes {creditor}: {details['capacity']}")
-    
+
 
 debt_simplification = Debtsimplification(group_1)
-debt_simplification.final_simplifying()
-
+debt_simplification.creating_simplified_graph()
 
 print("\nSimplified debts in the group:")
 for (debtor, creditor), details in group_1.debts.items():

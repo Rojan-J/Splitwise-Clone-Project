@@ -24,9 +24,10 @@ class Graph():
         self.graph.add_nodes_from(self.group.members.keys())
         for (u, v), attributes in self.group.debts.items():
             if u != v:
-                self.graph.add_edge(u, v, capacity=attributes["capacity"], flow=attributes["flow"])
+                self.graph.add_edge(u, v, capacity=attributes["capacity"])
 
     def plot_graph(self):
+        count = 0
         if self.graph_type == "Original": graph = self.graph
         else: graph = self.simplified_graph
         pos = nx.circular_layout(graph)
@@ -34,6 +35,7 @@ class Graph():
         # Draw edges with different connection styles for parallel edges
         for u, v, data in graph.edges(data=True):
             if u != v: 
+                count += 1
                 capacity = data["capacity"]
                 rad = 0.2 if data['capacity'] > 0 else -0.2
 
@@ -45,27 +47,10 @@ class Graph():
                     arrowsize=25,
                     edge_color= 'skyblue'
                 )
-        edge_label_positions = {}
-        edge_labels = {}
-        for i, (u, v, data) in enumerate(graph.edges(data=True)):
-            label = data['capacity']  # Customize your label
-
-            source, target = np.array(pos[u]), np.array(pos[v])
-            midpoint = (source + target) / 2  # Straight-line midpoint
-            direction = target - source
-            perpendicular = np.array([-direction[1], direction[0]])  # Perpendicular vector
-            arc_height = np.linalg.norm(direction) * abs(rad)  # Adjust arc height based on curvature
-
-            # Flip the perpendicular adjustment to ensure it's on the outer curve
-            arc_midpoint = midpoint - (arc_height * perpendicular / np.linalg.norm(perpendicular)) * np.sign(rad)
-
-            # Save the arc midpoint as the label position
-            edge_label_positions[(u, v)] = arc_midpoint
-            edge_labels[(u, v)] = label
-            plt.text(arc_midpoint[0], arc_midpoint[1], label, fontsize=10, color='black')
 
         plt.title(f"Financial Graph of group {self.graph_name}")
         plt.show()
+
 
 
 group_1 = Groups("Ronil")
@@ -91,9 +76,5 @@ for expense in expenses:
 
 
 
-debts_graph = Graph(group_1)
-
-debts_graph.plot_graph()
 
 
-    
