@@ -31,21 +31,29 @@ from PyQt5.QtWidgets import QApplication
 ## MAIN WINDOW CLASS
 ########################################################################
 current_script = os.path.dirname(os.path.realpath(sys.argv[0]))
-json_path = "Project/Splitwise-Clone-Project/GUI/style.json"
+json_path = "style2.json"
 
 class LoginWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = LoginPageUI()  # Create an instance of the login page UI
         self.ui.setupUi(self)
+        loadJsonStyle(self, self.ui, jsonFiles = ["style2.json"])
+        self.show()
         self.ui.loginBtn.clicked.connect(self.open_interface_page)  # Assuming the button is named "login_button"
         self.ui.signupBtn.clicked.connect(self.sign_up)
 
     def sign_up(self):
-        self.ui.loginTitle.setText( "ُSign Up:")
-        self.ui.noAccount.setText("Already have an account?")
-        self.ui.signupBtn.setText("Login")
-        self.ui.loginBtn.setText("Sign Up")
+        if self.ui.loginTitle.text() == "Login:":
+            self.ui.loginTitle.setText( "ُSign Up:")
+            self.ui.noAccount.setText("Already have an account?")
+            self.ui.signupBtn.setText("Login")
+            self.ui.loginBtn.setText("Sign Up")
+        else:
+            self.ui.loginTitle.setText( "Login:")
+            self.ui.noAccount.setText("Don't have an account?")
+            self.ui.signupBtn.setText("Sign Up")
+            self.ui.loginBtn.setText("Login")
 
 
     def open_interface_page(self):
@@ -92,7 +100,6 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = LoginWindow()
-    window.show()
     sys.exit(app.exec_())
 ########################################################################
 ## END===>

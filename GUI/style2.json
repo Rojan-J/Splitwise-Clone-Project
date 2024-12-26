@@ -1,0 +1,26 @@
+{
+	"QMainWindow":[
+		{
+			"tittle":"RONIL Splitwise",
+			"icon":"images/logo2.png",
+			"frameless": true,
+			"transluscentBg": true,
+			"sizeGrip": "sizeGrip",
+			"navigation":[
+				{
+					"minimize":"minimizeBtn",
+					"close": "closeBtn",
+					"restore":[
+						{	
+							"buttonName": "restoreBtn",
+							"normalIcon": "icons2/square.svg",
+							"maximizedIcon": "icons2/copy.svg"
+						}
+					],
+					"moveWindow": "title",
+					"tittleBar": "title"
+				}
+			]
+		}
+	]
+}
