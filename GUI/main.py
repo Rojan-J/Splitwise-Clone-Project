@@ -8,7 +8,8 @@ from PySide2 import *
 
 ########################################################################
 # IMPORT GUI FILE
-from interface import *
+from login_page import Ui_MainWindow as LoginPageUI
+from interface import Ui_MainWindow as InterfacePageUI
 ########################################################################
 
 ########################################################################
@@ -31,10 +32,32 @@ from PyQt5.QtWidgets import QApplication
 ########################################################################
 current_script = os.path.dirname(os.path.realpath(sys.argv[0]))
 json_path = "Project/Splitwise-Clone-Project/GUI/style.json"
+
+class LoginWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.ui = LoginPageUI()  # Create an instance of the login page UI
+        self.ui.setupUi(self)
+        self.ui.loginBtn.clicked.connect(self.open_interface_page)  # Assuming the button is named "login_button"
+        self.ui.signupBtn.clicked.connect(self.sign_up)
+
+    def sign_up(self):
+        self.ui.loginTitle.setText( "ُSign Up:")
+        self.ui.noAccount.setText("Already have an account?")
+        self.ui.signupBtn.setText("Login")
+        self.ui.loginBtn.setText("Sign Up")
+
+
+    def open_interface_page(self):
+        # Create an instance of the interface page window
+        self.interface_window = MainWindow()
+        self.close()
+
+    
 class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
-        self.ui = Ui_MainWindow()
+        self.ui = InterfacePageUI()
         self.ui.setupUi(self)
 
 
@@ -68,7 +91,8 @@ class MainWindow(QMainWindow):
 ########################################################################
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = MainWindow()
+    window = LoginWindow()
+    window.show()
     sys.exit(app.exec_())
 ########################################################################
 ## END===>
