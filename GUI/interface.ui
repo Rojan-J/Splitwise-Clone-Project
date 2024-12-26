@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
+    <width>1235</width>
     <height>758</height>
    </rect>
   </property>
@@ -28,6 +28,11 @@
 	margin: 0;
 	color: #fff;
 }
+
+QLineEdit, QTextEdit {
+    background-color: rgba(0, 0, 0, 180);
+    color: white; 
+}
 #centralwidget{
 	background-color: #1f232a;
 }
@@ -43,33 +48,41 @@
 #centerMenuSubContainer, #rightMenuSubContainer{
 	background-color: #2c313c;
 }
-#frame_6, #frame_8, #popupNotificationSubContainer{
+#frame_6, #frame_8, #popupNotificationSubContainer, #GrpHeaderSubContainer{
 	background-color: #16191d;
 	border-radius: 10px;
 }
 
 #headerContainer, #footerContainer{
 	background-color: #2c313c;
-}</string>
+}
+QTableWidget {
+    color: blue;  /* Change text color for the entire table */
+	background-color: rgba(0, 0, 0, 180);
+}
+QHeaderView::section {
+    color: white;              /* Text color */
+    background-color: black;   /* Background color */
+    font: bold 12px;           /* Font style */
+}
+QCalendarWidget {
+                background-color: red;  /* Background color */
+                border: 1px solid gray;       /* Border color */
+            }
+QCalendarWidget QAbstractItemView {
+                background-color: #16191d;     /* Calendar grid background */
+            }
+QCalendarWidget QToolButton::pressed {
+                background-color: gray;      /* Navigation buttons pressed color */
+            }
+QCalendarWidget QToolButton:hover {
+                background-color: darkgray;  /* Navigation buttons hover color */
+            }
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_2">
-    <property name="sizeConstraint">
-     <enum>QLayout::SetDefaultConstraint</enum>
-    </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
-    <item row="0" column="0">
+   <layout class="QHBoxLayout" name="horizontalLayout_29">
+    <item>
      <widget class="QCustomSlideMenu" name="leftMenuContainer" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -358,7 +371,7 @@
       </layout>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item>
      <widget class="QCustomSlideMenu" name="centerMenuContainer" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -539,7 +552,7 @@
       </layout>
      </widget>
     </item>
-    <item row="0" column="2">
+    <item>
      <widget class="QWidget" name="mainBodyContainer" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -772,7 +785,7 @@
              <item>
               <widget class="QCustomQStackedWidget" name="mainPages">
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="homePage">
                 <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1006,8 +1019,8 @@
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>448</width>
-                         <height>3018</height>
+                         <width>432</width>
+                         <height>430</height>
                         </rect>
                        </property>
                        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -1016,161 +1029,279 @@
                           <property name="minimumSize">
                            <size>
                             <width>0</width>
-                            <height>3000</height>
+                            <height>0</height>
                            </size>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_4">
                            <item row="0" column="0">
-                            <widget class="QWidget" name="widget_2" native="true">
-                             <widget class="QLabel" name="label_4">
-                              <property name="geometry">
-                               <rect>
-                                <x>70</x>
-                                <y>110</y>
-                                <width>47</width>
-                                <height>13</height>
-                               </rect>
-                              </property>
-                              <property name="text">
-                               <string>TextLabel</string>
-                              </property>
-                             </widget>
+                            <widget class="QWidget" name="Grp1" native="true">
+                             <layout class="QHBoxLayout" name="horizontalLayout_22">
+                              <item>
+                               <widget class="QGroupBox" name="groupBox">
+                                <property name="title">
+                                 <string/>
+                                </property>
+                                <layout class="QVBoxLayout" name="verticalLayout_20">
+                                 <item alignment="Qt::AlignHCenter">
+                                  <widget class="QLabel" name="label_4">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QPushButton" name="Grp1Btn">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                   <property name="icon">
+                                    <iconset resource="resource2.qrc">
+                                     <normaloff>:/icons2/icons2/log-in.svg</normaloff>:/icons2/icons2/log-in.svg</iconset>
+                                   </property>
+                                   <property name="iconSize">
+                                    <size>
+                                     <width>24</width>
+                                     <height>24</height>
+                                    </size>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                             </layout>
                             </widget>
                            </item>
                            <item row="0" column="1">
-                            <widget class="QWidget" name="widget_3" native="true">
-                             <widget class="QLabel" name="label_16">
-                              <property name="geometry">
-                               <rect>
-                                <x>100</x>
-                                <y>90</y>
-                                <width>47</width>
-                                <height>13</height>
-                               </rect>
-                              </property>
-                              <property name="text">
-                               <string>TextLabel</string>
-                              </property>
-                             </widget>
+                            <widget class="QWidget" name="Grp2" native="true">
+                             <layout class="QHBoxLayout" name="horizontalLayout_21">
+                              <item>
+                               <widget class="QGroupBox" name="groupBox_2">
+                                <property name="title">
+                                 <string/>
+                                </property>
+                                <layout class="QVBoxLayout" name="verticalLayout_22">
+                                 <item alignment="Qt::AlignHCenter">
+                                  <widget class="QLabel" name="label_21">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QPushButton" name="pushButton_4">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                             </layout>
                             </widget>
                            </item>
                            <item row="0" column="2">
-                            <widget class="QWidget" name="widget_4" native="true">
-                             <widget class="QLabel" name="label_17">
-                              <property name="geometry">
-                               <rect>
-                                <x>50</x>
-                                <y>90</y>
-                                <width>47</width>
-                                <height>13</height>
-                               </rect>
-                              </property>
-                              <property name="text">
-                               <string>TextLabel</string>
-                              </property>
-                             </widget>
+                            <widget class="QWidget" name="Grp3" native="true">
+                             <layout class="QHBoxLayout" name="horizontalLayout_20">
+                              <item>
+                               <widget class="QGroupBox" name="groupBox_3">
+                                <property name="title">
+                                 <string/>
+                                </property>
+                                <layout class="QVBoxLayout" name="verticalLayout_23">
+                                 <item alignment="Qt::AlignHCenter">
+                                  <widget class="QLabel" name="label_17">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QPushButton" name="pushButton_5">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                             </layout>
                             </widget>
                            </item>
                            <item row="1" column="0">
-                            <widget class="QWidget" name="widget_5" native="true">
-                             <widget class="QLabel" name="label_9">
-                              <property name="geometry">
-                               <rect>
-                                <x>100</x>
-                                <y>70</y>
-                                <width>47</width>
-                                <height>13</height>
-                               </rect>
-                              </property>
-                              <property name="text">
-                               <string>TextLabel</string>
-                              </property>
-                             </widget>
+                            <widget class="QWidget" name="Grp4" native="true">
+                             <layout class="QHBoxLayout" name="horizontalLayout_17">
+                              <item>
+                               <widget class="QGroupBox" name="groupBox_4">
+                                <property name="title">
+                                 <string/>
+                                </property>
+                                <layout class="QVBoxLayout" name="verticalLayout_24">
+                                 <item alignment="Qt::AlignHCenter">
+                                  <widget class="QLabel" name="label_9">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QPushButton" name="pushButton_6">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                             </layout>
                             </widget>
                            </item>
                            <item row="1" column="1">
-                            <widget class="QWidget" name="widget_7" native="true">
-                             <widget class="QLabel" name="label_11">
-                              <property name="geometry">
-                               <rect>
-                                <x>90</x>
-                                <y>60</y>
-                                <width>47</width>
-                                <height>13</height>
-                               </rect>
-                              </property>
-                              <property name="text">
-                               <string>TextLabel</string>
-                              </property>
-                             </widget>
+                            <widget class="QWidget" name="Grp5" native="true">
+                             <layout class="QHBoxLayout" name="horizontalLayout_18">
+                              <item>
+                               <widget class="QGroupBox" name="groupBox_5">
+                                <property name="title">
+                                 <string/>
+                                </property>
+                                <layout class="QVBoxLayout" name="verticalLayout_25">
+                                 <item alignment="Qt::AlignHCenter">
+                                  <widget class="QLabel" name="label_11">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QPushButton" name="pushButton_7">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                             </layout>
                             </widget>
                            </item>
                            <item row="1" column="2">
-                            <widget class="QWidget" name="widget_6" native="true">
-                             <widget class="QLabel" name="label_18">
-                              <property name="geometry">
-                               <rect>
-                                <x>60</x>
-                                <y>70</y>
-                                <width>47</width>
-                                <height>13</height>
-                               </rect>
-                              </property>
-                              <property name="text">
-                               <string>TextLabel</string>
-                              </property>
-                             </widget>
+                            <widget class="QWidget" name="Grp6" native="true">
+                             <layout class="QHBoxLayout" name="horizontalLayout_19">
+                              <item>
+                               <widget class="QGroupBox" name="groupBox_6">
+                                <property name="title">
+                                 <string/>
+                                </property>
+                                <layout class="QVBoxLayout" name="verticalLayout_26">
+                                 <item alignment="Qt::AlignHCenter">
+                                  <widget class="QLabel" name="label_18">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QPushButton" name="pushButton_8">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                             </layout>
                             </widget>
                            </item>
                            <item row="2" column="0">
-                            <widget class="QWidget" name="widget_8" native="true">
-                             <widget class="QLabel" name="label_10">
-                              <property name="geometry">
-                               <rect>
-                                <x>60</x>
-                                <y>90</y>
-                                <width>47</width>
-                                <height>13</height>
-                               </rect>
-                              </property>
-                              <property name="text">
-                               <string>TextLabel</string>
-                              </property>
-                             </widget>
+                            <widget class="QWidget" name="Grp7" native="true">
+                             <layout class="QHBoxLayout" name="horizontalLayout_16">
+                              <item>
+                               <widget class="QGroupBox" name="groupBox_7">
+                                <property name="title">
+                                 <string/>
+                                </property>
+                                <layout class="QVBoxLayout" name="verticalLayout_27">
+                                 <item alignment="Qt::AlignHCenter">
+                                  <widget class="QLabel" name="label_10">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QPushButton" name="pushButton_9">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                             </layout>
                             </widget>
                            </item>
                            <item row="2" column="1">
-                            <widget class="QWidget" name="widget_9" native="true">
-                             <widget class="QLabel" name="label_20">
-                              <property name="geometry">
-                               <rect>
-                                <x>70</x>
-                                <y>60</y>
-                                <width>47</width>
-                                <height>13</height>
-                               </rect>
-                              </property>
-                              <property name="text">
-                               <string>TextLabel</string>
-                              </property>
-                             </widget>
+                            <widget class="QWidget" name="Grp8" native="true">
+                             <layout class="QHBoxLayout" name="horizontalLayout_15">
+                              <item>
+                               <widget class="QGroupBox" name="groupBox_8">
+                                <property name="title">
+                                 <string/>
+                                </property>
+                                <layout class="QVBoxLayout" name="verticalLayout_28">
+                                 <item alignment="Qt::AlignHCenter">
+                                  <widget class="QLabel" name="label_20">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QPushButton" name="pushButton_10">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                             </layout>
                             </widget>
                            </item>
                            <item row="2" column="2">
-                            <widget class="QWidget" name="widget_10" native="true">
-                             <widget class="QLabel" name="label_19">
-                              <property name="geometry">
-                               <rect>
-                                <x>40</x>
-                                <y>70</y>
-                                <width>47</width>
-                                <height>13</height>
-                               </rect>
-                              </property>
-                              <property name="text">
-                               <string>TextLabel</string>
-                              </property>
-                             </widget>
+                            <widget class="QWidget" name="Grp9" native="true">
+                             <layout class="QHBoxLayout" name="horizontalLayout_14">
+                              <item>
+                               <widget class="QGroupBox" name="groupBox_9">
+                                <property name="title">
+                                 <string/>
+                                </property>
+                                <layout class="QVBoxLayout" name="verticalLayout_29">
+                                 <item alignment="Qt::AlignHCenter">
+                                  <widget class="QLabel" name="label_19">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QPushButton" name="pushButton_11">
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                             </layout>
                             </widget>
                            </item>
                           </layout>
@@ -1184,7 +1315,7 @@
                      <widget class="QWidget" name="widget_11" native="true">
                       <layout class="QHBoxLayout" name="horizontalLayout">
                        <item alignment="Qt::AlignLeft">
-                        <widget class="QPushButton" name="pushButton">
+                        <widget class="QPushButton" name="addGrpBtn">
                          <property name="text">
                           <string/>
                          </property>
@@ -1248,6 +1379,356 @@
                  </item>
                 </layout>
                </widget>
+               <widget class="QWidget" name="GrpPage">
+                <layout class="QVBoxLayout" name="verticalLayout_31">
+                 <item>
+                  <widget class="QScrollArea" name="scrollArea_2">
+                   <property name="widgetResizable">
+                    <bool>true</bool>
+                   </property>
+                   <widget class="QWidget" name="scrollAreaWidgetContents_3">
+                    <property name="geometry">
+                     <rect>
+                      <x>0</x>
+                      <y>0</y>
+                      <width>433</width>
+                      <height>1218</height>
+                     </rect>
+                    </property>
+                    <layout class="QHBoxLayout" name="horizontalLayout_24">
+                     <item>
+                      <widget class="QWidget" name="widget_2" native="true">
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>1200</height>
+                        </size>
+                       </property>
+                       <layout class="QVBoxLayout" name="verticalLayout_32">
+                        <item>
+                         <widget class="QWidget" name="GrpHeader" native="true">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>0</width>
+                            <height>100</height>
+                           </size>
+                          </property>
+                          <layout class="QVBoxLayout" name="verticalLayout_33">
+                           <item>
+                            <widget class="QFrame" name="GrpHeaderSubContainer">
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_25">
+                              <item>
+                               <widget class="QFrame" name="frame_13">
+                                <property name="frameShape">
+                                 <enum>QFrame::StyledPanel</enum>
+                                </property>
+                                <property name="frameShadow">
+                                 <enum>QFrame::Raised</enum>
+                                </property>
+                                <layout class="QVBoxLayout" name="verticalLayout_38">
+                                 <item>
+                                  <widget class="QLabel" name="GrpName">
+                                   <property name="sizePolicy">
+                                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                                     <horstretch>0</horstretch>
+                                     <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                   </property>
+                                   <property name="minimumSize">
+                                    <size>
+                                     <width>0</width>
+                                     <height>40</height>
+                                    </size>
+                                   </property>
+                                   <property name="font">
+                                    <font>
+                                     <family>Swis721 Blk BT</family>
+                                     <pointsize>18</pointsize>
+                                    </font>
+                                   </property>
+                                   <property name="text">
+                                    <string>Group Name</string>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QLabel" name="GrpTotalExpense">
+                                   <property name="font">
+                                    <font>
+                                     <family>Swis721 Blk BT</family>
+                                     <pointsize>12</pointsize>
+                                    </font>
+                                   </property>
+                                   <property name="text">
+                                    <string>Total expenses: </string>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QFrame" name="frame_14">
+                                <property name="frameShape">
+                                 <enum>QFrame::StyledPanel</enum>
+                                </property>
+                                <property name="frameShadow">
+                                 <enum>QFrame::Raised</enum>
+                                </property>
+                                <layout class="QHBoxLayout" name="horizontalLayout_27">
+                                 <item alignment="Qt::AlignRight">
+                                  <widget class="QFrame" name="frame_15">
+                                   <property name="frameShape">
+                                    <enum>QFrame::StyledPanel</enum>
+                                   </property>
+                                   <property name="frameShadow">
+                                    <enum>QFrame::Raised</enum>
+                                   </property>
+                                   <layout class="QHBoxLayout" name="horizontalLayout_26">
+                                    <item>
+                                     <widget class="QPushButton" name="AddMembersBtn">
+                                      <property name="toolTip">
+                                       <string>Add Members</string>
+                                      </property>
+                                      <property name="text">
+                                       <string/>
+                                      </property>
+                                      <property name="icon">
+                                       <iconset resource="resource2.qrc">
+                                        <normaloff>:/icons2/icons2/user-plus.svg</normaloff>:/icons2/icons2/user-plus.svg</iconset>
+                                      </property>
+                                      <property name="iconSize">
+                                       <size>
+                                        <width>32</width>
+                                        <height>32</height>
+                                       </size>
+                                      </property>
+                                     </widget>
+                                    </item>
+                                    <item>
+                                     <widget class="QPushButton" name="AddExpensesBtn">
+                                      <property name="toolTip">
+                                       <string>Add Expenses</string>
+                                      </property>
+                                      <property name="text">
+                                       <string/>
+                                      </property>
+                                      <property name="icon">
+                                       <iconset resource="resource2.qrc">
+                                        <normaloff>:/icons2/icons2/plus-circle.svg</normaloff>:/icons2/icons2/plus-circle.svg</iconset>
+                                      </property>
+                                      <property name="iconSize">
+                                       <size>
+                                        <width>32</width>
+                                        <height>32</height>
+                                       </size>
+                                      </property>
+                                     </widget>
+                                    </item>
+                                   </layout>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QWidget" name="Tables" native="true">
+                          <layout class="QVBoxLayout" name="verticalLayout_36">
+                           <item>
+                            <widget class="QLabel" name="label_22">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>13</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Members Debt Table:</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QScrollArea" name="scrollArea_4">
+                             <property name="widgetResizable">
+                              <bool>true</bool>
+                             </property>
+                             <widget class="QWidget" name="scrollAreaWidgetContents_6">
+                              <property name="geometry">
+                               <rect>
+                                <x>0</x>
+                                <y>0</y>
+                                <width>379</width>
+                                <height>225</height>
+                               </rect>
+                              </property>
+                              <layout class="QVBoxLayout" name="verticalLayout_37">
+                               <item>
+                                <widget class="QTableWidget" name="tableWidget"/>
+                               </item>
+                              </layout>
+                             </widget>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="label_23">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>13</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Expenses Table:</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QScrollArea" name="scrollArea_3">
+                             <property name="widgetResizable">
+                              <bool>true</bool>
+                             </property>
+                             <widget class="QWidget" name="scrollAreaWidgetContents_4">
+                              <property name="geometry">
+                               <rect>
+                                <x>0</x>
+                                <y>0</y>
+                                <width>379</width>
+                                <height>225</height>
+                               </rect>
+                              </property>
+                              <layout class="QVBoxLayout" name="verticalLayout_35">
+                               <item>
+                                <widget class="QTableWidget" name="ExpensesTable">
+                                 <property name="sizePolicy">
+                                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                                   <horstretch>0</horstretch>
+                                   <verstretch>0</verstretch>
+                                  </sizepolicy>
+                                 </property>
+                                 <column>
+                                  <property name="text">
+                                   <string>Amount</string>
+                                  </property>
+                                  <property name="font">
+                                   <font>
+                                    <family>Swis721 Blk BT</family>
+                                    <pointsize>10</pointsize>
+                                   </font>
+                                  </property>
+                                 </column>
+                                 <column>
+                                  <property name="text">
+                                   <string>Payer</string>
+                                  </property>
+                                  <property name="font">
+                                   <font>
+                                    <family>Swis721 Blk BT</family>
+                                    <pointsize>10</pointsize>
+                                   </font>
+                                  </property>
+                                 </column>
+                                 <column>
+                                  <property name="text">
+                                   <string>Contributers</string>
+                                  </property>
+                                  <property name="font">
+                                   <font>
+                                    <family>Swis721 Blk BT</family>
+                                    <pointsize>10</pointsize>
+                                   </font>
+                                  </property>
+                                 </column>
+                                 <column>
+                                  <property name="text">
+                                   <string>Date</string>
+                                  </property>
+                                  <property name="font">
+                                   <font>
+                                    <family>Swis721 Blk BT</family>
+                                    <pointsize>10</pointsize>
+                                   </font>
+                                  </property>
+                                  <property name="background">
+                                   <color>
+                                    <red>255</red>
+                                    <green>255</green>
+                                    <blue>255</blue>
+                                   </color>
+                                  </property>
+                                 </column>
+                                 <column>
+                                  <property name="text">
+                                   <string>Description</string>
+                                  </property>
+                                  <property name="font">
+                                   <font>
+                                    <family>Swis721 Blk BT</family>
+                                    <pointsize>10</pointsize>
+                                   </font>
+                                  </property>
+                                  <property name="background">
+                                   <color alpha="180">
+                                    <red>0</red>
+                                    <green>0</green>
+                                    <blue>0</blue>
+                                   </color>
+                                  </property>
+                                  <property name="foreground">
+                                   <brush brushstyle="NoBrush">
+                                    <color alpha="255">
+                                     <red>0</red>
+                                     <green>0</green>
+                                     <blue>0</blue>
+                                    </color>
+                                   </brush>
+                                  </property>
+                                 </column>
+                                </widget>
+                               </item>
+                              </layout>
+                             </widget>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QWidget" name="widget_5" native="true">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
               </widget>
              </item>
             </layout>
@@ -1257,7 +1738,7 @@
            <widget class="QCustomSlideMenu" name="rightMenuContainer" native="true">
             <property name="minimumSize">
              <size>
-              <width>200</width>
+              <width>450</width>
               <height>0</height>
              </size>
             </property>
@@ -1351,8 +1832,14 @@
                 </item>
                 <item>
                  <widget class="QCustomQStackedWidget" name="rightMenuPages">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="currentIndex">
-                   <number>0</number>
+                   <number>2</number>
                   </property>
                   <widget class="QWidget" name="profilePage">
                    <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -1380,6 +1867,464 @@
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
                       </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="AddGrpPage">
+                   <layout class="QVBoxLayout" name="verticalLayout_34">
+                    <item>
+                     <widget class="QGroupBox" name="groupBox_10">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="title">
+                       <string/>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_30" stretch="0,0,0,0,0,0,0,0,0,0,0">
+                       <property name="spacing">
+                        <number>23</number>
+                       </property>
+                       <item>
+                        <widget class="QLabel" name="GrpNameLabel">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>10</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Group Name</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item alignment="Qt::AlignVCenter">
+                        <widget class="QLineEdit" name="GrpNameInput">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>37</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>59</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="NoMembersLabel">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>10</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Number of members</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="NoMembersInput"/>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="GrpMembersLabel">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>10</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Group Members</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QTextEdit" name="GrpMembersInput"/>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="DefaultSplitLabel">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>10</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>DefaultSplit</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QCheckBox" name="Equal">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Equal</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QCheckBox" name="Percentage">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Unequal</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QCheckBox" name="Unequal">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Percentage/ Shares</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item alignment="Qt::AlignHCenter">
+                        <widget class="QPushButton" name="FinalAddGrpBtn">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>10</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Add Group</string>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="resource2.qrc">
+                           <normaloff>:/icons2/icons2/plus-square.svg</normaloff>:/icons2/icons2/plus-square.svg</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>20</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="AddExpensePage">
+                   <layout class="QVBoxLayout" name="verticalLayout_44">
+                    <item>
+                     <widget class="QScrollArea" name="scrollArea_6">
+                      <property name="widgetResizable">
+                       <bool>true</bool>
+                      </property>
+                      <widget class="QWidget" name="scrollAreaWidgetContents_8">
+                       <property name="geometry">
+                        <rect>
+                         <x>0</x>
+                         <y>0</y>
+                         <width>405</width>
+                         <height>702</height>
+                        </rect>
+                       </property>
+                       <layout class="QHBoxLayout" name="horizontalLayout_23">
+                        <item>
+                         <widget class="QGroupBox" name="groupBox_11">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>16777215</width>
+                            <height>16777215</height>
+                           </size>
+                          </property>
+                          <property name="title">
+                           <string/>
+                          </property>
+                          <layout class="QVBoxLayout" name="verticalLayout_43">
+                           <item>
+                            <widget class="QLabel" name="GrpNameLabel_2">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>10</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Amount</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLineEdit" name="GrpNameInput_2">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="minimumSize">
+                              <size>
+                               <width>0</width>
+                               <height>37</height>
+                              </size>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>16777215</width>
+                               <height>59</height>
+                              </size>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="NoMembersLabel_2">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>10</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Who Paid?</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLineEdit" name="GrpNameInput_3">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="minimumSize">
+                              <size>
+                               <width>0</width>
+                               <height>37</height>
+                              </size>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>16777215</width>
+                               <height>59</height>
+                              </size>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="GrpMembersLabel_2">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>10</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Who are in?</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QScrollArea" name="scrollArea_5">
+                             <property name="widgetResizable">
+                              <bool>true</bool>
+                             </property>
+                             <widget class="QWidget" name="scrollAreaWidgetContents_7">
+                              <property name="geometry">
+                               <rect>
+                                <x>0</x>
+                                <y>0</y>
+                                <width>369</width>
+                                <height>69</height>
+                               </rect>
+                              </property>
+                              <layout class="QHBoxLayout" name="horizontalLayout_28"/>
+                             </widget>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="DefaultSplitLabel_2">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>10</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Date:</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QWidget" name="widget_3" native="true">
+                             <layout class="QHBoxLayout" name="horizontalLayout_30">
+                              <item>
+                               <widget class="QFrame" name="frame_16">
+                                <property name="frameShape">
+                                 <enum>QFrame::StyledPanel</enum>
+                                </property>
+                                <property name="frameShadow">
+                                 <enum>QFrame::Raised</enum>
+                                </property>
+                                <layout class="QHBoxLayout" name="horizontalLayout_31">
+                                 <item>
+                                  <widget class="QCalendarWidget" name="calendarWidget"/>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="label_24">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>10</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Category:</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_17">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QGridLayout" name="gridLayout_2">
+                              <item row="0" column="2">
+                               <widget class="QRadioButton" name="radioButton_3">
+                                <property name="text">
+                                 <string>RadioButton</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item row="0" column="0">
+                               <widget class="QRadioButton" name="radioButton">
+                                <property name="text">
+                                 <string>RadioButton</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item row="0" column="1">
+                               <widget class="QRadioButton" name="radioButton_2">
+                                <property name="text">
+                                 <string>RadioButton</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item row="1" column="0">
+                               <widget class="QRadioButton" name="radioButton_4">
+                                <property name="text">
+                                 <string>RadioButton</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item row="1" column="1">
+                               <widget class="QRadioButton" name="radioButton_5">
+                                <property name="text">
+                                 <string>RadioButton</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item row="1" column="2">
+                               <widget class="QRadioButton" name="radioButton_6">
+                                <property name="text">
+                                 <string>RadioButton</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="label_25">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>10</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Discription(Optional):</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QTextEdit" name="textEdit"/>
+                           </item>
+                           <item>
+                            <widget class="QPushButton" name="FinalAddGrpBtn_2">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>10</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Add Expense</string>
+                             </property>
+                             <property name="icon">
+                              <iconset resource="resource2.qrc">
+                               <normaloff>:/icons2/icons2/plus-square.svg</normaloff>:/icons2/icons2/plus-square.svg</iconset>
+                             </property>
+                             <property name="iconSize">
+                              <size>
+                               <width>20</width>
+                               <height>20</height>
+                              </size>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
                      </widget>
                     </item>
                    </layout>

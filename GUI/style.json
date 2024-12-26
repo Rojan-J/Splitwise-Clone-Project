@@ -84,7 +84,7 @@
 				"height": "parent"
 			}],
 			"expandedSize": [{
-				"width": 200,
+				"width": 450,
 				"height": "parent"
 			}],
 			"toggleButton": [{
@@ -138,7 +138,8 @@
 						{
 							"HomeBtn": "homePage",
 							"ReportsBtn": "reportPage",
-							"GroupIcon": "GroupPage"
+							"GroupIcon": "GroupPage",
+							"Grp1Btn": "GrpPage"
 						}
 					]
 				}
@@ -165,7 +166,9 @@
 				{
 					"navigationButtons":[
 						{
-							"ProfileMenuBtn": "profilePage"
+							"ProfileMenuBtn": "profilePage",
+							"addGrpBtn": "AddGrpPage", 
+							"AddExpensesBtn" : "AddExpensePage"
 						}
 					]
 				}
