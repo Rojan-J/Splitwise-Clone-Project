@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1268</width>
+    <width>1290</width>
     <height>824</height>
    </rect>
   </property>
@@ -253,7 +253,7 @@ QCalendarWidget QToolButton:hover {
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="ReportsBtn">
+              <widget class="QPushButton" name="DebtsBtn">
                <property name="font">
                 <font>
                  <family>Swis721 Blk BT</family>
@@ -264,11 +264,11 @@ QCalendarWidget QToolButton:hover {
                 <string>Reports</string>
                </property>
                <property name="text">
-                <string>Reports</string>
+                <string>Debts</string>
                </property>
                <property name="icon">
                 <iconset resource="resource2.qrc">
-                 <normaloff>:/icons2/icons2/archive.svg</normaloff>:/icons2/icons2/archive.svg</iconset>
+                 <normaloff>:/icons2/icons2/credit-card.svg</normaloff>:/icons2/icons2/credit-card.svg</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -371,7 +371,7 @@ QCalendarWidget QToolButton:hover {
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="LogOutBtn">
+              <widget class="QPushButton" name="LogOutBtn_3">
                <property name="text">
                 <string/>
                </property>
@@ -436,7 +436,7 @@ QCalendarWidget QToolButton:hover {
          </property>
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>250</width>
            <height>0</height>
           </size>
          </property>
@@ -507,34 +507,103 @@ QCalendarWidget QToolButton:hover {
           <item>
            <widget class="QCustomQStackedWidget" name="centerMenupages">
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
-            <widget class="QWidget" name="settingsPage">
+            <widget class="QWidget" name="DebtsPage">
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <item>
-               <widget class="QLabel" name="label">
-                <property name="font">
-                 <font>
-                  <family>Swis721 Blk BT</family>
-                  <pointsize>10</pointsize>
-                 </font>
+               <widget class="QScrollArea" name="scrollArea_23">
+                <property name="widgetResizable">
+                 <bool>true</bool>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">*{
-	border: none;
-	background-color: transparent;
-	background: none;
-	padding: 0;
-	margin: 0;
-	color: #fff;
-}</string>
-                </property>
-                <property name="text">
-                 <string>Settings</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
+                <widget class="QWidget" name="scrollAreaWidgetContents_35">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>222</width>
+                   <height>731</height>
+                  </rect>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_175">
+                  <item>
+                   <widget class="QWidget" name="widget_23" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_176">
+                     <item alignment="Qt::AlignLeft">
+                      <widget class="QLabel" name="label_85">
+                       <property name="font">
+                        <font>
+                         <family>Swis721 Blk BT</family>
+                         <pointsize>11</pointsize>
+                        </font>
+                       </property>
+                       <property name="text">
+                        <string>You owe 5$ to Niloo</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item alignment="Qt::AlignHCenter">
+                      <widget class="QFrame" name="frame_109">
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                       <layout class="QVBoxLayout" name="verticalLayout_177">
+                        <item>
+                         <widget class="QRadioButton" name="radioButton_49">
+                          <property name="font">
+                           <font>
+                            <family>Swis721 Blk BT</family>
+                           </font>
+                          </property>
+                          <property name="text">
+                           <string>Paid from this account</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QRadioButton" name="radioButton_50">
+                          <property name="font">
+                           <font>
+                            <family>Swis721 Blk BT</family>
+                           </font>
+                          </property>
+                          <property name="text">
+                           <string>Paid on cash</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QRadioButton" name="radioButton_51">
+                          <property name="font">
+                           <font>
+                            <family>Swis721 Blk BT</family>
+                           </font>
+                          </property>
+                          <property name="text">
+                           <string>Not Paid</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QWidget" name="widget_24" native="true"/>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -816,7 +885,7 @@ QCalendarWidget QToolButton:hover {
              <item>
               <widget class="QCustomQStackedWidget" name="mainPages">
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="homePage">
                 <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -2998,7 +3067,7 @@ QCalendarWidget QToolButton:hover {
                      <rect>
                       <x>0</x>
                       <y>-540</y>
-                      <width>466</width>
+                      <width>488</width>
                       <height>1218</height>
                      </rect>
                     </property>
@@ -3202,7 +3271,7 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>412</width>
+                                <width>434</width>
                                 <height>225</height>
                                </rect>
                               </property>
@@ -3237,7 +3306,7 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>412</width>
+                                <width>434</width>
                                 <height>225</height>
                                </rect>
                               </property>
