@@ -20,7 +20,8 @@ def initialize_database():
             username TEXT NOT NULL,
             email TEXT NOT NULL,
             password_hash TEXT NOT NULL,
-            is_registered BOOLEAN DEFAULT TRUE     
+            is_registered BOOLEAN DEFAULT TRUE,
+            balance REAL DEFAULT 0     
         )
     ''')
     #unregistered users could have is_registered=FALSE
