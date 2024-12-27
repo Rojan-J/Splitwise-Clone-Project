@@ -102,7 +102,14 @@ class MainWindow(QMainWindow):
         #NotificationExpanding
         self.ui.ClosePopUpBtn.clicked.connect(lambda: self.ui.popupNotificationContainer.collapseMenu())
 
+        self.ui.LogOutBtn.clicked.connect(self.logout)
+        self.ui.LogOutProfileBtn.clicked.connect(self.logout)
+        
 
+    def logout(self):
+        # Create an instance of the interface page window
+        self.interface_window = LoginWindow()
+        self.close()
 
 ########################################################################
 ## EXECUTE APP

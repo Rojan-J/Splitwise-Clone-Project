@@ -183,7 +183,7 @@ QLineEdit {
      </widget>
     </item>
     <item>
-     <widget class="QStackedWidget" name="LoginSignUp">
+     <widget class="QCustomQStackedWidget" name="LoginSignUp">
       <property name="currentIndex">
        <number>0</number>
       </property>
@@ -815,6 +815,12 @@ QLineEdit {
    <class>QCustomSlideMenu</class>
    <extends>QWidget</extends>
    <header location="global">Custom_Widgets.QCustomSlideMenu.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QCustomQStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header location="global">Custom_Widgets.QCustomQStackedWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

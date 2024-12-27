@@ -110,7 +110,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_20.addWidget(self.closeBtn_3, 0, QtCore.Qt.AlignTop)
         self.horizontalLayout_17.addWidget(self.frame_22)
         self.verticalLayout_10.addWidget(self.title_2, 0, QtCore.Qt.AlignTop)
-        self.LoginSignUp = QtWidgets.QStackedWidget(self.centralwidget)
+        self.LoginSignUp = QCustomQStackedWidget(self.centralwidget)
         self.LoginSignUp.setObjectName("LoginSignUp")
         self.LoginPage = QtWidgets.QWidget()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
@@ -120,6 +120,7 @@ class Ui_MainWindow(object):
         self.LoginPage.setSizePolicy(sizePolicy)
         self.LoginPage.setObjectName("LoginPage")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.LoginPage)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.loginInfo = QtWidgets.QWidget(self.LoginPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.MinimumExpanding)
@@ -326,6 +327,7 @@ class Ui_MainWindow(object):
         self.SignupPage.setSizePolicy(sizePolicy)
         self.SignupPage.setObjectName("SignupPage")
         self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.SignupPage)
+        self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_11.setObjectName("verticalLayout_11")
         self.widget_5 = QtWidgets.QWidget(self.SignupPage)
         self.widget_5.setObjectName("widget_5")
@@ -513,6 +515,7 @@ class Ui_MainWindow(object):
         self.SignUpBtn.setText(_translate("MainWindow", "Sign Up"))
         self.HaveAccount.setText(_translate("MainWindow", "Do you have an account?"))
         self.LoginBtn.setText(_translate("MainWindow", "Log in"))
+from Custom_Widgets.QCustomQStackedWidget import QCustomQStackedWidget
 from Custom_Widgets.QCustomSlideMenu import QCustomSlideMenu
 import images_rc
 import resource2_rc
