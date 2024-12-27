@@ -83,10 +83,8 @@ class MainWindow(QMainWindow):
         #CenterMenu Expanding
         self.ui.SettingsBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
-        self.ui.HelpBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
 
         #RightMenuExpanding
-        self.ui.RightMenuBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
         self.ui.ProfileMenuBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
 
         #NotificationExpanding

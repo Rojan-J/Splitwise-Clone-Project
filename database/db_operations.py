@@ -70,7 +70,7 @@ def add_temp_user_tto_group(temp_user_id, group_id, temp_member_name, temp_membe
     
     
     
-def add_expanse(group_id,payer_id,amount,category,date,deescription=None):
+def add_expanse(group_id,payer_id,amount,category,date,description=None):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
@@ -81,7 +81,7 @@ def add_expanse(group_id,payer_id,amount,category,date,deescription=None):
     connection.close()
     
     
-def add_contribution(expense_id,user_id,amont_contributed):
+def add_contribution(expense_id,user_id,amount_contributed):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>986</width>
-    <height>786</height>
+    <width>1000</width>
+    <height>758</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -53,10 +53,7 @@
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
-    <property name="spacing">
-     <number>0</number>
-    </property>
+   <layout class="QGridLayout" name="gridLayout_2">
     <property name="sizeConstraint">
      <enum>QLayout::SetDefaultConstraint</enum>
     </property>
@@ -72,7 +69,7 @@
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <item>
+    <item row="0" column="0">
      <widget class="QCustomSlideMenu" name="leftMenuContainer" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -189,7 +186,7 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <property name="spacing">
-              <number>0</number>
+              <number>10</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
@@ -201,7 +198,7 @@
               <number>0</number>
              </property>
              <property name="bottomMargin">
-              <number>10</number>
+              <number>20</number>
              </property>
              <item>
               <widget class="QPushButton" name="HomeBtn">
@@ -225,32 +222,6 @@
                <property name="icon">
                 <iconset resource="resource2.qrc">
                  <normaloff>:/icons2/icons2/home.svg</normaloff>:/icons2/icons2/home.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="DataBtn">
-               <property name="font">
-                <font>
-                 <family>Swis721 Blk BT</family>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="toolTip">
-                <string>Data Analysis</string>
-               </property>
-               <property name="text">
-                <string>Data Analysis</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource2.qrc">
-                 <normaloff>:/icons2/icons2/activity.svg</normaloff>:/icons2/icons2/activity.svg</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -310,9 +281,9 @@
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4">
+            <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0">
              <property name="spacing">
-              <number>0</number>
+              <number>10</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
@@ -324,7 +295,7 @@
               <number>0</number>
              </property>
              <property name="bottomMargin">
-              <number>10</number>
+              <number>20</number>
              </property>
              <item>
               <widget class="QPushButton" name="SettingsBtn">
@@ -378,32 +349,6 @@
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QPushButton" name="HelpBtn">
-               <property name="font">
-                <font>
-                 <family>Swis721 Blk BT</family>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="toolTip">
-                <string>Help</string>
-               </property>
-               <property name="text">
-                <string>Help</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource2.qrc">
-                 <normaloff>:/icons2/icons2/help-circle.svg</normaloff>:/icons2/icons2/help-circle.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-              </widget>
-             </item>
             </layout>
            </widget>
           </item>
@@ -413,7 +358,7 @@
       </layout>
      </widget>
     </item>
-    <item>
+    <item row="0" column="1">
      <widget class="QCustomSlideMenu" name="centerMenuContainer" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -523,6 +468,9 @@
           </item>
           <item>
            <widget class="QCustomQStackedWidget" name="centerMenupages">
+            <property name="currentIndex">
+             <number>1</number>
+            </property>
             <widget class="QWidget" name="settingsPage">
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <item>
@@ -583,36 +531,6 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="helpPage">
-             <layout class="QVBoxLayout" name="verticalLayout_8">
-              <item>
-               <widget class="QLabel" name="label_4">
-                <property name="font">
-                 <font>
-                  <family>Swis721 Blk BT</family>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">*{
-	border: none;
-	background-color: transparent;
-	background: none;
-	padding: 0;
-	margin: 0;
-	color: #fff;
-}</string>
-                </property>
-                <property name="text">
-                 <string>Help</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
            </widget>
           </item>
          </layout>
@@ -621,7 +539,7 @@
       </layout>
      </widget>
     </item>
-    <item>
+    <item row="0" column="2">
      <widget class="QWidget" name="mainBodyContainer" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -754,26 +672,6 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="RightMenuBtn">
-               <property name="toolTip">
-                <string>More</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="resource2.qrc">
-                 <normaloff>:/icons2/icons2/more-horizontal.svg</normaloff>:/icons2/icons2/more-horizontal.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="ProfileMenuBtn">
                <property name="toolTip">
                 <string>Profile</string>
@@ -864,65 +762,458 @@
          <layout class="QHBoxLayout" name="horizontalLayout_9">
           <item>
            <widget class="QWidget" name="mainContentContainer" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_14">
              <item>
               <widget class="QCustomQStackedWidget" name="mainPages">
+               <property name="currentIndex">
+                <number>1</number>
+               </property>
                <widget class="QWidget" name="homePage">
                 <layout class="QVBoxLayout" name="verticalLayout_15">
                  <item>
-                  <widget class="QLabel" name="label_10">
-                   <property name="font">
-                    <font>
-                     <family>Swis721 Blk BT</family>
-                     <pointsize>10</pointsize>
-                    </font>
+                  <widget class="QFrame" name="frame_11">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
-                   <property name="styleSheet">
-                    <string notr="true">*{
-	border: none;
-	background-color: transparent;
-	background: none;
-	padding: 0;
-	margin: 0;
-	color: #fff;
-}</string>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
                    </property>
-                   <property name="text">
-                    <string>Home</string>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
                    </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
+                   <layout class="QGridLayout" name="gridLayout">
+                    <item row="0" column="1" alignment="Qt::AlignHCenter">
+                     <widget class="QFrame" name="frame_22">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_40">
+                       <item>
+                        <widget class="QPushButton" name="FriendsIcon">
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="images.qrc">
+                           <normaloff>:/images/Layer 0.png</normaloff>:/images/Layer 0.png</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>200</width>
+                           <height>200</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="FriendsBtn">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>16</pointsize>
+                           <stylestrategy>PreferAntialias</stylestrategy>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Friends</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item row="1" column="1" alignment="Qt::AlignHCenter">
+                     <widget class="QFrame" name="frame_24">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_42">
+                       <item>
+                        <widget class="QPushButton" name="ReportsIcon">
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="images.qrc">
+                           <normaloff>:/images/2235790.png</normaloff>:/images/2235790.png</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>200</width>
+                           <height>200</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="reportsBtn">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>16</pointsize>
+                           <stylestrategy>PreferAntialias</stylestrategy>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Reports</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item row="1" column="0" alignment="Qt::AlignHCenter">
+                     <widget class="QFrame" name="frame_23">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_41">
+                       <item>
+                        <widget class="QPushButton" name="ConversionIcon">
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="images.qrc">
+                           <normaloff>:/images/10826388.png</normaloff>:/images/10826388.png</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>200</width>
+                           <height>200</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="ConversionBtn">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>14</pointsize>
+                           <stylestrategy>PreferAntialias</stylestrategy>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Currency Conversion</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item row="0" column="0" alignment="Qt::AlignHCenter">
+                     <widget class="QFrame" name="frame_21">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_39">
+                       <item>
+                        <widget class="QPushButton" name="GroupIcon">
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="images.qrc">
+                           <normaloff>:/images/718339.png</normaloff>:/images/718339.png</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>200</width>
+                           <height>200</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="GroupBtn">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>16</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Groups</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
                  </item>
                 </layout>
                </widget>
-               <widget class="QWidget" name="dataPage">
+               <widget class="QWidget" name="GroupPage">
                 <layout class="QVBoxLayout" name="verticalLayout_16">
                  <item>
-                  <widget class="QLabel" name="label_11">
-                   <property name="font">
-                    <font>
-                     <family>Swis721 Blk BT</family>
-                     <pointsize>10</pointsize>
-                    </font>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">*{
-	border: none;
-	background-color: transparent;
-	background: none;
-	padding: 0;
-	margin: 0;
-	color: #fff;
-}</string>
-                   </property>
-                   <property name="text">
-                    <string>Data Analysis</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
+                  <widget class="QWidget" name="widget" native="true">
+                   <layout class="QVBoxLayout" name="verticalLayout_8">
+                    <item>
+                     <widget class="QScrollArea" name="scrollArea">
+                      <property name="widgetResizable">
+                       <bool>true</bool>
+                      </property>
+                      <widget class="QWidget" name="scrollAreaWidgetContents">
+                       <property name="geometry">
+                        <rect>
+                         <x>0</x>
+                         <y>0</y>
+                         <width>448</width>
+                         <height>3018</height>
+                        </rect>
+                       </property>
+                       <layout class="QVBoxLayout" name="verticalLayout_13">
+                        <item>
+                         <widget class="QWidget" name="widget_12" native="true">
+                          <property name="minimumSize">
+                           <size>
+                            <width>0</width>
+                            <height>3000</height>
+                           </size>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_4">
+                           <item row="0" column="0">
+                            <widget class="QWidget" name="widget_2" native="true">
+                             <widget class="QLabel" name="label_4">
+                              <property name="geometry">
+                               <rect>
+                                <x>70</x>
+                                <y>110</y>
+                                <width>47</width>
+                                <height>13</height>
+                               </rect>
+                              </property>
+                              <property name="text">
+                               <string>TextLabel</string>
+                              </property>
+                             </widget>
+                            </widget>
+                           </item>
+                           <item row="0" column="1">
+                            <widget class="QWidget" name="widget_3" native="true">
+                             <widget class="QLabel" name="label_16">
+                              <property name="geometry">
+                               <rect>
+                                <x>100</x>
+                                <y>90</y>
+                                <width>47</width>
+                                <height>13</height>
+                               </rect>
+                              </property>
+                              <property name="text">
+                               <string>TextLabel</string>
+                              </property>
+                             </widget>
+                            </widget>
+                           </item>
+                           <item row="0" column="2">
+                            <widget class="QWidget" name="widget_4" native="true">
+                             <widget class="QLabel" name="label_17">
+                              <property name="geometry">
+                               <rect>
+                                <x>50</x>
+                                <y>90</y>
+                                <width>47</width>
+                                <height>13</height>
+                               </rect>
+                              </property>
+                              <property name="text">
+                               <string>TextLabel</string>
+                              </property>
+                             </widget>
+                            </widget>
+                           </item>
+                           <item row="1" column="0">
+                            <widget class="QWidget" name="widget_5" native="true">
+                             <widget class="QLabel" name="label_9">
+                              <property name="geometry">
+                               <rect>
+                                <x>100</x>
+                                <y>70</y>
+                                <width>47</width>
+                                <height>13</height>
+                               </rect>
+                              </property>
+                              <property name="text">
+                               <string>TextLabel</string>
+                              </property>
+                             </widget>
+                            </widget>
+                           </item>
+                           <item row="1" column="1">
+                            <widget class="QWidget" name="widget_7" native="true">
+                             <widget class="QLabel" name="label_11">
+                              <property name="geometry">
+                               <rect>
+                                <x>90</x>
+                                <y>60</y>
+                                <width>47</width>
+                                <height>13</height>
+                               </rect>
+                              </property>
+                              <property name="text">
+                               <string>TextLabel</string>
+                              </property>
+                             </widget>
+                            </widget>
+                           </item>
+                           <item row="1" column="2">
+                            <widget class="QWidget" name="widget_6" native="true">
+                             <widget class="QLabel" name="label_18">
+                              <property name="geometry">
+                               <rect>
+                                <x>60</x>
+                                <y>70</y>
+                                <width>47</width>
+                                <height>13</height>
+                               </rect>
+                              </property>
+                              <property name="text">
+                               <string>TextLabel</string>
+                              </property>
+                             </widget>
+                            </widget>
+                           </item>
+                           <item row="2" column="0">
+                            <widget class="QWidget" name="widget_8" native="true">
+                             <widget class="QLabel" name="label_10">
+                              <property name="geometry">
+                               <rect>
+                                <x>60</x>
+                                <y>90</y>
+                                <width>47</width>
+                                <height>13</height>
+                               </rect>
+                              </property>
+                              <property name="text">
+                               <string>TextLabel</string>
+                              </property>
+                             </widget>
+                            </widget>
+                           </item>
+                           <item row="2" column="1">
+                            <widget class="QWidget" name="widget_9" native="true">
+                             <widget class="QLabel" name="label_20">
+                              <property name="geometry">
+                               <rect>
+                                <x>70</x>
+                                <y>60</y>
+                                <width>47</width>
+                                <height>13</height>
+                               </rect>
+                              </property>
+                              <property name="text">
+                               <string>TextLabel</string>
+                              </property>
+                             </widget>
+                            </widget>
+                           </item>
+                           <item row="2" column="2">
+                            <widget class="QWidget" name="widget_10" native="true">
+                             <widget class="QLabel" name="label_19">
+                              <property name="geometry">
+                               <rect>
+                                <x>40</x>
+                                <y>70</y>
+                                <width>47</width>
+                                <height>13</height>
+                               </rect>
+                              </property>
+                              <property name="text">
+                               <string>TextLabel</string>
+                              </property>
+                             </widget>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QWidget" name="widget_11" native="true">
+                      <layout class="QHBoxLayout" name="horizontalLayout">
+                       <item alignment="Qt::AlignLeft">
+                        <widget class="QPushButton" name="pushButton">
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="resource2.qrc">
+                           <normaloff>:/icons2/icons2/plus-circle.svg</normaloff>:/icons2/icons2/plus-circle.svg</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>32</width>
+                           <height>32</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QFrame" name="frame_12">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
                  </item>
                 </layout>
@@ -1085,36 +1376,6 @@
                       </property>
                       <property name="text">
                        <string>Profile</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                  <widget class="QWidget" name="morePage">
-                   <layout class="QVBoxLayout" name="verticalLayout_13">
-                    <item>
-                     <widget class="QLabel" name="label_9">
-                      <property name="font">
-                       <font>
-                        <family>Swis721 Blk BT</family>
-                        <pointsize>10</pointsize>
-                       </font>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">*{
-	border: none;
-	background-color: transparent;
-	background: none;
-	padding: 0;
-	margin: 0;
-	color: #fff;
-}</string>
-                      </property>
-                      <property name="text">
-                       <string>More...</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
@@ -1331,10 +1592,8 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="resource.qrc"/>
   <include location="images.qrc"/>
   <include location="resource2.qrc"/>
-  <include location="images.qrc"/>
  </resources>
  <connections/>
 </ui>

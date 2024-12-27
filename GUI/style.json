@@ -137,8 +137,8 @@
 					"navigationButtons":[
 						{
 							"HomeBtn": "homePage",
-							"ReportsBtn": "reportPage", 
-							"DataBtn": "dataPage"
+							"ReportsBtn": "reportPage",
+							"GroupIcon": "GroupPage"
 						}
 					]
 				}
@@ -152,8 +152,7 @@
 					"navigationButtons":[
 						{
 							"SettingsBtn": "settingsPage",
-							"InfoBtn": "informationPage", 
-							"HelpBtn": "helpPage"
+							"InfoBtn": "informationPage"							
 						}
 					]
 				}
@@ -166,8 +165,7 @@
 				{
 					"navigationButtons":[
 						{
-							"ProfileMenuBtn": "profilePage",
-							"RightMenuBtn": "morePage"
+							"ProfileMenuBtn": "profilePage"
 						}
 					]
 				}
@@ -178,8 +176,7 @@
 			{
 				"Buttons": [
 					"HomeBtn",
-					"ReportsBtn",
-					"DataBtn"
+					"ReportsBtn"
 				],
 				"ActiveButton": "HomeBtn",
 				"Style":[
@@ -192,8 +189,7 @@
 			{
 				"Buttons": [
 					"SettingsBtn",
-					"InfoBtn",
-					"HelpBtn"
+					"InfoBtn"
 				],
 				"ActiveButton": "HomeBtn",
 				"Style":[
