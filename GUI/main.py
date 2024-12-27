@@ -81,7 +81,6 @@ class MainWindow(QMainWindow):
 
         self.show()
         #CenterMenu Expanding
-        self.ui.SettingsBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
 
         #RightMenuExpanding
@@ -106,6 +105,10 @@ class MainWindow(QMainWindow):
         self.ui.EditFriendBtn.clicked.connect(lambda: self.ui.AddFriendBtn.setText("Edit Friend"))
         self.ui.AddFriendExpenseBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
         self.ui.AddFriendExpenseBtn.clicked.connect(lambda: self.ui.label_7.setText("Add Expense"))
+
+        #Users
+        self.ui.AddRExpenseBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
+        self.ui.AddRExpenseBtn.clicked.connect(lambda: self.ui.label_7.setText("New Recurrent Expense"))
 
         #NotificationExpanding
         self.ui.ClosePopUpBtn.clicked.connect(lambda: self.ui.popupNotificationContainer.collapseMenu())

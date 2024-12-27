@@ -144,7 +144,9 @@
 							"Grp1Btn": "GrpPage", 
 							"FriendsIcon" : "FriendsPage", 
 							"FriendsBtn" : "FriendsPage", 
-							"FriendBtn" : "page"
+							"FriendBtn" : "FriendPage",
+							"ProfileBtn": "ProfilePage"
+
 						}
 					]
 				}
@@ -157,7 +159,6 @@
 				{
 					"navigationButtons":[
 						{
-							"SettingsBtn": "settingsPage",
 							"InfoBtn": "informationPage"							
 						}
 					]
@@ -177,7 +178,8 @@
 							"AddFriendsBtn" : "AddNewFriendPage", 
 							"AddFriendExpenseBtn": "AddFriendExpensePage", 
 							"EditFriendBtn" : "AddNewFriendPage", 
-							"EditGrpBtn" : "AddGrpPage"
+							"EditGrpBtn" : "AddGrpPage",
+							"AddRExpenseBtn": "AddRecurrentExpense"
 						}
 					]
 				}
@@ -188,6 +190,7 @@
 			{
 				"Buttons": [
 					"HomeBtn",
+					"ProfileBtn",
 					"ReportsBtn"
 				],
 				"ActiveButton": "HomeBtn",
@@ -200,7 +203,6 @@
 		}, 
 			{
 				"Buttons": [
-					"SettingsBtn",
 					"InfoBtn"
 				],
 				"ActiveButton": "HomeBtn",

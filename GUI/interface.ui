@@ -48,7 +48,7 @@ QLineEdit, QTextEdit {
 #centerMenuSubContainer, #rightMenuSubContainer{
 	background-color: #2c313c;
 }
-#frame_6, #frame_8, #popupNotificationSubContainer, #GrpHeaderSubContainer, #FriendsHeader, #FriendFrame, #ReportsHeader, #ReportSubContainer{
+#frame_6, #frame_8, #popupNotificationSubContainer, #GrpHeaderSubContainer, #FriendsHeader, #FriendFrame, #ReportsHeader, #ReportSubContainer, #ProfileContainer{
 	background-color: #16191d;
 	border-radius: 10px;
 }
@@ -278,6 +278,32 @@ QCalendarWidget QToolButton:hover {
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QPushButton" name="ProfileBtn">
+               <property name="font">
+                <font>
+                 <family>Swis721 Blk BT</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Profile</string>
+               </property>
+               <property name="text">
+                <string>Settings</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource2.qrc">
+                 <normaloff>:/icons2/icons2/user.svg</normaloff>:/icons2/icons2/user.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -319,32 +345,6 @@ QCalendarWidget QToolButton:hover {
               <number>20</number>
              </property>
              <item>
-              <widget class="QPushButton" name="SettingsBtn">
-               <property name="font">
-                <font>
-                 <family>Swis721 Blk BT</family>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="toolTip">
-                <string>Profile</string>
-               </property>
-               <property name="text">
-                <string>Settings</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource2.qrc">
-                 <normaloff>:/icons2/icons2/user.svg</normaloff>:/icons2/icons2/user.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="InfoBtn">
                <property name="font">
                 <font>
@@ -361,6 +361,23 @@ QCalendarWidget QToolButton:hover {
                <property name="icon">
                 <iconset resource="resource2.qrc">
                  <normaloff>:/icons2/icons2/info.svg</normaloff>:/icons2/icons2/info.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="LogOutBtn">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="resource2.qrc">
+                 <normaloff>:/icons2/icons2/log-out.svg</normaloff>:/icons2/icons2/log-out.svg</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1018,6 +1035,504 @@ QCalendarWidget QToolButton:hover {
                  </item>
                 </layout>
                </widget>
+               <widget class="QWidget" name="ProfilePage">
+                <layout class="QVBoxLayout" name="verticalLayout_73">
+                 <item>
+                  <widget class="QScrollArea" name="scrollArea_9">
+                   <property name="widgetResizable">
+                    <bool>true</bool>
+                   </property>
+                   <widget class="QWidget" name="scrollAreaWidgetContents_15">
+                    <property name="geometry">
+                     <rect>
+                      <x>0</x>
+                      <y>0</y>
+                      <width>483</width>
+                      <height>570</height>
+                     </rect>
+                    </property>
+                    <layout class="QHBoxLayout" name="horizontalLayout_50">
+                     <item>
+                      <widget class="QWidget" name="widget_9" native="true">
+                       <layout class="QVBoxLayout" name="verticalLayout_74">
+                        <item alignment="Qt::AlignTop">
+                         <widget class="QFrame" name="ProfileContainer">
+                          <property name="frameShape">
+                           <enum>QFrame::StyledPanel</enum>
+                          </property>
+                          <property name="frameShadow">
+                           <enum>QFrame::Raised</enum>
+                          </property>
+                          <layout class="QHBoxLayout" name="horizontalLayout_51">
+                           <item alignment="Qt::AlignLeft">
+                            <widget class="QPushButton" name="pushButton_2">
+                             <property name="text">
+                              <string/>
+                             </property>
+                             <property name="icon">
+                              <iconset resource="images.qrc">
+                               <normaloff>:/images/3135823.png</normaloff>:/images/3135823.png</iconset>
+                             </property>
+                             <property name="iconSize">
+                              <size>
+                               <width>90</width>
+                               <height>90</height>
+                              </size>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="label_36">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>20</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Name</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QPushButton" name="EditProfileBtn">
+                             <property name="text">
+                              <string/>
+                             </property>
+                             <property name="icon">
+                              <iconset resource="resource2.qrc">
+                               <normaloff>:/icons2/icons2/edit-3.svg</normaloff>:/icons2/icons2/edit-3.svg</iconset>
+                             </property>
+                             <property name="iconSize">
+                              <size>
+                               <width>32</width>
+                               <height>32</height>
+                              </size>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QFrame" name="ProfileeInformations">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>0</width>
+                            <height>42</height>
+                           </size>
+                          </property>
+                          <property name="frameShape">
+                           <enum>QFrame::StyledPanel</enum>
+                          </property>
+                          <property name="frameShadow">
+                           <enum>QFrame::Raised</enum>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_15">
+                           <property name="verticalSpacing">
+                            <number>15</number>
+                           </property>
+                           <item row="0" column="0">
+                            <widget class="QFrame" name="frame_45">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QVBoxLayout" name="verticalLayout_76">
+                              <item alignment="Qt::AlignLeft">
+                               <widget class="QLabel" name="label_37">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                  <pointsize>14</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>Username:</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item row="0" column="1">
+                            <widget class="QFrame" name="frame_46">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>16777215</width>
+                               <height>16777215</height>
+                              </size>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QVBoxLayout" name="verticalLayout_78">
+                              <item>
+                               <widget class="QLabel" name="label_38">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>0</width>
+                                  <height>0</height>
+                                 </size>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                  <pointsize>11</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>niloofar_torki</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item row="1" column="0">
+                            <widget class="QFrame" name="frame_48">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QVBoxLayout" name="verticalLayout_77">
+                              <item>
+                               <widget class="QLabel" name="label_39">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                  <pointsize>14</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>Email:</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item row="2" column="0">
+                            <widget class="QFrame" name="frame_51">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QVBoxLayout" name="verticalLayout_81">
+                              <item>
+                               <widget class="QLabel" name="label_41">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                  <pointsize>14</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>Balance:</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item row="1" column="1">
+                            <widget class="QFrame" name="frame_49">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QVBoxLayout" name="verticalLayout_89">
+                              <item>
+                               <widget class="QLabel" name="label_40">
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                  <pointsize>10</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>niloofar.torki1381@gmail.com</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item row="2" column="1">
+                            <widget class="QFrame" name="frame_52">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QVBoxLayout" name="verticalLayout_90">
+                              <item>
+                               <widget class="QLabel" name="label_42">
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                  <pointsize>11</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>x $</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item row="0" column="2">
+                            <widget class="QPushButton" name="pushButton_3">
+                             <property name="text">
+                              <string/>
+                             </property>
+                             <property name="icon">
+                              <iconset resource="resource2.qrc">
+                               <normaloff>:/icons2/icons2/edit-2.svg</normaloff>:/icons2/icons2/edit-2.svg</iconset>
+                             </property>
+                             <property name="iconSize">
+                              <size>
+                               <width>20</width>
+                               <height>20</height>
+                              </size>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="1" column="2">
+                            <widget class="QPushButton" name="pushButton_12">
+                             <property name="text">
+                              <string/>
+                             </property>
+                             <property name="icon">
+                              <iconset resource="resource2.qrc">
+                               <normaloff>:/icons2/icons2/edit-2.svg</normaloff>:/icons2/icons2/edit-2.svg</iconset>
+                             </property>
+                             <property name="iconSize">
+                              <size>
+                               <width>20</width>
+                               <height>20</height>
+                              </size>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="2">
+                            <widget class="QPushButton" name="pushButton_13">
+                             <property name="text">
+                              <string/>
+                             </property>
+                             <property name="icon">
+                              <iconset resource="resource2.qrc">
+                               <normaloff>:/icons2/icons2/edit-2.svg</normaloff>:/icons2/icons2/edit-2.svg</iconset>
+                             </property>
+                             <property name="iconSize">
+                              <size>
+                               <width>20</width>
+                               <height>20</height>
+                              </size>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QWidget" name="widget_10" native="true">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <layout class="QHBoxLayout" name="horizontalLayout_52">
+                           <item>
+                            <widget class="QTableWidget" name="tableWidget_2">
+                             <property name="showGrid">
+                              <bool>true</bool>
+                             </property>
+                             <column>
+                              <property name="text">
+                               <string>Amount</string>
+                              </property>
+                             </column>
+                             <column>
+                              <property name="text">
+                               <string>TimeDuration</string>
+                              </property>
+                             </column>
+                             <column>
+                              <property name="text">
+                               <string>Category</string>
+                              </property>
+                             </column>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QFrame" name="frame_44">
+                          <property name="font">
+                           <font>
+                            <family>Swis721 Blk BT</family>
+                            <pointsize>16</pointsize>
+                           </font>
+                          </property>
+                          <property name="frameShape">
+                           <enum>QFrame::StyledPanel</enum>
+                          </property>
+                          <property name="frameShadow">
+                           <enum>QFrame::Raised</enum>
+                          </property>
+                          <layout class="QHBoxLayout" name="horizontalLayout_53">
+                           <item alignment="Qt::AlignLeft">
+                            <widget class="QPushButton" name="AddRExpenseBtn">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>12</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Add Recurrent Expense</string>
+                             </property>
+                             <property name="icon">
+                              <iconset resource="resource2.qrc">
+                               <normaloff>:/icons2/icons2/file-plus.svg</normaloff>:/icons2/icons2/file-plus.svg</iconset>
+                             </property>
+                             <property name="iconSize">
+                              <size>
+                               <width>32</width>
+                               <height>32</height>
+                              </size>
+                             </property>
+                            </widget>
+                           </item>
+                           <item alignment="Qt::AlignRight">
+                            <widget class="QPushButton" name="LogOutProfileBtn">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>12</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Log out</string>
+                             </property>
+                             <property name="icon">
+                              <iconset resource="resource2.qrc">
+                               <normaloff>:/icons2/icons2/log-out.svg</normaloff>:/icons2/icons2/log-out.svg</iconset>
+                             </property>
+                             <property name="iconSize">
+                              <size>
+                               <width>32</width>
+                               <height>32</height>
+                              </size>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
                <widget class="QWidget" name="GroupsPage">
                 <layout class="QVBoxLayout" name="verticalLayout_16">
                  <item>
@@ -1374,7 +1889,7 @@ QCalendarWidget QToolButton:hover {
                     <property name="geometry">
                      <rect>
                       <x>0</x>
-                      <y>-247</y>
+                      <y>-16</y>
                       <width>466</width>
                       <height>843</height>
                      </rect>
@@ -2272,7 +2787,7 @@ QCalendarWidget QToolButton:hover {
                  </item>
                 </layout>
                </widget>
-               <widget class="QWidget" name="page">
+               <widget class="QWidget" name="FriendPage">
                 <layout class="QVBoxLayout" name="verticalLayout_50">
                  <item alignment="Qt::AlignTop">
                   <widget class="QWidget" name="FriendFrame" native="true">
@@ -2415,8 +2930,26 @@ QCalendarWidget QToolButton:hover {
                        <enum>QFrame::Raised</enum>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_53">
-                       <item>
+                       <item alignment="Qt::AlignHCenter">
                         <widget class="QPushButton" name="FriendsExpenseGraphBtn">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>300</width>
+                           <height>50</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>300</width>
+                           <height>50</height>
+                          </size>
+                         </property>
                          <property name="font">
                           <font>
                            <family>Swis721 Blk BT</family>
@@ -2464,7 +2997,7 @@ QCalendarWidget QToolButton:hover {
                     <property name="geometry">
                      <rect>
                       <x>0</x>
-                      <y>0</y>
+                      <y>-540</y>
                       <width>466</width>
                       <height>1218</height>
                      </rect>
@@ -3065,7 +3598,7 @@ QCalendarWidget QToolButton:hover {
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>1</number>
+                   <number>3</number>
                   </property>
                   <widget class="QWidget" name="AddNewMemberPage">
                    <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -3549,6 +4082,606 @@ QCalendarWidget QToolButton:hover {
                          </property>
                          <property name="text">
                           <string>Add Group</string>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="resource2.qrc">
+                           <normaloff>:/icons2/icons2/plus-square.svg</normaloff>:/icons2/icons2/plus-square.svg</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>20</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="AddRecurrentExpense">
+                   <layout class="QVBoxLayout" name="verticalLayout_91">
+                    <item>
+                     <widget class="QGroupBox" name="AddExpenseBox_4">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="title">
+                       <string/>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_75">
+                       <item>
+                        <widget class="QLabel" name="LabelLabel">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>10</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Label</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="LabelInput">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>37</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>59</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="AmountRExpenseLabel">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>10</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Amount</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="AmountRExpenseInput">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>37</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>59</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="DaysLabel">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>10</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Check the days when this expense happens:</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QScrollArea" name="DaysOfExpense">
+                         <property name="widgetResizable">
+                          <bool>true</bool>
+                         </property>
+                         <widget class="QWidget" name="scrollAreaWidgetContents_16">
+                          <property name="geometry">
+                           <rect>
+                            <x>0</x>
+                            <y>0</y>
+                            <width>378</width>
+                            <height>124</height>
+                           </rect>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_16">
+                           <item row="4" column="5">
+                            <widget class="QCheckBox" name="day27">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>27</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="4" column="6">
+                            <widget class="QCheckBox" name="day28">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>28</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="0">
+                            <widget class="QCheckBox" name="day1">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>1</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="1">
+                            <widget class="QCheckBox" name="day1_2">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>2</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="2">
+                            <widget class="QCheckBox" name="day10">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>10</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="1">
+                            <widget class="QCheckBox" name="day9">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>9</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="5">
+                            <widget class="QCheckBox" name="day6">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>6</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="2">
+                            <widget class="QCheckBox" name="day3">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>3</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="3">
+                            <widget class="QCheckBox" name="day4">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>4</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="4">
+                            <widget class="QCheckBox" name="day5">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>5</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="1">
+                            <widget class="QCheckBox" name="day16">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>16</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="3">
+                            <widget class="QCheckBox" name="day18">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>18</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="2">
+                            <widget class="QCheckBox" name="day17">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>17</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="5">
+                            <widget class="QCheckBox" name="day20">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>20</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="4">
+                            <widget class="QCheckBox" name="day19">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>19</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="4" column="0">
+                            <widget class="QCheckBox" name="day22">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>22</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="6">
+                            <widget class="QCheckBox" name="day21">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>21</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="4" column="2">
+                            <widget class="QCheckBox" name="day24">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>24</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="4" column="3">
+                            <widget class="QCheckBox" name="day25">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>25</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="4" column="4">
+                            <widget class="QCheckBox" name="day26">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>26</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="6">
+                            <widget class="QCheckBox" name="day7">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>7</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="6">
+                            <widget class="QCheckBox" name="day14">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>14</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="0">
+                            <widget class="QCheckBox" name="day8">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>8</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="3">
+                            <widget class="QCheckBox" name="day11">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>11</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="4">
+                            <widget class="QCheckBox" name="day12">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>12</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="0">
+                            <widget class="QCheckBox" name="day15">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>15</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="5">
+                            <widget class="QCheckBox" name="day13">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>13</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="4" column="1">
+                            <widget class="QCheckBox" name="day23">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>23</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="5" column="0">
+                            <widget class="QCheckBox" name="day29">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>29</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="5" column="1">
+                            <widget class="QCheckBox" name="day30">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>30</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="5" column="2">
+                            <widget class="QCheckBox" name="day31">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 BlkEx BT</family>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>31</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QWidget" name="DateInput_5" native="true">
+                         <layout class="QHBoxLayout" name="horizontalLayout_54"/>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="CategoryLabel_5">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>10</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Category:</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QFrame" name="CategoryGrid_5">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QGridLayout" name="gridLayout_17">
+                          <item row="0" column="1">
+                           <widget class="QRadioButton" name="radioButton_25">
+                            <property name="text">
+                             <string>RadioButton</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="1">
+                           <widget class="QRadioButton" name="radioButton_26">
+                            <property name="text">
+                             <string>RadioButton</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="2">
+                           <widget class="QRadioButton" name="radioButton_27">
+                            <property name="text">
+                             <string>RadioButton</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="2">
+                           <widget class="QRadioButton" name="radioButton_28">
+                            <property name="text">
+                             <string>RadioButton</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="0">
+                           <widget class="QRadioButton" name="radioButton_29">
+                            <property name="text">
+                             <string>RadioButton</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="0">
+                           <widget class="QRadioButton" name="radioButton_30">
+                            <property name="text">
+                             <string>RadioButton</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="FinalAddRecurrentExpenseBtn">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>10</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Add Recurrent Expense</string>
                          </property>
                          <property name="icon">
                           <iconset resource="resource2.qrc">
