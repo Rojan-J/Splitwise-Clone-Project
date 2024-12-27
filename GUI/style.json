@@ -138,6 +138,8 @@
 						{
 							"HomeBtn": "homePage",
 							"ReportsBtn": "reportPage",
+							"ReportsIcon" : "reportPage",
+							"reportsBtn" : "reportPage",
 							"GroupIcon": "GroupsPage",
 							"Grp1Btn": "GrpPage", 
 							"FriendsIcon" : "FriendsPage", 
