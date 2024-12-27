@@ -885,7 +885,7 @@ QCalendarWidget QToolButton:hover {
              <item>
               <widget class="QCustomQStackedWidget" name="mainPages">
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="homePage">
                 <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -3067,7 +3067,7 @@ QCalendarWidget QToolButton:hover {
                      <rect>
                       <x>0</x>
                       <y>-540</y>
-                      <width>488</width>
+                      <width>466</width>
                       <height>1218</height>
                      </rect>
                     </property>
@@ -3271,7 +3271,7 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>434</width>
+                                <width>412</width>
                                 <height>225</height>
                                </rect>
                               </property>
@@ -3306,7 +3306,7 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>434</width>
+                                <width>412</width>
                                 <height>225</height>
                                </rect>
                               </property>
