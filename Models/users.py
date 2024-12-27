@@ -1,22 +1,24 @@
 import sqlite3
 
 class Users:
-    def __init__(self, name, email_adress):
+    def __init__(self, name=None, email=None):
         self.name = name
-        self.email = email_adress
+        self.email = email
         self.balance = 0
         self.user_id=None
         
         #fetch user data from database if email is provided
-        if email_adress:
-            self.load_from_database()
+        if email:
+            self.load_from_database(email)
 
-    def load_from_database(self):
+    def load_from_database(self,email):
         connection=sqlite3.connect("database.db")
         cursor=connection.cursor()
         #find a row where the email matches the email address passed to the Users object
-        cursor.execute("SELECT user_id, username, email, balance FROM users WHERE email = ?", (self.email,))
+        cursor.execute("SELECT user_id, username, email, balance FROM users WHERE email = ?", (email,))
         #retrive the first row
+        cursor.execute("SELECT user_id, username, email, balance FROM users WHERE email = ?", (email,))
+
         result = cursor.fetchone()
 
         #if row is found:
@@ -41,3 +43,5 @@ class Users:
     
     def __str__(self):
         return f"User({self.name}, Balance: {self.balance})"
+    
+    
