@@ -139,7 +139,10 @@
 							"HomeBtn": "homePage",
 							"ReportsBtn": "reportPage",
 							"GroupIcon": "GroupsPage",
-							"Grp1Btn": "GrpPage"
+							"Grp1Btn": "GrpPage", 
+							"FriendsIcon" : "FriendsPage", 
+							"FriendsBtn" : "FriendsPage", 
+							"FriendBtn" : "page"
 						}
 					]
 				}
@@ -168,7 +171,11 @@
 						{
 							"AddMembersBtn_7": "AddNewMemberPage",
 							"addGrpBtn": "AddGrpPage", 
-							"AddExpensesBtn" : "AddExpensePage"
+							"AddExpensesBtn" : "AddExpensePage",
+							"AddFriendsBtn" : "AddNewFriendPage", 
+							"AddFriendExpenseBtn": "AddFriendExpensePage", 
+							"EditFriendBtn" : "AddNewFriendPage", 
+							"EditGrpBtn" : "AddGrpPage"
 						}
 					]
 				}

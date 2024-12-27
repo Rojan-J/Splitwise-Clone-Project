@@ -85,12 +85,27 @@ class MainWindow(QMainWindow):
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
 
         #RightMenuExpanding
+        #Group Issues
         self.ui.AddMembersBtn_7.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
         self.ui.AddMembersBtn_7.clicked.connect(lambda: self.ui.label_7.setText("Add New Member"))
         self.ui.addGrpBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
         self.ui.addGrpBtn.clicked.connect(lambda: self.ui.label_7.setText("New Group"))
+        self.ui.addGrpBtn.clicked.connect(lambda: self.ui.FinalAddGrpBtn.setText("Add Group"))
+        self.ui.EditGrpBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
+        self.ui.EditGrpBtn.clicked.connect(lambda: self.ui.label_7.setText("Edit Group"))
+        self.ui.EditGrpBtn.clicked.connect(lambda: self.ui.FinalAddGrpBtn.setText("Edit Group"))
         self.ui.AddExpensesBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
         self.ui.AddExpensesBtn.clicked.connect(lambda: self.ui.label_7.setText("Add Expense"))
+
+        #Friend Issues
+        self.ui.AddFriendsBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
+        self.ui.AddFriendsBtn.clicked.connect(lambda: self.ui.label_7.setText("New Friend"))
+        self.ui.AddFriendsBtn.clicked.connect(lambda: self.ui.AddFriendBtn.setText("Add Friend"))
+        self.ui.EditFriendBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
+        self.ui.EditFriendBtn.clicked.connect(lambda: self.ui.label_7.setText("Edit Friend"))
+        self.ui.EditFriendBtn.clicked.connect(lambda: self.ui.AddFriendBtn.setText("Edit Friend"))
+        self.ui.AddFriendExpenseBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
+        self.ui.AddFriendExpenseBtn.clicked.connect(lambda: self.ui.label_7.setText("Add Expense"))
 
         #NotificationExpanding
         self.ui.ClosePopUpBtn.clicked.connect(lambda: self.ui.popupNotificationContainer.collapseMenu())
