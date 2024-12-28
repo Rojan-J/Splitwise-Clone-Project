@@ -86,21 +86,15 @@ def add_expanse(group_id,payer_id,amount,category,date,description=None):
     
 
 #to add a single user's contribution to an expense    
-def add_contribution(expense_id,user_id,amount_contributed, split_proportion=None):
+def add_contribution(expense_id,user_id,amount_contributed, split_proportion=None, share=None):
     connection = get_connection()
     cursor = connection.cursor()
     
-    if split_proportion is None:
-        cursor.execute('''
-            INSERT INTO expense_user (expense_id, user_id, amount_contributed)
-            VALUES (?, ?, ?)
-        ''', (expense_id, user_id, amount_contributed))
-        
-    else:
-        cursor.execute('''
-            INSERT INTO expense_user (expense_id, user_id, amount_contributed, split_proportion)
-            VALUES (?, ?, ?)
-        ''', (expense_id, user_id, amount_contributed,split_proportion))
+    cursor.execute('''
+            INSERT INTO expense_user (expense_id, user_id, amount_contributed, split_proportion, share)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (expense_id, user_id, amount_contributed, split_proportion, share))
+
     connection.commit()
     connection.close()
     
@@ -132,6 +126,28 @@ def add_percentage_contributions(expense_id,user_contributions):
     connection.close()
     
     
+def add_share_contributions(expense_id, user_contributions):
+    connection=get_connection()
+    cursor=connection.cursor()
+        
+    cursor.execute('''
+        SELECT amount FROM expenses WHERE expense_id = ?
+    ''', (expense_id,))
+    expense = cursor.fetchone()  
+      
+    total_amount = expense[0]
+    total_shares = sum(share for _, share in user_contributions)
+    
+    for user_id, share in user_contributions:
+        amount_contributed = (share / total_shares) * total_amount
+        cursor.execute('''
+            INSERT INTO expense_user (expense_id, user_id, amount_contributed, share)
+            VALUES (?, ?, ?, ?)
+        ''', (expense_id, user_id, amount_contributed, share))
+    
+    connection.commit()
+    connection.close()
+      
     
 def add_debt(debtor_id,creditor_id,amount):
     connection = get_connection()

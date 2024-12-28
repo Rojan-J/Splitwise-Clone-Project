@@ -15,6 +15,7 @@ def main():
 
     groups = get_all_groups()
     print("Groups:", groups)
+    
 
 if __name__ == "__main__":
     main()

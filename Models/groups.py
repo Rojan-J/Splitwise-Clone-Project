@@ -71,7 +71,7 @@ class Groups:
             connection.close()    
             
 
-    def add_expenses(self, expense, payer, contributors, category="General",description=None, split_type="equally", proportions=None):
+    def add_expenses(self, expense, payer, contributors, category="General",description=None, split_type="equally", proportions=None, shares=None):
         
         #contributors is a list of users represented by their ids who are sharing the expense
         #contributions is a list that hold each contributor's share
@@ -89,7 +89,7 @@ class Groups:
         # add expense
         cursor.execute("""
             INSERT INTO expenses (group_id, payer_id, amount, category, date, description, split_type) 
-            VALUES (?, ?, ?, ?, date('now'))
+            VALUES (?, ?, ?, ?, date('now'),?,?)
         """, (self.group_id, payer, expense, category, description , split_type))
         expense_id = cursor.lastrowid
 
@@ -106,12 +106,20 @@ class Groups:
             
             contributions=[(contributor,expense*(percentage)) for contributor, percentage in zip(contributors, proportions)]
             
+        elif split_type=="shares":
+            total_share=sum(shares)
+            contributions=[(contributor,expense*(share/total_share))for contributor, share in zip(contributors,shares)]
+            
+            
+        else:
+            raise ValueError(f"Invalid split_type:{split_type}")
+            
         for contributor,contribution in contributions:
             proportion=contribution/expense
                 
             cursor.execute("""
                 INSERT INTO expense_user (expense_id, user_id, amount_contributed,split_proportion)
-                VALUES (?, ?, ?)
+                VALUES (?, ?, ?,?)
             """, (expense_id, contributor, contribution,proportion))
 
         connection.commit()
