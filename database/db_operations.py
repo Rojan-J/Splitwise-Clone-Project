@@ -1,7 +1,11 @@
 import sqlite3
 
 def get_connection():
-    return sqlite3.connect("database.db")
+    connection=sqlite3.connect("database.db")
+
+    connection.execute("PRAGMA foreign_keys=ON")  #enable foreign key support
+    
+    return connection
 
 def add_user(username,email,password_hash, is_registered=True):
     connection=get_connection()
@@ -58,7 +62,7 @@ def add_user_to_group(user_id,group_id):
     connection.commit()
     connection.close()
     
-def add_temp_user_tto_group(temp_user_id, group_id, temp_member_name, temp_member_email):
+def add_temp_user_to_group(temp_user_id, group_id, temp_member_name, temp_member_email):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
@@ -80,16 +84,53 @@ def add_expanse(group_id,payer_id,amount,category,date,description=None):
     connection.commit()
     connection.close()
     
-    
-def add_contribution(expense_id,user_id,amount_contributed):
+
+#to add a single user's contribution to an expense    
+def add_contribution(expense_id,user_id,amount_contributed, split_proportion=None):
     connection = get_connection()
     cursor = connection.cursor()
-    cursor.execute('''
-        INSERT INTO expense_user (expense_id, user_id, amount_contributed)
-        VALUES (?, ?, ?)
-    ''', (expense_id, user_id, amount_contributed))
+    
+    if split_proportion is None:
+        cursor.execute('''
+            INSERT INTO expense_user (expense_id, user_id, amount_contributed)
+            VALUES (?, ?, ?)
+        ''', (expense_id, user_id, amount_contributed))
+        
+    else:
+        cursor.execute('''
+            INSERT INTO expense_user (expense_id, user_id, amount_contributed, split_proportion)
+            VALUES (?, ?, ?)
+        ''', (expense_id, user_id, amount_contributed,split_proportion))
     connection.commit()
     connection.close()
+    
+    
+#to add contributions for multiple users based on their percentage shares 
+def add_percentage_contributions(expense_id,user_contributions):
+    connection=get_connection()
+    cursor=connection.cursor()
+    
+    cursor.execute('''
+        SELECT amount FROM expenses WHERE expense_id = ?
+    ''', (expense_id,))
+    expense = cursor.fetchone()
+    
+    total_amount = expense[0]
+    
+    total_percentage = sum(percentage for _, percentage in user_contributions)
+    if total_percentage != 1.0:
+        raise ValueError("Total percentage must sum up to 100% (1.0).")
+
+    for user_id, percentage in user_contributions:
+        amount_contributed = total_amount * percentage
+        cursor.execute('''
+            INSERT INTO expense_user (expense_id, user_id, amount_contributed, split_proportion)
+            VALUES (?, ?, ?, ?)
+        ''', (expense_id, user_id, amount_contributed, percentage))
+    
+    connection.commit()
+    connection.close()
+    
     
     
 def add_debt(debtor_id,creditor_id,amount):

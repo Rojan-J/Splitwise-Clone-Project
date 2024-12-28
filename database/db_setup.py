@@ -73,6 +73,7 @@ def initialize_database():
             user_id INTEGER,
             temp_user_id INTEGER,
             amount_contributed REAL NOT NULL,
+            split_proportion REAL,  -- Add this column,
             FOREIGN KEY(expense_id) REFERENCES expenses(expense_id),
             FOREIGN KEY(user_id) REFERENCES users(user_id),
             PRIMARY KEY(expense_id, user_id),

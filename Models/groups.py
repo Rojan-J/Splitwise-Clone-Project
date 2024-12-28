@@ -71,7 +71,7 @@ class Groups:
             connection.close()    
             
 
-    def add_expenses(self, expense, payer, contributors, category="General", split_type="equally", proportions=None):
+    def add_expenses(self, expense, payer, contributors, category="General",description=None, split_type="equally", proportions=None):
         
         #contributors is a list of users represented by their ids who are sharing the expense
         #contributions is a list that hold each contributor's share
@@ -88,9 +88,9 @@ class Groups:
 
         # add expense
         cursor.execute("""
-            INSERT INTO expenses (group_id, payer_id, amount, category, date) 
+            INSERT INTO expenses (group_id, payer_id, amount, category, date, description, split_type) 
             VALUES (?, ?, ?, ?, date('now'))
-        """, (self.group_id, payer, expense, category))
+        """, (self.group_id, payer, expense, category, description , split_type))
         expense_id = cursor.lastrowid
 
         print(f"Expense added with ID: {expense_id}")
@@ -107,10 +107,12 @@ class Groups:
             contributions=[(contributor,expense*(percentage)) for contributor, percentage in zip(contributors, proportions)]
             
         for contributor,contribution in contributions:
+            proportion=contribution/expense
+                
             cursor.execute("""
-                INSERT INTO expense_user (expense_id, user_id, amount_contributed)
+                INSERT INTO expense_user (expense_id, user_id, amount_contributed,split_proportion)
                 VALUES (?, ?, ?)
-            """, (expense_id, contributor, contribution))
+            """, (expense_id, contributor, contribution,proportion))
 
         connection.commit()
         connection.close()     
