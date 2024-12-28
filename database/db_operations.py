@@ -7,14 +7,14 @@ def get_connection():
     
     return connection
 
-def add_user(username,email,password_hash, is_registered=True):
+def add_user(name, username,email,password_hash,profile=0, is_registered=True, balance=0):
     connection=get_connection()
     cursor=connection.cursor()
     
     cursor.execute('''
-        INSERT INTO users (username, email, password_hash, is_registered)
-        VALUES (?, ?, ?, ?)
-    ''', (username, email, password_hash, is_registered))
+        INSERT INTO users (name, username, email, password_hash, is_registered, proflie, balance)
+        VALUES (?, ?, ?, ?, ?, )
+    ''', (name, username, email, password_hash, is_registered, profile, balance))
     
     connection.commit()
     connection.close()

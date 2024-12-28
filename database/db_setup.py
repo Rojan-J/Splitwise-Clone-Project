@@ -17,11 +17,14 @@ def initialize_database():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
+            name TEXT NOT NULL,
+            username TEXT NOT NULL
             email TEXT NOT NULL,
             password_hash TEXT NOT NULL,
             is_registered BOOLEAN DEFAULT TRUE,
-            balance REAL DEFAULT 0     
+            profile INTEGER DEFAULT 0,
+            balance REAL DEFAULT 0
+ 
         )
     ''')
     #unregistered users could have is_registered=FALSE
