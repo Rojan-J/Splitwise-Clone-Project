@@ -136,14 +136,30 @@ class Groups:
                 self.debts[(contributer, expense[1])]["capacity"] += portion
 
 
+reset_expenses_for_testing = True
 
 
-
+def clear_expenses(group_id):
+    if not reset_expenses_for_testing:
+        print("test mode is off- skipping clearing expenses")
+        return
+    
+    connection=sqlite3.connect("database.db")
+    cursor=connection.cursor()
+    
+    cursor.execute("DELETE FROM expense_user WHERE expense_id IN (SELECT expense_id FROM expenses WHERE group_id = ?)", (group_id,))
+    cursor.execute("DELETE FROM expenses WHERE group_id = ?", (group_id,))
+    
+    connection.commit()
+    connection.close()
+    print(f"Cleared expenses for group_id={group_id}.")
 
 #test the database/ user, group connection
 
 def main():
     group = Groups("Food")
+    
+    clear_expenses(group.group_id)
     group.add_members("Rojan", "rojan@gmail.com")
     group.add_members("Niloo", "niloo@gmail.com.com")
 
