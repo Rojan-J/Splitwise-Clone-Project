@@ -63,8 +63,8 @@ class Groups:
             connection.close()    
             
 
-    def add_expenses(self, expense, payer, contributors):
-        self.expenses.append([expense, payer, contributors])
+    def add_expenses(self, expense, payer, contributors, category="General"):
+        self.expenses.append([expense, payer, contributors,category])
         
         connection = sqlite3.connect("database.db")
         cursor = connection.cursor()
@@ -73,7 +73,7 @@ class Groups:
         cursor.execute("""
             INSERT INTO expenses (group_id, payer_id, amount, category, date) 
             VALUES (?, ?, ?, ?, date('now'))
-        """, (self.group_id, payer, expense, "General"))
+        """, (self.group_id, payer, expense, category))
         expense_id = cursor.lastrowid
 
         for contributor in contributors:
@@ -86,6 +86,22 @@ class Groups:
         connection.close()     
         
         self.cal_debts()
+        
+    def get_expenses_by_category(self):
+        connection=sqlite3.connect("database.db")
+        cursor=connection.cursor()
+       
+        cursor.execute("""
+            SELECT category, SUM(amount)
+            FROM expenses
+            WHERE group_id = ?
+            GROUP BY category
+        """, (self.group_id,))
+        
+        expense_by_category=cursor.fetchall()
+        connection.close()
+        return expense_by_category 
+        
 
     def cal_debts(self):
         expense = self.expenses[-1]
@@ -112,8 +128,12 @@ def main():
     user = Users(email="rojan@gmail.com")
     print(user)
 
-    group.add_expenses(100, user.user_id, [user.user_id,2])  # Rojan pays for all
+    group.add_expenses(100, user.user_id, [user.user_id,2], category="Food")  # Rojan pays for all
 
+    expense_report=group.get_expenses_by_category()
+    print("expense by category:")
+    for category, total in expense_report:
+        print(f"   {category}:{total}")
 
 # def update_balance(user_id, new_balance):
 #     connection = sqlite3.connect("database.db")

@@ -17,7 +17,6 @@ class Users:
         #find a row where the email matches the email address passed to the Users object
         cursor.execute("SELECT user_id, username, email, balance FROM users WHERE email = ?", (email,))
         #retrive the first row
-        cursor.execute("SELECT user_id, username, email, balance FROM users WHERE email = ?", (email,))
 
         result = cursor.fetchone()
 

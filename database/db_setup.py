@@ -57,7 +57,7 @@ def initialize_database():
             group_id INTEGER,
             payer_id INTEGER,
             amount REAL NOT NULL,
-            category TEXT NOT NULL,
+            category TEXT NOT NULL DEFAULT 'General',  -- Added category column,
             date TEXT NOT NULL,
             description TEXT,
             FOREIGN KEY(group_id) REFERENCES groups(group_id),
