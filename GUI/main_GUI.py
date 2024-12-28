@@ -17,8 +17,11 @@ from interface import Ui_MainWindow as InterfacePageUI
 
 
 import ctypes
-import os
 os.chdir("Project/Splitwise-Clone-Project/GUI")
+
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+from db_setup import initialize_database
+from db_operations import add_user, get_user_by_email, add_group, get_all_groups
 
 # Explicitly load the cairo DLL
 cairo_path = r"C:/Program Files/GTK3-Runtime Win64/bin/libcairo-2.dll"
@@ -41,14 +44,33 @@ class LoginWindow(QMainWindow):
         loadJsonStyle(self, self.ui, jsonFiles = ["style2.json"])
         self.show()
         self.ui.loginBtn_2.clicked.connect(self.open_interface_page)  # Assuming the button is named "login_button"
+        self.ui.SignUpBtn.clicked.connect(self.sign_up)
         self.ui.SignUpBtn.clicked.connect(self.open_interface_page)
-
+        
 
 
     def open_interface_page(self):
         # Create an instance of the interface page window
         self.interface_window = MainWindow()
         self.close()
+
+    def sign_up(self):
+        name = self.ui.NameSignUp.text()
+        username = self.ui.UsernameSignUp.text()
+        email = self.ui.EmailSignUp.text()
+        password = self.ui.PasswordSignUp.text()
+        balance = self.ui.BalanceSignUp.text()
+        if self.ui.MaleRBtn.isChecked():
+            profile = 1
+        else:
+            profile = 0
+        is_registered=True
+        
+        add_user(name, username,email,password,profile,is_registered, balance)
+
+
+
+            
 
     
 class MainWindow(QMainWindow):
@@ -121,6 +143,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = LoginWindow()
     sys.exit(app.exec_())
+    initialize_database()
 ########################################################################
 ## END===>
 ########################################################################  

@@ -12,8 +12,8 @@ def add_user(name, username,email,password_hash,profile=0, is_registered=True, b
     cursor=connection.cursor()
     
     cursor.execute('''
-        INSERT INTO users (name, username, email, password_hash, is_registered, proflie, balance)
-        VALUES (?, ?, ?, ?, ?, )
+        INSERT INTO users (name, username, email, password_hash, is_registered, profile, balance)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', (name, username, email, password_hash, is_registered, profile, balance))
     
     connection.commit()
