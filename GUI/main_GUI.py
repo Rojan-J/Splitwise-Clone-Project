@@ -53,7 +53,7 @@ class LoginWindow(QMainWindow):
 
     def open_interface_page(self):
         # Create an instance of the interface page window
-        self.interface_window = MainWindow()
+        self.interface_window = MainWindow(self.user)
         self.close()
 
     def sign_up(self):
@@ -123,6 +123,7 @@ class LoginWindow(QMainWindow):
         if balance_check:
             is_registered=True
             add_user(name, username,email,password,profile,is_registered, balance)
+            self.user = get_user_by_email(email, username)
             self.open_interface_page()
 
 
@@ -145,16 +146,18 @@ class LoginWindow(QMainWindow):
                 self.ui.label_14.setStyleSheet("color: red;")
             else:
                 self.ui.label_14.setText("")
+                self.user = user
                 self.open_interface_page()
 
 
 
     
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, user):
         QMainWindow.__init__(self)
         self.ui = InterfacePageUI()
         self.ui.setupUi(self)
+        self.user = user
 
 
         ########################################################################
@@ -168,6 +171,7 @@ class MainWindow(QMainWindow):
         ########################################################################
 
         self.show()
+        self.ui.NameProfile.setText(self.user[1])
         #CenterMenu Expanding
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.label_2.setText("Information"))
