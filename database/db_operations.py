@@ -19,18 +19,33 @@ def add_user(name, username,email,password_hash,profile=0, is_registered=True, b
     connection.commit()
     connection.close()
     
-    
-def get_user_by_email (email):
+def get_user_by_email (email, username):
     connection=get_connection()
     cursor=connection.cursor()
     cursor.execute('''
-        SELECT * FROM users WHERE email = ?
-    ''', (email,))
+        SELECT * FROM users WHERE email = ? or username = ?
+    ''', (email,username, ))
     
     #fetch the first matching row
     user=cursor.fetchone()
     connection.close()
     return user
+
+def get_all_usernames():
+    all_usernames = []
+
+    connection=get_connection()
+    cursor=connection.cursor()
+
+    # Execute the query to fetch all usernames
+    cursor.execute('SELECT username FROM users;')
+    usernames = cursor.fetchall()
+
+    for username in usernames:
+        all_usernames.append(username[0])
+    
+    connection.close()
+    return all_usernames
 
 
 def add_group(group_name):

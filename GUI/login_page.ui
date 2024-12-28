@@ -185,7 +185,7 @@ QLineEdit {
     <item>
      <widget class="QCustomQStackedWidget" name="LoginSignUp">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="LoginPage">
        <property name="sizePolicy">
@@ -235,7 +235,7 @@ QLineEdit {
                 </property>
                </widget>
               </item>
-              <item>
+              <item alignment="Qt::AlignHCenter">
                <widget class="QFrame" name="frame_18">
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
@@ -248,17 +248,19 @@ QLineEdit {
                   <number>9</number>
                  </property>
                  <item>
-                  <widget class="QWidget" name="widget" native="true">
+                  <widget class="QLabel" name="label_5">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_5">
+                   <property name="maximumSize">
+                    <size>
+                     <width>200</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="font">
                     <font>
                      <family>Swis721 Blk BT</family>
@@ -266,17 +268,23 @@ QLineEdit {
                     </font>
                    </property>
                    <property name="text">
-                    <string>Username:</string>
+                    <string>Username/Email:</string>
                    </property>
                   </widget>
                  </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_3">
+                 <item alignment="Qt::AlignLeft">
+                  <widget class="QLineEdit" name="NameLogin">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>200</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>0</height>
+                    </size>
                    </property>
                    <property name="font">
                     <font>
@@ -292,20 +300,10 @@ QLineEdit {
                    </property>
                   </widget>
                  </item>
-                 <item>
-                  <widget class="QWidget" name="widget_2" native="true">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                  </widget>
-                 </item>
                 </layout>
                </widget>
               </item>
-              <item>
+              <item alignment="Qt::AlignHCenter">
                <widget class="QFrame" name="frame_21">
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
@@ -317,18 +315,26 @@ QLineEdit {
                  <property name="leftMargin">
                   <number>9</number>
                  </property>
-                 <item>
-                  <widget class="QWidget" name="widget_3" native="true">
+                 <item alignment="Qt::AlignRight">
+                  <widget class="QLabel" name="label_6">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_6">
+                   <property name="minimumSize">
+                    <size>
+                     <width>105</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>178</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="font">
                     <font>
                      <family>Swis721 Blk BT</family>
@@ -338,25 +344,30 @@ QLineEdit {
                    <property name="text">
                     <string>Password:</string>
                    </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
                   </widget>
                  </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_4">
+                 <item alignment="Qt::AlignLeft">
+                  <widget class="QLineEdit" name="passwordLogin">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="font">
                     <font>
                      <family>Segoe UI Emoji</family>
                      <pointsize>10</pointsize>
                     </font>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QWidget" name="widget_4" native="true">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
                    </property>
                   </widget>
                  </item>
@@ -458,7 +469,7 @@ QLineEdit {
                           </font>
                          </property>
                          <property name="text">
-                          <string>Notification Messages</string>
+                          <string/>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -543,9 +554,9 @@ QLineEdit {
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>0</y>
+             <y>-255</y>
              <width>747</width>
-             <height>620</height>
+             <height>719</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -631,7 +642,7 @@ QLineEdit {
                      </font>
                     </property>
                     <property name="text">
-                     <string> Name:</string>
+                     <string> Name*:</string>
                     </property>
                    </widget>
                   </item>
@@ -663,7 +674,7 @@ QLineEdit {
                      </font>
                     </property>
                     <property name="text">
-                     <string>Email:</string>
+                     <string>Email*:</string>
                     </property>
                    </widget>
                   </item>
@@ -679,7 +690,7 @@ QLineEdit {
                      </font>
                     </property>
                     <property name="text">
-                     <string>Password:</string>
+                     <string>Password*:</string>
                     </property>
                    </widget>
                   </item>
@@ -770,9 +781,6 @@ QLineEdit {
                  </layout>
                 </widget>
                </item>
-               <item>
-                <widget class="QWidget" name="widget_8" native="true"/>
-               </item>
               </layout>
              </widget>
             </item>
@@ -788,6 +796,34 @@ QLineEdit {
                <property name="sizeConstraint">
                 <enum>QLayout::SetDefaultConstraint</enum>
                </property>
+               <item>
+                <widget class="QFrame" name="frame">
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_2">
+                  <item alignment="Qt::AlignHCenter">
+                   <widget class="QLabel" name="label">
+                    <property name="font">
+                     <font>
+                      <family>Swis721 Blk BT</family>
+                      <pointsize>10</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item alignment="Qt::AlignHCenter">
+                   <widget class="QTextBrowser" name="textBrowser"/>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
                <item alignment="Qt::AlignTop">
                 <widget class="QLabel" name="RecurrentNotice">
                  <property name="font">
