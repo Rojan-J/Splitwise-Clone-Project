@@ -45,6 +45,7 @@ class LoginWindow(QMainWindow):
         self.ui.setupUi(self)
         loadJsonStyle(self, self.ui, jsonFiles = ["style2.json"])
         self.show()
+        self.ui.passwordLogin.setEchoMode(QtWidgets.QLineEdit.Password)
         self.ui.loginBtn_2.clicked.connect(self.login)
         self.ui.SignUpBtn.clicked.connect(self.sign_up)
 

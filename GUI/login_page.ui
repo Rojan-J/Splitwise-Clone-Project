@@ -35,7 +35,10 @@
 QLineEdit {
     background-color: rgba(44, 49, 60, 180);
     color: white; 
-}</string>
+}
+QLineEdit, QTextEdit {
+        font-family:Swiss721 BT;
+    }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_10">
@@ -288,8 +291,8 @@ QLineEdit {
                    </property>
                    <property name="font">
                     <font>
-                     <family>Segoe UI Emoji</family>
-                     <pointsize>10</pointsize>
+                     <family>Swiss721 BT</family>
+                     <pointsize>11</pointsize>
                     </font>
                    </property>
                    <property name="styleSheet">
@@ -365,8 +368,8 @@ QLineEdit {
                    </property>
                    <property name="font">
                     <font>
-                     <family>Segoe UI Emoji</family>
-                     <pointsize>10</pointsize>
+                     <family>Swiss721 BT</family>
+                     <pointsize>11</pointsize>
                     </font>
                    </property>
                   </widget>
@@ -554,9 +557,9 @@ QLineEdit {
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>-255</y>
+             <y>-39</y>
              <width>747</width>
-             <height>719</height>
+             <height>729</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -647,7 +650,14 @@ QLineEdit {
                    </widget>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLineEdit" name="NameSignUp"/>
+                   <widget class="QLineEdit" name="NameSignUp">
+                    <property name="font">
+                     <font>
+                      <family>Swiss721 BT</family>
+                      <pointsize>12</pointsize>
+                     </font>
+                    </property>
+                   </widget>
                   </item>
                   <item row="2" column="0">
                    <widget class="QLabel" name="label_9">
@@ -658,12 +668,19 @@ QLineEdit {
                      </font>
                     </property>
                     <property name="text">
-                     <string>Username:</string>
+                     <string>Username*:</string>
                     </property>
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QLineEdit" name="UsernameSignUp"/>
+                   <widget class="QLineEdit" name="UsernameSignUp">
+                    <property name="font">
+                     <font>
+                      <family>Swiss721 BT</family>
+                      <pointsize>12</pointsize>
+                     </font>
+                    </property>
+                   </widget>
                   </item>
                   <item row="3" column="0">
                    <widget class="QLabel" name="label_10">
@@ -679,7 +696,14 @@ QLineEdit {
                    </widget>
                   </item>
                   <item row="3" column="1">
-                   <widget class="QLineEdit" name="EmailSignUp"/>
+                   <widget class="QLineEdit" name="EmailSignUp">
+                    <property name="font">
+                     <font>
+                      <family>Swiss721 BT</family>
+                      <pointsize>12</pointsize>
+                     </font>
+                    </property>
+                   </widget>
                   </item>
                   <item row="4" column="0">
                    <widget class="QLabel" name="label_12">
@@ -695,7 +719,14 @@ QLineEdit {
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QLineEdit" name="PasswordSignUp"/>
+                   <widget class="QLineEdit" name="PasswordSignUp">
+                    <property name="font">
+                     <font>
+                      <family>Swiss721 BT</family>
+                      <pointsize>12</pointsize>
+                     </font>
+                    </property>
+                   </widget>
                   </item>
                   <item row="5" column="0">
                    <widget class="QLabel" name="label_15">
@@ -711,7 +742,14 @@ QLineEdit {
                    </widget>
                   </item>
                   <item row="5" column="1">
-                   <widget class="QLineEdit" name="BalanceSignUp"/>
+                   <widget class="QLineEdit" name="BalanceSignUp">
+                    <property name="font">
+                     <font>
+                      <family>Swiss721 BT</family>
+                      <pointsize>12</pointsize>
+                     </font>
+                    </property>
+                   </widget>
                   </item>
                   <item row="6" column="0">
                    <widget class="QLabel" name="label_2">
