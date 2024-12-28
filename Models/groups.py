@@ -134,6 +134,24 @@ class Groups:
                 self.debts[(contributer, expense[1])]= {"capacity": portion, "flow": 0}
             else:
                 self.debts[(contributer, expense[1])]["capacity"] += portion
+                
+                
+                
+    def settle_debt(self,debtor,creditor,amount):
+        if(debtor,creditor) not in self.debts:     #check if debtor owes to creditor
+            return
+        
+        current_debt=self.debts[(debtor,creditor)]
+        if amount>current_debt["capacity"]-current_debt["flow"]:
+            print("Error: Amount exceeds the debt")
+            
+        current_debt["flow"]+=amount
+        
+        if current_debt["flow"]>=current_debt["capacity"]:
+            self.debts.pop((debtor,creditor))           
+            
+        
+            
 
 
 reset_expenses_for_testing = True
