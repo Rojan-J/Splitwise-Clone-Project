@@ -71,7 +71,13 @@ class Groups:
             connection.close()    
             
 
-    def add_expenses(self, expense, payer, contributors, category="General"):
+    def add_expenses(self, expense, payer, contributors, category="General", split_type="equally", proportions=None):
+        
+        #contributors is a list of users represented by their ids who are sharing the expense
+        #contributions is a list that hold each contributor's share
+        #contributor represents the user's id who contributed
+        #contribution represents the amount that the contributor has paid
+        
         self.expenses.append([expense, payer, contributors,category])
         
         connection = sqlite3.connect("database.db")
@@ -89,16 +95,27 @@ class Groups:
 
         print(f"Expense added with ID: {expense_id}")
         
-        for contributor in contributors:
+        contributions=[]
+        if split_type=="equally":
+            amount_per_user=expense/len(contributors)
+            contributions=[(contributor, amount_per_user) for contributor in contributors]
+            
+        elif split_type=="percentage":
+            if not proportions or len(proportions)!=len(contributors):
+                raise ValueError("proportionss must match the number of contributors for expense split.")
+            
+            contributions=[(contributor,expense*(percentage)) for contributor, percentage in zip(contributors, proportions)]
+            
+        for contributor,contribution in contributions:
             cursor.execute("""
                 INSERT INTO expense_user (expense_id, user_id, amount_contributed)
                 VALUES (?, ?, ?)
-            """, (expense_id, contributor, expense / len(contributors)))
+            """, (expense_id, contributor, contribution))
 
         connection.commit()
         connection.close()     
         
-        self.cal_debts()
+        self.cal_debts(contributions,payer)
         
     def get_expenses_by_category(self):
         
@@ -126,14 +143,14 @@ class Groups:
         return category_expenses
         
 
-    def cal_debts(self):
-        expense = self.expenses[-1]
-        portion = expense[0]/len(expense[2])
-        for contributer in expense[2]:
-            if (contributer, expense[1]) not in self.debts.keys():
-                self.debts[(contributer, expense[1])]= {"capacity": portion, "flow": 0}
+    def cal_debts(self,contributions,payer):
+        # expense = self.expenses[-1]
+        # portion = expense[0]/len(expense[2])
+        for contributor ,contribution in contributions:
+            if (contributor, payer) not in self.debts:
+                self.debts[(contributor, payer)]= {"capacity": contribution, "flow": 0}
             else:
-                self.debts[(contributer, expense[1])]["capacity"] += portion
+                self.debts[(contributor, payer)]["capacity"] += contribution
                 
                 
                 
@@ -185,7 +202,7 @@ def main():
     user = Users(email="rojan@gmail.com")
     print(user)
 
-    group.add_expenses(100, user.user_id, [user.user_id,2], category="Food")  # Rojan pays for all
+    group.add_expenses(100, user.user_id, [user.user_id,2], category="Food",split_type="percentage",proportions=[60,40])  # Rojan pays for all
 
     expense_report=group.get_expenses_by_category()
     print("expense by category:")
