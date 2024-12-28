@@ -40,20 +40,9 @@ class LoginWindow(QMainWindow):
         self.ui.setupUi(self)
         loadJsonStyle(self, self.ui, jsonFiles = ["style2.json"])
         self.show()
-        self.ui.loginBtn.clicked.connect(self.open_interface_page)  # Assuming the button is named "login_button"
-        self.ui.signupBtn.clicked.connect(self.sign_up)
+        self.ui.loginBtn_2.clicked.connect(self.open_interface_page)  # Assuming the button is named "login_button"
+        self.ui.SignUpBtn.clicked.connect(self.open_interface_page)
 
-    def sign_up(self):
-        if self.ui.loginTitle.text() == "Login:":
-            self.ui.loginTitle.setText( "ُSign Up:")
-            self.ui.noAccount.setText("Already have an account?")
-            self.ui.signupBtn.setText("Login")
-            self.ui.loginBtn.setText("Sign Up")
-        else:
-            self.ui.loginTitle.setText( "Login:")
-            self.ui.noAccount.setText("Don't have an account?")
-            self.ui.signupBtn.setText("Sign Up")
-            self.ui.loginBtn.setText("Login")
 
 
     def open_interface_page(self):
@@ -113,7 +102,14 @@ class MainWindow(QMainWindow):
         #NotificationExpanding
         self.ui.ClosePopUpBtn.clicked.connect(lambda: self.ui.popupNotificationContainer.collapseMenu())
 
+        self.ui.LogOutBtn.clicked.connect(self.logout)
+        self.ui.LogOutProfileBtn.clicked.connect(self.logout)
+        
 
+    def logout(self):
+        # Create an instance of the interface page window
+        self.interface_window = LoginWindow()
+        self.close()
 
 ########################################################################
 ## EXECUTE APP

@@ -8,11 +8,11 @@
 			"sizeGrip": "sizeGrip",
 			"navigation":[
 				{
-					"minimize":"minimizeBtn",
-					"close": "closeBtn",
+					"minimize": "minimizeBtn_3",
+					"close": "closeBtn_3",
 					"restore":[
 						{	
-							"buttonName": "restoreBtn",
+							"buttonName": "restoreBtn_3",
 							"normalIcon": "icons2/square.svg",
 							"maximizedIcon": "icons2/copy.svg"
 						}
@@ -22,5 +22,40 @@
 				}
 			]
 		}
-	]
+	],
+	"QCustomQStackedWidget":[
+		{
+			"name":"LoginSignUp",
+			"transitionAnimation":[
+				{
+					"fade":[
+						{
+							"active": true,
+							"duration":1000,
+							"easingCurve": "OutBack"
+						}
+					],
+					"slide":[
+						{
+							"active":true,
+							"duration": 1000,
+							"direction": "horizontal",
+							"easingCurve": "OutBack"
+						}
+					]
+				}
+			],
+			"navigation":[
+				{
+					"navigationButtons":[
+						{
+							"signupBtn_2": "SignupPage",
+							"LoginBtn": "LoginPage"
+
+						}
+					]
+				}
+			]
+		
+	}]
 }
