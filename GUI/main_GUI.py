@@ -29,6 +29,7 @@ ctypes.CDLL(cairo_path)
 from Custom_Widgets import *
 from PyQt5.QtWidgets import QApplication
 from PyQt5 import QtCore, QtGui, QtWidgets
+from ProfilePage import toggle_edit_mode_NameProfile
 
 ########################################################################
 ## MAIN WINDOW CLASS
@@ -45,6 +46,7 @@ class LoginWindow(QMainWindow):
         self.ui.setupUi(self)
         loadJsonStyle(self, self.ui, jsonFiles = ["style2.json"])
         self.show()
+        self.user = None
         self.ui.passwordLogin.setEchoMode(QtWidgets.QLineEdit.Password)
         self.ui.loginBtn_2.clicked.connect(self.login)
         self.ui.SignUpBtn.clicked.connect(self.sign_up)
@@ -204,6 +206,8 @@ class MainWindow(QMainWindow):
 
         self.ui.LogOutBtn_3.clicked.connect(self.logout)
         self.ui.LogOutProfileBtn.clicked.connect(self.logout)
+        edited = True
+        self.ui.EditProfileBtn.clicked.connect(lambda: toggle_edit_mode_NameProfile(self.ui, edited))
         
 
     def logout(self):
