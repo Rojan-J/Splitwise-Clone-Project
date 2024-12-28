@@ -62,7 +62,7 @@
 				"height": "parent"
 			}],
 			"expandedSize": [{
-				"width": 200,
+				"width": 250,
 				"height": "parent"
 			}],
 			"toggleButton": [{
@@ -137,7 +137,6 @@
 					"navigationButtons":[
 						{
 							"HomeBtn": "homePage",
-							"ReportsBtn": "reportPage",
 							"ReportsIcon" : "reportPage",
 							"reportsBtn" : "reportPage",
 							"GroupIcon": "GroupsPage",
@@ -159,7 +158,8 @@
 				{
 					"navigationButtons":[
 						{
-							"InfoBtn": "informationPage"							
+							"InfoBtn": "informationPage",
+							"DebtsBtn": "DebtsPage"							
 						}
 					]
 				}
@@ -190,8 +190,7 @@
 			{
 				"Buttons": [
 					"HomeBtn",
-					"ProfileBtn",
-					"ReportsBtn"
+					"ProfileBtn"
 				],
 				"ActiveButton": "HomeBtn",
 				"Style":[

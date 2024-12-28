@@ -71,6 +71,9 @@ class MainWindow(QMainWindow):
         self.show()
         #CenterMenu Expanding
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
+        self.ui.InfoBtn.clicked.connect(lambda: self.ui.label_2.setText("Information"))
+        self.ui.DebtsBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
+        self.ui.DebtsBtn.clicked.connect(lambda: self.ui.label_2.setText("Debts"))
 
         #RightMenuExpanding
         #Group Issues
@@ -102,7 +105,7 @@ class MainWindow(QMainWindow):
         #NotificationExpanding
         self.ui.ClosePopUpBtn.clicked.connect(lambda: self.ui.popupNotificationContainer.collapseMenu())
 
-        self.ui.LogOutBtn.clicked.connect(self.logout)
+        self.ui.LogOutBtn_3.clicked.connect(self.logout)
         self.ui.LogOutProfileBtn.clicked.connect(self.logout)
         
 
