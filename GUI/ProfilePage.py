@@ -19,6 +19,17 @@ def set_user(ui, user):
         profile = QtGui.QIcon(":/images/Layer 1.png")
         ui.PicProfile.setIcon(profile)
         ui.PicProfile.setIconSize(QtCore.QSize(90, 90))
+    
+    header = ui.tableWidget_2.horizontalHeader()
+    header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+
+    recurrents = get_recurrent_expense_by_username(user[2])
+    for expense in recurrents:
+        row_position = ui.tableWidget_2.rowCount()
+        ui.tableWidget_2.insertRow(row_position)
+        var_to_add = [expense[2], str(expense[5]), expense[4], expense[6]]
+        for col, value in enumerate(var_to_add):
+            ui.tableWidget_2.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
 
 def toggle_edit_mode_NameProfile(ui, edited, name):
         
@@ -178,4 +189,21 @@ def add_recurrent(ui, user):
          category = "General"
     if label != "" and amount != "" and days != "" and isfloat(amount) :
         add_recurrent_expense(username, user_id, label, amount, days, category)
+        var_to_add = [label, str(amount), days, category]
+        row_position = ui.tableWidget_2.rowCount()
+        ui.tableWidget_2.insertRow(row_position)
+        for col, value in enumerate(var_to_add):
+            ui.tableWidget_2.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
+
+        ui.LabelInput.setText("")
+        ui.AmountRExpenseInput.setText("")
+        for day in range(31):
+            ui.gridLayout_16.itemAt(day).widget().setChecked(False)
+        
+        for categoryBtnNo in range(6):
+            ui.gridLayout_17.itemAt(categoryBtnNo).widget().setChecked(False)
+
         ui.rightMenuContainer.collapseMenu()
+
+
+#def draw_recurrent_table(ui, user)

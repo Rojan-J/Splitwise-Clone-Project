@@ -213,4 +213,16 @@ def update_balance(user_name, balance):
     ''', (balance, user_name))
     connection.commit()
     connection.close()
+
+
+def get_recurrent_expense_by_username(username):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM recurrent_expenses WHERE username = ?
+    ''', (username, ))
     
+    #fetch the first matching row
+    recurrent=cursor.fetchall()
+    connection.close()
+    return recurrent

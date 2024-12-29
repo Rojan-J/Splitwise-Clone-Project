@@ -1471,12 +1471,17 @@ QCalendarWidget QToolButton:hover {
                              </property>
                              <column>
                               <property name="text">
+                               <string>Label</string>
+                              </property>
+                             </column>
+                             <column>
+                              <property name="text">
                                <string>Amount</string>
                               </property>
                              </column>
                              <column>
                               <property name="text">
-                               <string>TimeDuration</string>
+                               <string>Days of month</string>
                               </property>
                              </column>
                              <column>
@@ -4664,43 +4669,73 @@ QCalendarWidget QToolButton:hover {
                          <layout class="QGridLayout" name="gridLayout_17">
                           <item row="0" column="1">
                            <widget class="QRadioButton" name="radioButton_25">
+                            <property name="font">
+                             <font>
+                              <family>Swis721 Blk BT</family>
+                             </font>
+                            </property>
                             <property name="text">
-                             <string>RadioButton</string>
+                             <string>Health</string>
                             </property>
                            </widget>
                           </item>
                           <item row="1" column="1">
                            <widget class="QRadioButton" name="radioButton_26">
+                            <property name="font">
+                             <font>
+                              <family>Swis721 Blk BT</family>
+                             </font>
+                            </property>
                             <property name="text">
-                             <string>RadioButton</string>
+                             <string>Transport</string>
                             </property>
                            </widget>
                           </item>
                           <item row="1" column="2">
                            <widget class="QRadioButton" name="radioButton_27">
+                            <property name="font">
+                             <font>
+                              <family>Swis721 Blk BT</family>
+                             </font>
+                            </property>
                             <property name="text">
-                             <string>RadioButton</string>
+                             <string>etc.</string>
                             </property>
                            </widget>
                           </item>
                           <item row="0" column="2">
                            <widget class="QRadioButton" name="radioButton_28">
+                            <property name="font">
+                             <font>
+                              <family>Swis721 Blk BT</family>
+                             </font>
+                            </property>
                             <property name="text">
-                             <string>RadioButton</string>
+                             <string>Housing</string>
                             </property>
                            </widget>
                           </item>
                           <item row="1" column="0">
                            <widget class="QRadioButton" name="radioButton_29">
+                            <property name="font">
+                             <font>
+                              <family>Swis721 Blk BT</family>
+                             </font>
+                            </property>
                             <property name="text">
-                             <string>RadioButton</string>
+                             <string>Education/Entertainment</string>
                             </property>
                            </widget>
                           </item>
                           <item row="0" column="0">
                            <widget class="QRadioButton" name="radioButton_30">
+                            <property name="font">
+                             <font>
+                              <family>Swis721 Blk BT</family>
+                             </font>
+                            </property>
                             <property name="text">
-                             <string>RadioButton</string>
+                             <string>Food</string>
                             </property>
                            </widget>
                           </item>
