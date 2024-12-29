@@ -10,7 +10,6 @@ def set_user(ui, user):
     ui.UsernameProfile.setText(user[2])
     ui.EmailProfile.setText(user[3])
     ui.BalanceProfile.setText(str(user[-1]))
-    print(user[-2] == 0)
     if user[-2] == 0:
         profile = QtGui.QIcon(":/images/3135823.png")
         ui.PicProfile.setIcon(profile)
@@ -169,7 +168,6 @@ def isfloat(value):
         return False
 
 def add_recurrent(ui, user):
-    print(user)
     category = ""
     username = user[2]
     user_id = user[0]
@@ -186,7 +184,7 @@ def add_recurrent(ui, user):
         if categoryBtn.isChecked():
               category = categoryBtn.text()
     if category == "":
-         category = "General"
+         category = "etc."
     if label != "" and amount != "" and days != "" and isfloat(amount) :
         add_recurrent_expense(username, user_id, label, amount, days, category)
         var_to_add = [label, str(amount), days, category]
@@ -204,6 +202,16 @@ def add_recurrent(ui, user):
             ui.gridLayout_17.itemAt(categoryBtnNo).widget().setChecked(False)
 
         ui.rightMenuContainer.collapseMenu()
+    widgets = [ui.LabelLabel, ui.AmountRExpenseLabel, ui.DaysLabel, ui.CategoryLabel_5]
+    for widget, data in enumerate([label, amount, days, category]):
+        if data == "":
+            widgets[widget].setStyleSheet("color: red;")
+        else:
+            widgets[widget].setStyleSheet("color: white;")
+    if not isfloat(amount):
+        widgets[1].setStyleSheet("color: red;")
+    else:
+        widgets[1].setStyleSheet("color: white;")
 
 
 #def draw_recurrent_table(ui, user)
