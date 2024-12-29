@@ -172,7 +172,7 @@ class MainWindow(QMainWindow):
 
         self.show()
         set_user(self.ui, self.user)
-        
+
         #CenterMenu Expanding
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.label_2.setText("Information"))
@@ -216,6 +216,8 @@ class MainWindow(QMainWindow):
 
         balance_edited = True
         self.ui.BalanceEditBtn.clicked.connect(lambda: toggle_edit_Balance(self.ui, balance_edited, self.ui.BalanceProfile.text()))
+
+        self.ui.FinalAddRecurrentExpenseBtn.clicked.connect(lambda: add_recurrent(self.ui, self.user))
         
 
     def logout(self):

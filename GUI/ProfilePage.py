@@ -151,3 +151,19 @@ def toggle_edit_Balance(ui, edited, balance):
             ui.BalanceEditBtn.clicked.connect(lambda: toggle_edit_Balance(ui, edited, balance))
 
 
+def add_recurrent(ui, user):
+    username = user[2]
+    user_id = user[0]
+    label = ui.LabelInput.text()
+    amount = ui.AmountRExpenseInput.text()
+    days = []
+    for day in range(31):
+        dayCheck = ui.gridLayout_16.itemAt(day)
+        if dayCheck.isChecked():
+            days.append(dayCheck.text())
+    days = ",".join(days)
+    for categoryBtnNo in range(6):
+        categoryBtn = ui.gridLayout_17.itemAt(categoryBtnNo)
+        if categoryBtn.isChecked():
+              category = categoryBtn.text()
+    print(username, user_id, label, amount, days, category)

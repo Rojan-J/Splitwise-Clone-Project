@@ -1,7 +1,7 @@
 import sqlite3
 
 def initialize_database():
-    connection=sqlite3.connect("database.db")  #create database file
+    connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")  #create database file
 
     cursor=connection.cursor()  # to interact with the database
     
@@ -102,6 +102,22 @@ def initialize_database():
         )
     ''')
 
+    #Create Recurrnt Expenses for user
+
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS recurrent_expenses (
+            username TEXT NOT NULL,
+            user_id INTEGER,
+            label TEXT NOT NULL,
+            expense_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            days_of_month TEXT NOT NULL,
+            amount REAL NOT NULL,
+            category TEXT NOT NULL,
+            paid TEXT NOT NULL DEFAULT 'Paid',
+            FOREIGN KEY(username) REFERENCES users(username),
+            FOREIGN KEY(user_id) REFERENCES users(user_id)
+        )
+    ''')
 
 
 

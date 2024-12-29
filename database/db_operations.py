@@ -1,7 +1,7 @@
 import sqlite3
 
 def get_connection():
-    connection=sqlite3.connect("database.db")
+    connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")
 
     connection.execute("PRAGMA foreign_keys=ON")  #enable foreign key support
     
@@ -171,6 +171,16 @@ def add_debt(debtor_id,creditor_id,amount):
         INSERT INTO debts (debtor_id, creditor_id, amount)
         VALUES (?, ?, ?)
     ''', (debtor_id, creditor_id, amount))
+    connection.commit()
+    connection.close()
+
+def add_recurrent_expense(username, user_id, label, amount, days, category, paid = "Paid"):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        INSERT INTO recurrent_expenses (username, user_id, label, days_of_month, amount, category, paid)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    ''', (username, user_id, label, days, amount, category, paid))
     connection.commit()
     connection.close()
     
