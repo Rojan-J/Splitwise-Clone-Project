@@ -183,5 +183,24 @@ def update_debt_status(debt_id,status):
     ''', (status, debt_id))
     connection.commit()
     connection.close()
+
+def update_name(user_name, new_name):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        UPDATE users SET name = ? WHERE username = ?
+    ''', (new_name, user_name))
+    connection.commit()
+    connection.close()
+
     
+
+def update_balance(user_name, balance):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        UPDATE users SET balance = ? WHERE username = ?
+    ''', (balance, user_name))
+    connection.commit()
+    connection.close()
     

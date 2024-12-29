@@ -1,5 +1,25 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import sys
+import os
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+from db_operations import *
+
+def set_user(ui, user):
+    ui.NameProfile.setText(user[1])
+    ui.UsernameProfile.setText(user[2])
+    ui.EmailProfile.setText(user[3])
+    ui.BalanceProfile.setText(str(user[-1]))
+    print(user[-2] == 0)
+    if user[-2] == 0:
+        profile = QtGui.QIcon(":/images/3135823.png")
+        ui.PicProfile.setIcon(profile)
+
+    else:
+        profile = QtGui.QIcon(":/images/Layer 1.png")
+        ui.PicProfile.setIcon(profile)
+        ui.PicProfile.setIconSize(QtCore.QSize(90, 90))
+
 def toggle_edit_mode_NameProfile(ui, edited, name):
         
         if edited:
@@ -31,8 +51,10 @@ def toggle_edit_mode_NameProfile(ui, edited, name):
             ui.EditProfileBtn.clicked.connect(lambda: toggle_edit_mode_NameProfile(ui, edited, name))
 
         else:
+            user_name = ui.UsernameProfile.text()
             new_name = ui.NameLineEdit.text()
             name = " ".join(new_name.split()) if new_name.strip() else name  # Avoid empty names
+            update_name(user_name, name)
             ui.NameLineEdit.deleteLater()
             ui.NameProfile = QtWidgets.QLabel(ui.ProfileContainer)
             sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
@@ -90,16 +112,18 @@ def toggle_edit_Balance(ui, edited, balance):
             ui.BalanceEditBtn.clicked.connect(lambda: toggle_edit_Balance(ui, edited, balance))
 
         else:
+            user_name = ui.UsernameProfile.text()
             balance_check = False
             new_balance = ui.BalanceLineEdit.text()
             if new_balance != "":
                 try:
-                    int_balance = int(new_balance)
+                    new_balance = float(new_balance)
                     balance_check = True
                 except:
                     balance_check = False
                 balance = new_balance if balance_check else balance
 
+            update_balance(user_name, float(balance))
             ui.BalanceLineEdit.deleteLater()
             ui.BalanceProfile = QtWidgets.QLabel(ui.frame_52)
             font = QtGui.QFont()
@@ -108,9 +132,9 @@ def toggle_edit_Balance(ui, edited, balance):
             ui.BalanceProfile.setFont(font)
             ui.BalanceProfile.setObjectName("BalanceProfile")
             ui.verticalLayout_90.addWidget(ui.BalanceProfile)
-            ui.BalanceProfile.setText(balance)
+            ui.BalanceProfile.setText(str(balance))
             # Switch back to display mode
-            ui.BalanceProfile.setText(balance)
+            ui.BalanceProfile.setText(str(balance))
 
             ui.BalanceEditBtn.deleteLater()
             ui.BalanceEditBtn = QtWidgets.QPushButton(ui.ProfileeInformations)

@@ -171,7 +171,8 @@ class MainWindow(QMainWindow):
         ########################################################################
 
         self.show()
-        self.ui.NameProfile.setText(self.user[1])
+        set_user(self.ui, self.user)
+        
         #CenterMenu Expanding
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.label_2.setText("Information"))
