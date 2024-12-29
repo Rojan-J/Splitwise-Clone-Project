@@ -29,7 +29,7 @@ ctypes.CDLL(cairo_path)
 from Custom_Widgets import *
 from PyQt5.QtWidgets import QApplication
 from PyQt5 import QtCore, QtGui, QtWidgets
-from ProfilePage import toggle_edit_mode_NameProfile
+from ProfilePage import *
 
 ########################################################################
 ## MAIN WINDOW CLASS
@@ -206,12 +206,15 @@ class MainWindow(QMainWindow):
         self.ui.AddRExpenseBtn.clicked.connect(lambda: self.ui.label_7.setText("New Recurrent Expense"))
 
         #NotificationExpanding
-        self.ui.ClosePopUpBtn.clicked.connect(lambda: self.ui.popupNotificationContainer.collapseMenu())
+        self.ui.ClosePopUpBtn.clicked.connect(lambda: self.ui.popupNotificationContainer.collapseMenu()) 
 
         self.ui.LogOutBtn_3.clicked.connect(self.logout)
         self.ui.LogOutProfileBtn.clicked.connect(self.logout)
-        edited = True
-        self.ui.EditProfileBtn.clicked.connect(lambda: toggle_edit_mode_NameProfile(self.ui, edited))
+        name_edited = True
+        self.ui.EditProfileBtn.clicked.connect(lambda: toggle_edit_mode_NameProfile(self.ui, name_edited, self.ui.NameProfile.text()))
+
+        balance_edited = True
+        self.ui.BalanceEditBtn.clicked.connect(lambda: toggle_edit_Balance(self.ui, balance_edited, self.ui.BalanceProfile.text()))
         
 
     def logout(self):
