@@ -1292,7 +1292,7 @@ QCalendarWidget QToolButton:hover {
                                  </font>
                                 </property>
                                 <property name="text">
-                                 <string>niloofar_torki</string>
+                                 <string/>
                                 </property>
                                </widget>
                               </item>

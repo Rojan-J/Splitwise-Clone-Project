@@ -150,20 +150,32 @@ def toggle_edit_Balance(ui, edited, balance):
             edited = True
             ui.BalanceEditBtn.clicked.connect(lambda: toggle_edit_Balance(ui, edited, balance))
 
+def isfloat(value):
+    try:
+        float(value)  
+        return True
+    except:  
+        return False
 
 def add_recurrent(ui, user):
+    print(user)
+    category = ""
     username = user[2]
     user_id = user[0]
     label = ui.LabelInput.text()
     amount = ui.AmountRExpenseInput.text()
     days = []
     for day in range(31):
-        dayCheck = ui.gridLayout_16.itemAt(day)
+        dayCheck = ui.gridLayout_16.itemAt(day).widget()
         if dayCheck.isChecked():
             days.append(dayCheck.text())
     days = ",".join(days)
     for categoryBtnNo in range(6):
-        categoryBtn = ui.gridLayout_17.itemAt(categoryBtnNo)
+        categoryBtn = ui.gridLayout_17.itemAt(categoryBtnNo).widget()
         if categoryBtn.isChecked():
               category = categoryBtn.text()
-    print(username, user_id, label, amount, days, category)
+    if category == "":
+         category = "General"
+    if label != "" and amount != "" and days != "" and isfloat(amount) :
+        add_recurrent_expense(username, user_id, label, amount, days, category)
+        ui.rightMenuContainer.collapseMenu()
