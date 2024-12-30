@@ -221,6 +221,7 @@ class MainWindow(QMainWindow):
         self.ui.FinalAddRecurrentExpenseBtn.clicked.connect(lambda: add_recurrent(self.ui, self.user))
 
         self.ui.FinalAddGrpBtn.clicked.connect(lambda: create_group(self.ui, self.user))
+        self.ui.GroupIcon.clicked.connect(lambda: show_all_existing_groups(self.ui, self.user))
         
 
     def logout(self):

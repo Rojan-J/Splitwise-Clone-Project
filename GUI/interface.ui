@@ -1588,292 +1588,26 @@ QCalendarWidget QToolButton:hover {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>228</width>
-                         <height>252</height>
+                         <width>465</width>
+                         <height>496</height>
                         </rect>
                        </property>
                        <layout class="QVBoxLayout" name="verticalLayout_13">
                         <item>
                          <widget class="QWidget" name="GroupsGrid" native="true">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
                           <property name="minimumSize">
                            <size>
                             <width>0</width>
                             <height>0</height>
                            </size>
                           </property>
-                          <layout class="QGridLayout" name="gridLayout_4">
-                           <item row="0" column="0">
-                            <widget class="QWidget" name="Grp1" native="true">
-                             <layout class="QHBoxLayout" name="horizontalLayout_22">
-                              <item>
-                               <widget class="QGroupBox" name="groupBox">
-                                <property name="title">
-                                 <string/>
-                                </property>
-                                <layout class="QVBoxLayout" name="verticalLayout_20">
-                                 <item alignment="Qt::AlignHCenter">
-                                  <widget class="QLabel" name="label_4">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                 <item>
-                                  <widget class="QPushButton" name="Grp1Btn">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                   <property name="icon">
-                                    <iconset resource="resource2.qrc">
-                                     <normaloff>:/icons2/icons2/log-in.svg</normaloff>:/icons2/icons2/log-in.svg</iconset>
-                                   </property>
-                                   <property name="iconSize">
-                                    <size>
-                                     <width>24</width>
-                                     <height>24</height>
-                                    </size>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                </layout>
-                               </widget>
-                              </item>
-                             </layout>
-                            </widget>
-                           </item>
-                           <item row="0" column="1">
-                            <widget class="QWidget" name="Grp2" native="true">
-                             <layout class="QHBoxLayout" name="horizontalLayout_21">
-                              <item>
-                               <widget class="QGroupBox" name="groupBox_2">
-                                <property name="title">
-                                 <string/>
-                                </property>
-                                <layout class="QVBoxLayout" name="verticalLayout_22">
-                                 <item alignment="Qt::AlignHCenter">
-                                  <widget class="QLabel" name="label_21">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                 <item>
-                                  <widget class="QPushButton" name="pushButton_4">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                </layout>
-                               </widget>
-                              </item>
-                             </layout>
-                            </widget>
-                           </item>
-                           <item row="0" column="2">
-                            <widget class="QWidget" name="Grp3" native="true">
-                             <layout class="QHBoxLayout" name="horizontalLayout_20">
-                              <item>
-                               <widget class="QGroupBox" name="groupBox_3">
-                                <property name="title">
-                                 <string/>
-                                </property>
-                                <layout class="QVBoxLayout" name="verticalLayout_23">
-                                 <item alignment="Qt::AlignHCenter">
-                                  <widget class="QLabel" name="label_17">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                 <item>
-                                  <widget class="QPushButton" name="pushButton_5">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                </layout>
-                               </widget>
-                              </item>
-                             </layout>
-                            </widget>
-                           </item>
-                           <item row="1" column="0">
-                            <widget class="QWidget" name="Grp4" native="true">
-                             <layout class="QHBoxLayout" name="horizontalLayout_17">
-                              <item>
-                               <widget class="QGroupBox" name="groupBox_4">
-                                <property name="title">
-                                 <string/>
-                                </property>
-                                <layout class="QVBoxLayout" name="verticalLayout_24">
-                                 <item alignment="Qt::AlignHCenter">
-                                  <widget class="QLabel" name="label_9">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                 <item>
-                                  <widget class="QPushButton" name="pushButton_6">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                </layout>
-                               </widget>
-                              </item>
-                             </layout>
-                            </widget>
-                           </item>
-                           <item row="1" column="1">
-                            <widget class="QWidget" name="Grp5" native="true">
-                             <layout class="QHBoxLayout" name="horizontalLayout_18">
-                              <item>
-                               <widget class="QGroupBox" name="groupBox_5">
-                                <property name="title">
-                                 <string/>
-                                </property>
-                                <layout class="QVBoxLayout" name="verticalLayout_25">
-                                 <item alignment="Qt::AlignHCenter">
-                                  <widget class="QLabel" name="label_11">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                 <item>
-                                  <widget class="QPushButton" name="pushButton_7">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                </layout>
-                               </widget>
-                              </item>
-                             </layout>
-                            </widget>
-                           </item>
-                           <item row="1" column="2">
-                            <widget class="QWidget" name="Grp6" native="true">
-                             <layout class="QHBoxLayout" name="horizontalLayout_19">
-                              <item>
-                               <widget class="QGroupBox" name="groupBox_6">
-                                <property name="title">
-                                 <string/>
-                                </property>
-                                <layout class="QVBoxLayout" name="verticalLayout_26">
-                                 <item alignment="Qt::AlignHCenter">
-                                  <widget class="QLabel" name="label_18">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                 <item>
-                                  <widget class="QPushButton" name="pushButton_8">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                </layout>
-                               </widget>
-                              </item>
-                             </layout>
-                            </widget>
-                           </item>
-                           <item row="2" column="0">
-                            <widget class="QWidget" name="Grp7" native="true">
-                             <layout class="QHBoxLayout" name="horizontalLayout_16">
-                              <item>
-                               <widget class="QGroupBox" name="groupBox_7">
-                                <property name="title">
-                                 <string/>
-                                </property>
-                                <layout class="QVBoxLayout" name="verticalLayout_27">
-                                 <item alignment="Qt::AlignHCenter">
-                                  <widget class="QLabel" name="label_10">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                 <item>
-                                  <widget class="QPushButton" name="pushButton_9">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                </layout>
-                               </widget>
-                              </item>
-                             </layout>
-                            </widget>
-                           </item>
-                           <item row="2" column="1">
-                            <widget class="QWidget" name="Grp8" native="true">
-                             <layout class="QHBoxLayout" name="horizontalLayout_15">
-                              <item>
-                               <widget class="QGroupBox" name="groupBox_8">
-                                <property name="title">
-                                 <string/>
-                                </property>
-                                <layout class="QVBoxLayout" name="verticalLayout_28">
-                                 <item alignment="Qt::AlignHCenter">
-                                  <widget class="QLabel" name="label_20">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                 <item>
-                                  <widget class="QPushButton" name="pushButton_10">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                </layout>
-                               </widget>
-                              </item>
-                             </layout>
-                            </widget>
-                           </item>
-                           <item row="2" column="2">
-                            <widget class="QWidget" name="Grp9" native="true">
-                             <layout class="QHBoxLayout" name="horizontalLayout_14">
-                              <item>
-                               <widget class="QGroupBox" name="groupBox_9">
-                                <property name="title">
-                                 <string/>
-                                </property>
-                                <layout class="QVBoxLayout" name="verticalLayout_29">
-                                 <item alignment="Qt::AlignHCenter">
-                                  <widget class="QLabel" name="label_19">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                 <item>
-                                  <widget class="QPushButton" name="pushButton_11">
-                                   <property name="text">
-                                    <string/>
-                                   </property>
-                                  </widget>
-                                 </item>
-                                </layout>
-                               </widget>
-                              </item>
-                             </layout>
-                            </widget>
-                           </item>
-                          </layout>
+                          <layout class="QVBoxLayout" name="verticalLayout_20"/>
                          </widget>
                         </item>
                        </layout>
@@ -1930,7 +1664,7 @@ QCalendarWidget QToolButton:hover {
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>415</width>
+                      <width>466</width>
                       <height>843</height>
                      </rect>
                     </property>
@@ -2585,7 +2319,7 @@ QCalendarWidget QToolButton:hover {
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>301</width>
+                      <width>466</width>
                       <height>618</height>
                      </rect>
                     </property>
@@ -3038,7 +2772,7 @@ QCalendarWidget QToolButton:hover {
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>401</width>
+                      <width>466</width>
                       <height>1218</height>
                      </rect>
                     </property>
@@ -3242,8 +2976,8 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>87</width>
-                                <height>87</height>
+                                <width>412</width>
+                                <height>225</height>
                                </rect>
                               </property>
                               <layout class="QVBoxLayout" name="verticalLayout_37">
@@ -3277,8 +3011,8 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>87</width>
-                                <height>87</height>
+                                <width>412</width>
+                                <height>225</height>
                                </rect>
                               </property>
                               <layout class="QVBoxLayout" name="verticalLayout_35">
@@ -3638,7 +3372,7 @@ QCalendarWidget QToolButton:hover {
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>3</number>
+                   <number>2</number>
                   </property>
                   <widget class="QWidget" name="AddNewMemberPage">
                    <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -3652,8 +3386,8 @@ QCalendarWidget QToolButton:hover {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>262</width>
-                         <height>214</height>
+                         <width>396</width>
+                         <height>496</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_56">
@@ -3733,8 +3467,8 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>156</width>
-                                <height>50</height>
+                                <width>360</width>
+                                <height>347</height>
                                </rect>
                               </property>
                               <layout class="QGridLayout" name="gridLayout_5">
@@ -3814,8 +3548,8 @@ QCalendarWidget QToolButton:hover {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>208</width>
-                         <height>454</height>
+                         <width>396</width>
+                         <height>496</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_33">
@@ -4783,7 +4517,7 @@ QCalendarWidget QToolButton:hover {
                          <x>0</x>
                          <y>0</y>
                          <width>384</width>
-                         <height>698</height>
+                         <height>702</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_23">
@@ -4898,8 +4632,8 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>156</width>
-                                <height>50</height>
+                                <width>348</width>
+                                <height>69</height>
                                </rect>
                               </property>
                               <layout class="QGridLayout" name="gridLayout_3">
@@ -5103,7 +4837,7 @@ QCalendarWidget QToolButton:hover {
                          <x>0</x>
                          <y>0</y>
                          <width>384</width>
-                         <height>698</height>
+                         <height>702</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_41">
@@ -5218,8 +4952,8 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>123</width>
-                                <height>31</height>
+                                <width>348</width>
+                                <height>69</height>
                                </rect>
                               </property>
                               <layout class="QGridLayout" name="gridLayout_12">
