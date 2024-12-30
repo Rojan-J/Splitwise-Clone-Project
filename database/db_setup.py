@@ -23,7 +23,8 @@ def initialize_database():
             password_hash TEXT NOT NULL,
             is_registered BOOLEAN DEFAULT TRUE,
             profile INTEGER DEFAULT 0,
-            balance REAL DEFAULT 0
+            balance REAL DEFAULT 0,
+            temp BOOLEAN DEFAULT FALSE
  
         )
     ''')
@@ -33,7 +34,8 @@ def initialize_database():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS groups (
             group_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            group_name TEXT NOT NULL
+            group_name TEXT NOT NULL,
+            group_owner TEXT NOT NULL
         )
     ''')
 
@@ -42,46 +44,48 @@ def initialize_database():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS user_group (
             user_id INTEGER,
-            temp_user_id INTEGER,
-            group_id INTEGER,
-            temp_memmber_name TEXT,
-            temp_member_email TEXT,
+            username TEXT NOT NULL,
+            group_id INTEGER ,
+            group_name TEXT NOT NULL,
             FOREIGN KEY(user_id) REFERENCES users(user_id),
-            FOREIGN KEY(group_id) REFERENCES groups(group_id),
-            PRIMARY KEY(user_id, group_id),
-            UNIQUE(temp_user_id, group_id)  
+            
+            PRIMARY KEY(user_id, group_id)
+
         )
     ''')
-
-    # Create expenses table
+     # Create expenses table
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS expenses (
+        CREATE TABLE IF NOT EXISTS group_expenses (
             expense_id INTEGER PRIMARY KEY AUTOINCREMENT,
             group_id INTEGER,
-            payer_id INTEGER,
+            groupname TEXT NOT NULL,
+            payername INTEGER,
+            contributers TEXT NOT NULL,
             amount REAL NOT NULL,
-            category TEXT NOT NULL DEFAULT 'General',  -- Added category column,
+            category TEXT NOT NULL DEFAULT 'etc.',  -- Added category column,
             date TEXT NOT NULL,
             description TEXT,
-            FOREIGN KEY(group_id) REFERENCES groups(group_id),
-            FOREIGN KEY(payer_id) REFERENCES users(user_id)
+            split_type TEXT DEFAULT 'equally',
+            proportions TEXT,
+            shares TEXT,
+            FOREIGN KEY(group_id) REFERENCES groups(group_id)
+
         )
     ''')
-
 
     # Create expense-user relationship table (for tracking contributions)
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS expense_user (
             expense_id INTEGER,
-            user_id INTEGER,
-            temp_user_id INTEGER,
+            total_expense REAL NOT NULL,
+            username TEXT NOT NULL,
             amount_contributed REAL NOT NULL,
             split_proportion REAL,  -- Add this column,
+            for_what TEXT NOT NULL,
+            name TEXT NOT NULL,
             share REAL,  -- Share for share-based splits,
-            FOREIGN KEY(expense_id) REFERENCES expenses(expense_id),
-            FOREIGN KEY(user_id) REFERENCES users(user_id),
-            PRIMARY KEY(expense_id, user_id),
-            UNIQUE(temp_user_id, expense_id)
+            FOREIGN KEY(expense_id) REFERENCES group_expenses(expense_id),
+            FOREIGN KEY(username) REFERENCES users(username)
         )
     ''')
 

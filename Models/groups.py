@@ -3,94 +3,103 @@ from datetime import date
 
 from users import Users
 
+import sys
+import os
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+from db_operations import *
+
 class Groups:
-    def __init__(self, group_name):
+    def __init__(self, group_name, group_owner, expenses = [], members = dict(), debts = dict()):
         self.group_name = group_name
-        self.group_id=None
-        self.members = dict()
-        self.expenses = []
-        self.debts =dict()
-        
+        self.group_id = None
+        self.members = members
+        self.expenses = expenses
+        self.debts = debts
+        self.group_owner = group_owner
         self.load_from_database()
+
         
     def load_from_database(self):
-        connection=sqlite3.connect("database.db")
+        connection=get_connection()
         cursor=connection.cursor()
         
-        cursor.execute("SELECT group_id FROM groups WHERE group_name = ?", (self.group_name,))
+        cursor.execute("SELECT group_id FROM groups WHERE group_name = ? and group_owner = ?", (self.group_name, self.group_owner, ))
         group = cursor.fetchone()
         
         #check if group exists and fetch members of the group
         if group:
-            self.group_id = group[0]
+            self.group_id  =group[0]
+            cursor.execute("""
+                SELECT u.username, u.email 
+                FROM users u
+                JOIN user_group ug ON u.username = ug.username
+                WHERE ug.group_name = ?
+            """, (self.group_name,))
+            members = cursor.fetchall()
+            
+            for member in members:
+                self.members[member[0]] = member[1]  #name=key, email=value
+            
+            all_expenses  =get_group_expenses_by_group_id(self.group_id)
+            for expense in all_expenses:
+                self.expenses.append([expense[5], expense[3], expense[4], expense[7], expense[6], expense[8], expense[9], expense[10], expense[11]])
 
         else:
-            cursor.execute("INSERT INTO groups (group_name) VALUES (?)", (self.group_name,))
+            cursor.execute("INSERT INTO groups (group_name, group_owner) VALUES (?, ?)", (self.group_name, self.group_owner, ))
+            
             self.group_id = cursor.lastrowid
             print(f"Group '{self.group_name}' created with group_id: {self.group_id}")
-
-            
-        cursor.execute("""
-            SELECT u.user_id, u.username, u.email 
-            FROM users u
-            JOIN user_group ug ON u.user_id = ug.user_id
-            WHERE ug.group_id = ?
-        """, (self.group_id,))
-        members = cursor.fetchall()
-        
-        for member in members:
-            self.members[member[1]] = member[2]  #name=key, email=value
-        
+        connection.commit()
         connection.close()
 
         
         
         
 
-    def add_members(self, name, email):
+    def add_members(self, name, email, username):
         if name not in self.members:
             self.members[name] = email
             
-            connection=sqlite3.connect("database.db")
+            connection=get_connection()
             cursor=connection.cursor()
             
             # check if user already exists
-            cursor.execute("SELECT user_id FROM users WHERE email = ?", (email,))
-            user = cursor.fetchone()
-
+            user = get_user_by_email (email, username)
             if user:
                 user_id = user[0]
             else:
-                cursor.execute("INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)", 
-               (name, email, "placeholder_hash"))
-                user_id = cursor.lastrowid
+                add_user(name, username, email, "DefaultPass0", 0, True, 0, True)
+                cursor.execute("SELECT user_id FROM users WHERE email = ? or username = ?", (email, username, ))
+                user = cursor.fetchone()
+                user_id = user[0]
             
             #add member to the group
-            cursor.execute("INSERT INTO user_group (user_id, group_id) VALUES (?, ?)", (user_id, self.group_id))
+            print_table_columns("user_group")
+            cursor.execute("INSERT INTO user_group (user_id, username, group_id, group_name) VALUES (?, ?, ?, ?)", (user_id, username, self.group_id, self.group_name))
             connection.commit()
             connection.close()    
             
 
-    def add_expenses(self, expense, payer, contributors, category="General",description=None, split_type="equally", proportions=None, shares=None):
+    def add_expenses(self, expense, payer, contributors, expense_date = date.today(), category="etc.",description=None, split_type="equally", proportions=None, shares=None):
         
         #contributors is a list of users represented by their ids who are sharing the expense
         #contributions is a list that hold each contributor's share
         #contributor represents the user's id who contributed
         #contribution represents the amount that the contributor has paid
         
-        self.expenses.append([expense, payer, contributors,category])
+        self.expenses.append([expense, payer, contributors, expense_date, category, description, split_type, proportions, shares])
         
-        connection = sqlite3.connect("database.db")
+        connection = get_connection()
         cursor = connection.cursor()
 
         #check if expenses are added correctly:
-        print(f"Adding expense: group_id={self.group_id}, payer_id={payer}, amount={expense}, category={category}, date={date.today()}")
+        print(f"Adding expense: group_id={self.group_id}, payer_id={payer}, amount={expense}, category={category}, date={expense_date}")
 
         # add expense
         cursor.execute("""
-            INSERT INTO expenses (group_id, payer_id, amount, category, date, description, split_type) 
-            VALUES (?, ?, ?, ?, date('now'),?,?)
-        """, (self.group_id, payer, expense, category, description , split_type))
+            INSERT INTO group_expenses (group_id,groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares) 
+            VALUES (?, ?, ?, ?, ?,?,?, ?, ?, ?, ?)
+        """, (self.group_id, self.group_name, payer, ",".join(contributors), expense, category, str(expense_date), description , split_type, proportions, shares))
         expense_id = cursor.lastrowid
 
         print(f"Expense added with ID: {expense_id}")
@@ -118,29 +127,29 @@ class Groups:
             proportion=contribution/expense
                 
             cursor.execute("""
-                INSERT INTO expense_user (expense_id, user_id, amount_contributed,split_proportion)
-                VALUES (?, ?, ?,?)
-            """, (expense_id, contributor, contribution,proportion))
+                INSERT INTO expense_user (expense_id, total_expense,  username, amount_contributed, split_proportion, for_what, name)
+                VALUES (?, ?, ?,?,?, "group", ?)
+            """, (expense_id, expense, contributor, contribution, proportion, self.group_name))
 
         connection.commit()
         connection.close()     
         
-        self.cal_debts(contributions,payer)
+
         
     def get_expenses_by_category(self):
         
         category_expenses={}
-        connection=sqlite3.connect("database.db")
+        connection=get_connection()
         cursor=connection.cursor()
         
         print(f"Retrieving expenses for group_id={self.group_id} and categorizing them.")
        
         cursor.execute("""
             SELECT category, SUM(amount)
-            FROM expenses
-            WHERE group_id = ?
+            FROM group_expenses
+            WHERE group_id = ? or groupname = ?
             GROUP BY category
-        """, (self.group_id,))
+        """, (self.group_id, self.group_name,))
         
         expense_by_category=cursor.fetchall()
         print("Expenses retrieved:", expense_by_category)
@@ -151,11 +160,29 @@ class Groups:
         
         connection.close()
         return category_expenses
+    
+    def get_total_expenses_of_group(self):
+
+        connection=get_connection()
+        cursor=connection.cursor()
+        
+        print(f"Retrieving expenses for group_id={self.group_id} and categorizing them.")
+       
+        cursor.execute("""
+            SELECT SUM(amount)
+            FROM group_expenses
+            WHERE group_id = ? AND groupname = ?
+        """, (self.group_id, self.group_name,))
+        
+        total_expenses=cursor.fetchone()
+        
+        
+        connection.close()
+        return total_expenses
         
 
     def cal_debts(self,contributions,payer):
-        # expense = self.expenses[-1]
-        # portion = expense[0]/len(expense[2])
+
         for contributor ,contribution in contributions:
             if (contributor, payer) not in self.debts:
                 self.debts[(contributor, payer)]= {"capacity": contribution, "flow": 0}
@@ -175,70 +202,23 @@ class Groups:
         current_debt["flow"]+=amount
         
         if current_debt["flow"]>=current_debt["capacity"]:
-            self.debts.pop((debtor,creditor))           
-            
-        
-            
+            self.debts.pop((debtor,creditor))
 
-
-reset_expenses_for_testing = True
-
-
-def clear_expenses(group_id):
-    if not reset_expenses_for_testing:
-        print("test mode is off- skipping clearing expenses")
-        return
+def print_table_columns(table_name):
+    connection = get_connection()
+    cursor = connection.cursor()
     
-    connection=sqlite3.connect("database.db")
-    cursor=connection.cursor()
+    # Query the table's metadata
+    cursor.execute(f"PRAGMA table_info({table_name})")
+    columns = cursor.fetchall()
     
-    cursor.execute("DELETE FROM expense_user WHERE expense_id IN (SELECT expense_id FROM expenses WHERE group_id = ?)", (group_id,))
-    cursor.execute("DELETE FROM expenses WHERE group_id = ?", (group_id,))
+    print(f"Columns in the table '{table_name}':")
+    for column in columns:
+        print(f"Column Name: {column[1]}, Data Type: {column[2]}")
     
-    connection.commit()
     connection.close()
-    print(f"Cleared expenses for group_id={group_id}.")
 
-#test the database/ user, group connection
-
-def main():
-    group = Groups("Food")
     
-    clear_expenses(group.group_id)
-    group.add_members("Rojan", "rojan@gmail.com")
-    group.add_members("Niloo", "niloo@gmail.com.com")
-
-
-    user = Users(email="rojan@gmail.com")
-    print(user)
-
-    group.add_expenses(100, user.user_id, [user.user_id,2], category="Food",split_type="percentage",proportions=[60,40])  # Rojan pays for all
-
-    expense_report=group.get_expenses_by_category()
-    print("expense by category:")
-    print("Expenses by category:")
-    category_expenses = group.get_expenses_by_category()
-    
-    if category_expenses:
-        for category, total_amount in category_expenses.items():
-            print(f"  {category}: {total_amount}")
-    else:
-        print("No expenses by category found.")
-
-# def update_balance(user_id, new_balance):
-#     connection = sqlite3.connect("database.db")
-#     cursor = connection.cursor()
-
-#     # Update the balance for the given user
-#     cursor.execute("UPDATE users SET balance = ? WHERE user_id = ?", (new_balance, user_id))
-
-#     connection.commit()
-#     connection.close()
-
-# # Example usage: update Rojan's balance to 50
-# update_balance(1, 50.0)
-
-if __name__ == "__main__":
-    main()
+            
 
 

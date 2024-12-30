@@ -3,14 +3,16 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 import os
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+
 from db_operations import *
+
 
 def set_user(ui, user):
     ui.NameProfile.setText(user[1])
     ui.UsernameProfile.setText(user[2])
     ui.EmailProfile.setText(user[3])
-    ui.BalanceProfile.setText(str(user[-1]))
-    if user[-2] == 0:
+    ui.BalanceProfile.setText(str(user[-2]))
+    if user[-3] == 0:
         profile = QtGui.QIcon(":/images/3135823.png")
         ui.PicProfile.setIcon(profile)
 

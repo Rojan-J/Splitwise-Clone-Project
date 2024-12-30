@@ -7,14 +7,14 @@ def get_connection():
     
     return connection
 
-def add_user(name, username,email,password_hash,profile=0, is_registered=True, balance=0):
+def add_user(name, username,email,password_hash,profile=0, is_registered=True, balance=0, temp = False):
     connection=get_connection()
     cursor=connection.cursor()
     
     cursor.execute('''
-        INSERT INTO users (name, username, email, password_hash, is_registered, profile, balance)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    ''', (name, username, email, password_hash, is_registered, profile, balance))
+        INSERT INTO users (name, username, email, password_hash, is_registered, profile, balance, temp)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (name, username, email, password_hash, is_registered, profile, balance, temp))
     
     connection.commit()
     connection.close()
@@ -67,13 +67,13 @@ def get_all_groups():
     connection.close()
     return groups
 
-def add_user_to_group(user_id,group_id):
+def add_user_to_group(user_id,username, group_id, groupname):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
-        INSERT INTO user_group (user_id, group_id)
-        VALUES (?, ?)
-    ''', (user_id, group_id))
+        INSERT INTO user_group (user_id,username, group_id, groupname)
+        VALUES (?, ?, ?, ?)
+    ''', (user_id,username, group_id, groupname))
     connection.commit()
     connection.close()
     
@@ -89,29 +89,53 @@ def add_temp_user_to_group(temp_user_id, group_id, temp_member_name, temp_member
     
     
     
-def add_expanse(group_id,payer_id,amount,category,date,description=None):
+def add_expanse(group_id, groupname, payername, contributers, amount, category, date, description=None, split_type = "equally", proportions = None, shares = None):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
-        INSERT INTO expenses (group_id, payer_id, amount, category, date, description)
-        VALUES (?, ?, ?, ?, ?, ?)
-    ''', (group_id, payer_id, amount, category, date, description))
+        INSERT INTO group_expenses (group_id,groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (group_id, groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares))
     connection.commit()
     connection.close()
     
 
 #to add a single user's contribution to an expense    
-def add_contribution(expense_id,user_id,amount_contributed, split_proportion=None, share=None):
+def add_contribution(expense_id, total_expense, username,amount_contributed, groupname, split_proportion=None, share=None, for_what = "groups"):
     connection = get_connection()
     cursor = connection.cursor()
     
     cursor.execute('''
-            INSERT INTO expense_user (expense_id, user_id, amount_contributed, split_proportion, share)
-            VALUES (?, ?, ?, ?, ?)
-        ''', (expense_id, user_id, amount_contributed, split_proportion, share))
+            INSERT INTO expense_user (expense_id, total_expense,  username, amount_contributed, split_proportion, for_what, name)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (expense_id, total_expense, username, amount_contributed,split_proportion, for_what, groupname))
 
     connection.commit()
     connection.close()
+
+def get_groups_by_username(username):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM user_group WHERE username = ?
+    ''', (username, ))
+    
+    #fetch the first matching row
+    groups=cursor.fetchall()
+    connection.close()
+    return groups
+
+def get_group_expenses_by_group_id(group_id):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM group_expenses WHERE group_id = ?
+    ''', (group_id, ))
+    
+    #fetch the first matching row
+    expenses=cursor.fetchall()
+    connection.close()
+    return expenses
     
     
 #to add contributions for multiple users based on their percentage shares 
