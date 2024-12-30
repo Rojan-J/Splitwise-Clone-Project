@@ -30,6 +30,7 @@ from Custom_Widgets import *
 from PyQt5.QtWidgets import QApplication
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ProfilePage import *
+from GroupPage import *
 
 ########################################################################
 ## MAIN WINDOW CLASS
@@ -218,6 +219,8 @@ class MainWindow(QMainWindow):
         self.ui.BalanceEditBtn.clicked.connect(lambda: toggle_edit_Balance(self.ui, balance_edited, self.ui.BalanceProfile.text()))
 
         self.ui.FinalAddRecurrentExpenseBtn.clicked.connect(lambda: add_recurrent(self.ui, self.user))
+
+        self.ui.FinalAddGrpBtn.clicked.connect(lambda: create_group(self.ui, self.user))
         
 
     def logout(self):

@@ -9,7 +9,7 @@ sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone
 from db_operations import *
 
 class Groups:
-    def __init__(self, group_name, group_owner, expenses = [], members = dict(), debts = dict()):
+    def __init__(self, group_name, group_owner, split = "equally", expenses = [], members = [], debts = dict()):
         self.group_name = group_name
         self.group_id = None
         self.members = members
@@ -30,7 +30,7 @@ class Groups:
         if group:
             self.group_id  =group[0]
             cursor.execute("""
-                SELECT u.username, u.email 
+                SELECT u.username
                 FROM users u
                 JOIN user_group ug ON u.username = ug.username
                 WHERE ug.group_name = ?
@@ -38,7 +38,7 @@ class Groups:
             members = cursor.fetchall()
             
             for member in members:
-                self.members[member[0]] = member[1]  #name=key, email=value
+                self.members.append(member[0])  #name=key, email=value
             
             all_expenses  =get_group_expenses_by_group_id(self.group_id)
             for expense in all_expenses:
@@ -56,20 +56,20 @@ class Groups:
         
         
 
-    def add_members(self, name, email, username):
-        if name not in self.members:
-            self.members[name] = email
+    def add_members(self, username):
+        if username not in self.members:
+            self.members.append(username)
             
             connection=get_connection()
             cursor=connection.cursor()
             
             # check if user already exists
-            user = get_user_by_email (email, username)
+            user = get_user_by_email (username, username)
             if user:
                 user_id = user[0]
             else:
-                add_user(name, username, email, "DefaultPass0", 0, True, 0, True)
-                cursor.execute("SELECT user_id FROM users WHERE email = ? or username = ?", (email, username, ))
+                add_user(username, username, "Defaultmail@mail.com", "DefaultPass0", 0, True, 0, True)
+                cursor.execute("SELECT user_id FROM users WHERE username = ?", (username, ))
                 user = cursor.fetchone()
                 user_id = user[0]
             
