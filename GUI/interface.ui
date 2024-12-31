@@ -3377,7 +3377,7 @@ QCalendarWidget QToolButton:hover {
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>2</number>
+                   <number>4</number>
                   </property>
                   <widget class="QWidget" name="AddNewMemberPage">
                    <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -3391,8 +3391,8 @@ QCalendarWidget QToolButton:hover {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>262</width>
-                         <height>214</height>
+                         <width>396</width>
+                         <height>496</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_56">
@@ -3472,8 +3472,8 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>156</width>
-                                <height>50</height>
+                                <width>360</width>
+                                <height>347</height>
                                </rect>
                               </property>
                               <layout class="QGridLayout" name="gridLayout_5">
@@ -3553,8 +3553,8 @@ QCalendarWidget QToolButton:hover {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>208</width>
-                         <height>454</height>
+                         <width>396</width>
+                         <height>496</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_33">
@@ -3992,8 +3992,8 @@ QCalendarWidget QToolButton:hover {
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>341</width>
-                            <height>112</height>
+                            <width>378</width>
+                            <height>124</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_16">
@@ -4520,9 +4520,9 @@ QCalendarWidget QToolButton:hover {
                        <property name="geometry">
                         <rect>
                          <x>0</x>
-                         <y>0</y>
-                         <width>384</width>
-                         <height>698</height>
+                         <y>-503</y>
+                         <width>387</width>
+                         <height>982</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_23">
@@ -4544,6 +4544,35 @@ QCalendarWidget QToolButton:hover {
                            <string/>
                           </property>
                           <layout class="QVBoxLayout" name="verticalLayout_43">
+                           <item>
+                            <widget class="QLabel" name="GrpExpenseLabelLabel">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>10</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Label</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLineEdit" name="GrpExpenseLabelInput">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="minimumSize">
+                              <size>
+                               <width>0</width>
+                               <height>37</height>
+                              </size>
+                             </property>
+                            </widget>
+                           </item>
                            <item>
                             <widget class="QLabel" name="AmountLabel">
                              <property name="font">
@@ -4637,40 +4666,11 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>156</width>
-                                <height>50</height>
+                                <width>351</width>
+                                <height>69</height>
                                </rect>
                               </property>
-                              <layout class="QGridLayout" name="gridLayout_3">
-                               <item row="1" column="1">
-                                <widget class="QCheckBox" name="checkBox_2">
-                                 <property name="text">
-                                  <string>Me</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item row="1" column="2">
-                                <widget class="QCheckBox" name="checkBox_3">
-                                 <property name="text">
-                                  <string>CheckBox</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item row="2" column="2">
-                                <widget class="QCheckBox" name="checkBox_4">
-                                 <property name="text">
-                                  <string>CheckBox</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item row="2" column="1">
-                                <widget class="QCheckBox" name="checkBox">
-                                 <property name="text">
-                                  <string>CheckBox</string>
-                                 </property>
-                                </widget>
-                               </item>
-                              </layout>
+                              <layout class="QVBoxLayout" name="verticalLayout_23"/>
                              </widget>
                             </widget>
                            </item>
@@ -4738,44 +4738,177 @@ QCalendarWidget QToolButton:hover {
                              <layout class="QGridLayout" name="gridLayout_2">
                               <item row="0" column="1">
                                <widget class="QRadioButton" name="radioButton_2">
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                 </font>
+                                </property>
                                 <property name="text">
-                                 <string>RadioButton</string>
+                                 <string>Health</string>
                                 </property>
                                </widget>
                               </item>
                               <item row="1" column="1">
                                <widget class="QRadioButton" name="radioButton_5">
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                 </font>
+                                </property>
                                 <property name="text">
-                                 <string>RadioButton</string>
+                                 <string>Transport</string>
                                 </property>
                                </widget>
                               </item>
                               <item row="1" column="2">
                                <widget class="QRadioButton" name="radioButton_6">
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                 </font>
+                                </property>
                                 <property name="text">
-                                 <string>RadioButton</string>
+                                 <string>etc.</string>
                                 </property>
                                </widget>
                               </item>
                               <item row="0" column="2">
                                <widget class="QRadioButton" name="radioButton_3">
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                 </font>
+                                </property>
                                 <property name="text">
-                                 <string>RadioButton</string>
+                                 <string>Housing</string>
                                 </property>
                                </widget>
                               </item>
                               <item row="1" column="0">
                                <widget class="QRadioButton" name="radioButton_4">
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                 </font>
+                                </property>
                                 <property name="text">
-                                 <string>RadioButton</string>
+                                 <string>Education/Entertainment</string>
                                 </property>
                                </widget>
                               </item>
                               <item row="0" column="0">
                                <widget class="QRadioButton" name="radioButton">
-                                <property name="text">
-                                 <string>RadioButton</string>
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                 </font>
                                 </property>
+                                <property name="text">
+                                 <string>Food</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="SplitLabel">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>10</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Split:</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_29">
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QVBoxLayout" name="verticalLayout_22">
+                              <item>
+                               <widget class="QRadioButton" name="radioButton_10">
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>default split</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QRadioButton" name="radioButton_7">
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>equally</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QRadioButton" name="ShareSplit">
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>share</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QRadioButton" name="PercentageSplit">
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>percentage</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_30">
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QVBoxLayout" name="verticalLayout_24">
+                              <item>
+                               <widget class="QScrollArea" name="scrollArea_10">
+                                <property name="widgetResizable">
+                                 <bool>true</bool>
+                                </property>
+                                <widget class="QWidget" name="scrollAreaWidgetContents_9">
+                                 <property name="geometry">
+                                  <rect>
+                                   <x>0</x>
+                                   <y>0</y>
+                                   <width>333</width>
+                                   <height>69</height>
+                                  </rect>
+                                 </property>
+                                 <layout class="QVBoxLayout" name="verticalLayout_25"/>
+                                </widget>
                                </widget>
                               </item>
                              </layout>
@@ -4842,7 +4975,7 @@ QCalendarWidget QToolButton:hover {
                          <x>0</x>
                          <y>0</y>
                          <width>384</width>
-                         <height>698</height>
+                         <height>702</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_41">
@@ -4957,8 +5090,8 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>123</width>
-                                <height>31</height>
+                                <width>348</width>
+                                <height>69</height>
                                </rect>
                               </property>
                               <layout class="QGridLayout" name="gridLayout_12">

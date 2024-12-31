@@ -20,6 +20,7 @@ class Groups:
 
         
     def load_from_database(self):
+        self.members= []
         connection=get_connection()
         cursor=connection.cursor()
         
@@ -106,25 +107,25 @@ class Groups:
         
         contributions=[]
         if split_type=="equally":
-            amount_per_user=expense/len(contributors)
+            amount_per_user=float(expense)/len(contributors)
             contributions=[(contributor, amount_per_user) for contributor in contributors]
             
         elif split_type=="percentage":
             if not proportions or len(proportions)!=len(contributors):
                 raise ValueError("proportionss must match the number of contributors for expense split.")
             
-            contributions=[(contributor,expense*(percentage)) for contributor, percentage in zip(contributors, proportions)]
+            contributions=[(contributor,expense*(percentage)) for contributor, percentage in proportion.items()]
             
-        elif split_type=="shares":
-            total_share=sum(shares)
-            contributions=[(contributor,expense*(share/total_share))for contributor, share in zip(contributors,shares)]
+        elif split_type=="share":
+            total_share=sum(shares.values())
+            contributions=[(contributor,expense*(share/total_share))for contributor, share in shares.items()]
             
             
         else:
             raise ValueError(f"Invalid split_type:{split_type}")
             
         for contributor,contribution in contributions:
-            proportion=contribution/expense
+            proportion=contribution/float(expense)
                 
             cursor.execute("""
                 INSERT INTO expense_user (expense_id, total_expense,  username, amount_contributed, split_proportion, for_what, name)
