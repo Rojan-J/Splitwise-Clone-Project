@@ -3024,11 +3024,6 @@ QCalendarWidget QToolButton:hover {
                                    <verstretch>0</verstretch>
                                   </sizepolicy>
                                  </property>
-                                 <row>
-                                  <property name="text">
-                                   <string>Me</string>
-                                  </property>
-                                 </row>
                                  <column>
                                   <property name="text">
                                    <string>Amount</string>
@@ -3078,6 +3073,16 @@ QCalendarWidget QToolButton:hover {
                                     <green>255</green>
                                     <blue>255</blue>
                                    </color>
+                                  </property>
+                                 </column>
+                                 <column>
+                                  <property name="text">
+                                   <string>Category</string>
+                                  </property>
+                                 </column>
+                                 <column>
+                                  <property name="text">
+                                   <string>Split type</string>
                                   </property>
                                  </column>
                                  <column>
@@ -3386,8 +3391,8 @@ QCalendarWidget QToolButton:hover {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>396</width>
-                         <height>496</height>
+                         <width>262</width>
+                         <height>214</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_56">
@@ -3467,8 +3472,8 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>360</width>
-                                <height>347</height>
+                                <width>156</width>
+                                <height>50</height>
                                </rect>
                               </property>
                               <layout class="QGridLayout" name="gridLayout_5">
@@ -3548,8 +3553,8 @@ QCalendarWidget QToolButton:hover {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>396</width>
-                         <height>496</height>
+                         <width>208</width>
+                         <height>454</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_33">
@@ -3987,8 +3992,8 @@ QCalendarWidget QToolButton:hover {
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>378</width>
-                            <height>124</height>
+                            <width>341</width>
+                            <height>112</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_16">
@@ -4517,7 +4522,7 @@ QCalendarWidget QToolButton:hover {
                          <x>0</x>
                          <y>0</y>
                          <width>384</width>
-                         <height>702</height>
+                         <height>698</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_23">
@@ -4632,8 +4637,8 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>348</width>
-                                <height>69</height>
+                                <width>156</width>
+                                <height>50</height>
                                </rect>
                               </property>
                               <layout class="QGridLayout" name="gridLayout_3">
@@ -4837,7 +4842,7 @@ QCalendarWidget QToolButton:hover {
                          <x>0</x>
                          <y>0</y>
                          <width>384</width>
-                         <height>702</height>
+                         <height>698</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_41">
@@ -4952,8 +4957,8 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>348</width>
-                                <height>69</height>
+                                <width>123</width>
+                                <height>31</height>
                                </rect>
                               </property>
                               <layout class="QGridLayout" name="gridLayout_12">

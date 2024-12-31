@@ -250,3 +250,15 @@ def get_recurrent_expense_by_username(username):
     recurrent=cursor.fetchall()
     connection.close()
     return recurrent
+
+def get_expenses_of_grp_by_grp_id(group_id):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM group_expenses WHERE group_id = ?
+    ''', (group_id, ))
+    
+    #fetch the first matching row
+    expenses=cursor.fetchall()
+    connection.close()
+    return expenses

@@ -159,6 +159,7 @@ class MainWindow(QMainWindow):
         self.ui = InterfacePageUI()
         self.ui.setupUi(self)
         self.user = user
+        self.groupbtns = dict()
 
 
         ########################################################################
@@ -221,9 +222,12 @@ class MainWindow(QMainWindow):
         self.ui.FinalAddRecurrentExpenseBtn.clicked.connect(lambda: add_recurrent(self.ui, self.user))
 
         self.ui.FinalAddGrpBtn.clicked.connect(lambda: create_group(self.ui, self.user))
-        self.ui.GroupIcon.clicked.connect(lambda: show_all_existing_groups(self.ui, self.user))
-        
+        self.ui.GroupIcon.clicked.connect(lambda: show_all_existing_groups(self.ui, self.user, self.groupbtns))
 
+    
+    def change_Btn_name(btn):
+        btn.setObjectName("GrpBtn")
+    
     def logout(self):
         # Create an instance of the interface page window
         self.interface_window = LoginWindow()

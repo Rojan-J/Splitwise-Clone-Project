@@ -9,9 +9,9 @@ from db_operations import *
 from groups import *
 import sqlite3
 
-def show_all_existing_groups(ui, user):
+def show_all_existing_groups(ui, user, grpbtns):
     groups = get_groups_by_username(user[2])
-    GroupsBtns = dict()
+    grpbtns = dict()
     GroupsBox = dict()
     GroupGroups = dict()
     while ui.verticalLayout_20.count():
@@ -62,10 +62,29 @@ def show_all_existing_groups(ui, user):
         icon23.addPixmap(QtGui.QPixmap(":/icons2/icons2/log-in.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         ui.GrpBtn.setIcon(icon23)
         ui.GrpBtn.setIconSize(QtCore.QSize(32, 32))
-        ui.GrpBtn.setObjectName("GrpBtn")
+        ui.GrpBtn.setObjectName(f"{group_name}")
         ui.verticalLayout_100.addWidget(ui.GrpBtn, 0, QtCore.Qt.AlignRight)
+        grpbtns[group_grp] = ui.GrpBtn
+
         ui.verticalLayout_20.addWidget(ui.GrpFrame)
 
+    for group, btn in grpbtns.items():
+        btn.clicked.connect(lambda _, g=group: specific_group_page(ui, g))
+
+
+
+
+def specific_group_page(ui,grp : Groups):
+    ui.mainPages.setCurrentWidget(ui.GrpPage)
+    ui.GrpName.setText(grp.group_name)
+    ui.GrpTotalExpense.setText(f"Total Expense: {grp.get_total_expenses_of_group()[0]}")
+    expenses = get_expenses_of_grp_by_grp_id(grp.group_id)
+    for expense in expenses:
+        row_position = ui.ExpensesTable.rowCount()
+        ui.ExpensesTable.insertRow(row_position)
+        var_to_add = [expense[2], str(expense[5]), expense[4], expense[6]]
+        for col, value in enumerate(var_to_add):
+            ui.ExpensesTable.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
 
 def create_group(ui, user):
     connection=get_connection()
