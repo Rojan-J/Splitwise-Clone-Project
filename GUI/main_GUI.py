@@ -223,10 +223,14 @@ class MainWindow(QMainWindow):
         self.ui.FinalAddRecurrentExpenseBtn.clicked.connect(lambda: add_recurrent(self.ui, self.user))
 
         self.ui.FinalAddGrpBtn.clicked.connect(lambda: create_group(self.ui, self.user))
-        self.ui.GroupIcon.clicked.connect(lambda: show_all_existing_groups(self.ui, self.user, self.groupbtns, self.group))
+        self.ui.GroupIcon.clicked.connect(lambda: show_all_existing_groups(self.ui, self.user, self.groupbtns))
         
+        self.group = take_group(self.ui)
+        self.ui.ShareSplit.clicked.connect(lambda: add_shares(self.ui, "share", self.group))
+        self.ui.PercentageSplit.clicked.connect(lambda: add_shares(self.ui, "percentage", self.group))
+        
+    
 
-        self.ui.ShareSplit.clicked.connect(lambda: add_shares(self.ui, "share"))
         
     
     def change_Btn_name(btn):

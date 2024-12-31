@@ -9,7 +9,7 @@ from db_operations import *
 from groups import *
 import sqlite3
 
-def show_all_existing_groups(ui, user, grpbtns, main_group):
+def show_all_existing_groups(ui, user, grpbtns):
     groups = get_groups_by_username(user[2])
     grpbtns = dict()
     GroupsBox = dict()
@@ -69,15 +69,15 @@ def show_all_existing_groups(ui, user, grpbtns, main_group):
         ui.verticalLayout_20.addWidget(ui.GrpFrame)
 
     for group, btn in grpbtns.items():
-        btn.clicked.connect(lambda _, g=group: specific_group_page(ui, g, main_group))
+        btn.clicked.connect(lambda _, g=group: specific_group_page(ui, g))
 
 
 
 
-def specific_group_page(ui,grp : Groups, main_group):
-    main_group = grp
+def specific_group_page(ui,grp : Groups):
     ui.mainPages.setCurrentWidget(ui.GrpPage)
     ui.GrpName.setText(grp.group_name)
+    ui.grp_owner.setText(f"Owner: {grp.group_owner}")
     ui.GrpTotalExpense.setText(f"Total Expense: {grp.get_total_expenses_of_group()[0]}")
     expenses = get_expenses_of_grp_by_grp_id(grp.group_id)
     print(grp.members)
@@ -116,50 +116,49 @@ def create_group(ui, user):
     connection.commit()
     connection.close()   
 
-def add_expense_page(ui, group):
-    layout = ui.scrollAreaWidgetContents_7.layout()
-    # Iterate through the layout's items
-    while layout.count():
-        item = layout.takeAt(0)  # Remove the first item in the layout
-        widget = item.widget()
-        widget.deleteLater()
+def add_expense_page(ui, group, recover = True):
+    print("CALLED")
+    if recover:
+        print("CAlled")
+        layout = ui.scrollAreaWidgetContents_7.layout()
+        # Iterate through the layout's items
+        while layout.count():
+            item = layout.takeAt(0)  # Remove the first item in the layout
+            widget = item.widget()
+            widget.deleteLater()
 
-    for member in group.members:
-        ui.checkBox_2 = QtWidgets.QCheckBox(ui.scrollAreaWidgetContents_7)
-        ui.checkBox_2.setObjectName(member)
-        ui.checkBox_2.setText(member)
-        ui.verticalLayout_23.addWidget(ui.checkBox_2)
+        for member in group.members:
+            ui.checkBox_2 = QtWidgets.QCheckBox(ui.scrollAreaWidgetContents_7)
+            ui.checkBox_2.setObjectName(member)
+            ui.checkBox_2.setText(member)
+            ui.verticalLayout_23.addWidget(ui.checkBox_2)
 
-    layout = ui.scrollAreaWidgetContents_9.layout()
-    # Iterate through the layout's items
-    while layout.count():
-        item = layout.takeAt(0)  # Remove the first item in the layout
-        widget = item.widget()
-        widget.deleteLater()
-    
+        layout = ui.scrollAreaWidgetContents_9.layout()
+        # Iterate through the layout's items
+        while layout.count():
+            item = layout.takeAt(0)  # Remove the first item in the layout
+            widget = item.widget()
+            widget.deleteLater()
+
+
     ui.FinalAddExpenseBtn.clicked.connect(lambda: add_group_expense(ui, group))
     
 
 
 
 def add_group_expense(ui, main_group):
+    print("YES")
     category = ""
     label = ui.GrpExpenseLabelInput.text()
     amount = ui.AmountInput.text()
     selected_date = ui.calendarWidget.selectedDate()
     payer = ui.PayerInput.text()
-    contributers = []
-    layout = ui.scrollAreaWidgetContents_7.layout()
     description = ui.DiscriptionInput.toPlainText()
     split_type = "equally"
 
-    # Iterate through the layout's items
-    while layout.count():
-        item = layout.takeAt(0)  # Remove the first item in the layout
-        widget = item.widget()
-        if widget.isChecked():
-            contributer = widget.text()
-            contributers.append(contributer)
+    contributers = get_contributers(ui)
+
+    print(contributers)
 
     for categoryBtnNo in range(6):
         categoryBtn = ui.gridLayout_2.itemAt(categoryBtnNo).widget()
@@ -168,77 +167,60 @@ def add_group_expense(ui, main_group):
     if category == "":
          category = "etc."
 
+    print(category)
+
     for SplitTypeNo in range(4):
         SplitTypeBtn = ui.verticalLayout_22.itemAt(SplitTypeNo).widget()
         if SplitTypeBtn.isChecked():
             split_type = SplitTypeBtn.text()
-        
-    
-    if split_type == "share" or split_type == "percentage":
-        ui.label = QtWidgets.QLabel(ui.AddExpenseBox)
-        font = QtGui.QFont()
-        font.setFamily("Swis721 Blk BT")
-        font.setPointSize(10)
-        ui.label.setFont(font)
-        ui.label.setObjectName("label")
-        ui.verticalLayout_43.addWidget(ui.label)
-        ui.label.setText(f"{split_type}s:")
-        shares = dict()
-        proportions = dict()
-        for contributer in contributers:
-            ui.label_9 = QtWidgets.QLabel(ui.scrollAreaWidgetContents_9)
-            ui.label_9.setObjectName("label_9")
-            ui.verticalLayout_25.addWidget(ui.label_9)
-            ui.label_9.setText(contributer)
-            ui.spinBox = QtWidgets.QSpinBox(ui.scrollAreaWidgetContents_9)
-            ui.spinBox.setObjectName("spinBox")
-            ui.verticalLayout_25.addWidget(ui.spinBox)
-            if split_type == "share":
-                shares[contributer] = ui.spinBox.value()
-            elif split_type == "percentage": 
-                proportions[contributer] = ui.spinBox.value() 
 
+    print(split_type)
+    print(label, amount, selected_date, contributers, payer)
+    print(label == "" , amount == "" , selected_date == "" , isfloat(amount), contributers == [] , payer != "")
 
     if label != "" and amount != "" and selected_date != "" and isfloat(amount) and contributers != [] and payer != "" :
         if split_type == "share":
+            
+            shares = get_shares(ui)
+            print(shares)
             main_group.add_expenses(amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
         elif split_type == "percentage":
-            main_group.add_expenses(amount, payer, contributers, selected_date, category,description, split_type, percentages=proportions)
+            proportions = get_shares(ui)
+            main_group.add_expenses(amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
         else:
             main_group.add_expenses(amount, payer, contributers, selected_date, category,description, split_type)
-        var_to_add = [str(amount), payer,",".join(contributers), str(selected_date), category, split_type, description]
+        var_to_add = [str(amount), payer,",".join(contributers), selected_date.toString(), category, split_type, description]
         row_position = ui.ExpensesTable.rowCount()
         ui.ExpensesTable.insertRow(row_position)
         for col, value in enumerate(var_to_add):
             ui.ExpensesTable.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
 
-def add_shares(ui, split_type):
+def add_shares(ui, split_type, group):
     contributers= get_contributers(ui)
-    print(contributers)
-
-    if split_type == "share" or split_type == "percentage":
-        ui.label = QtWidgets.QLabel(ui.scrollAreaWidgetContents_9)
+    ui.label = QtWidgets.QLabel(ui.scrollAreaWidgetContents_9)
+    font = QtGui.QFont()
+    font.setFamily("Swis721 Blk BT")
+    font.setPointSize(10)
+    ui.label.setFont(font)
+    ui.label.setObjectName("label")
+    ui.verticalLayout_25.addWidget(ui.label)
+    ui.label.setText(f"{split_type}s:")
+    for contributer in contributers:
+        ui.label_9 = QtWidgets.QLabel(ui.scrollAreaWidgetContents_9)
+        ui.label_9.setObjectName("label_9")
+        ui.verticalLayout_25.addWidget(ui.label_9)
+        ui.label_9.setText(contributer)
         font = QtGui.QFont()
         font.setFamily("Swis721 Blk BT")
-        font.setPointSize(10)
-        ui.label.setFont(font)
-        ui.label.setObjectName("label")
-        ui.verticalLayout_43.addWidget(ui.label)
-        ui.label.setText(f"{split_type}s:")
-        shares = dict()
-        proportions = dict()
-        for contributer in contributers:
-            ui.label_9 = QtWidgets.QLabel(ui.scrollAreaWidgetContents_9)
-            ui.label_9.setObjectName("label_9")
-            ui.verticalLayout_25.addWidget(ui.label_9)
-            ui.label_9.setText(contributer)
-            ui.spinBox = QtWidgets.QSpinBox(ui.scrollAreaWidgetContents_9)
-            ui.spinBox.setObjectName("spinBox")
-            ui.verticalLayout_25.addWidget(ui.spinBox)
-            if split_type == "share":
-                shares[contributer] = ui.spinBox.value()
-            elif split_type == "percentage": 
-                proportions[contributer] = ui.spinBox.value()
+        font.setPointSize(8)
+        ui.label_9.setFont(font)
+        ui.spinBox = QtWidgets.QSpinBox(ui.scrollAreaWidgetContents_9)
+        ui.spinBox.setObjectName("spinBox")
+        font = QtGui.QFont()
+        font.setFamily("Swis721 Blk BT")
+        font.setPointSize(8)
+        ui.spinBox.setFont(font)
+        ui.verticalLayout_25.addWidget(ui.spinBox)
 
 def isfloat(value):
     try:
@@ -250,12 +232,30 @@ def isfloat(value):
 def get_contributers(ui):
     contributers = []
     layout = ui.scrollAreaWidgetContents_7.layout()
-    while layout.count():
-        item = layout.takeAt(0)  # Remove the first item in the layout
+    for i in range(layout.count()):
+        item = layout.itemAt(i)  # Remove the first item in the layout
         widget = item.widget()
         if widget.isChecked():
             contributer = widget.text()
-            print(contributer)
             contributers.append(contributer)
     return contributers
+
+def get_shares(ui):
+    shares = dict()
+    layout = ui.scrollAreaWidgetContents_9.layout()
+    i= 1
+    while i != layout.count():
+        label_item = layout.itemAt(i)
+        share_item = layout.itemAt(i + 1)
+        label_widget = label_item.widget()
+        share_widget = share_item.widget()
+        label = label_widget.text()
+        share = share_widget.value()
+        shares[label] = share
+        i += 2
+    return shares
+
+def take_group(ui):
+    group = Groups(ui.GrpName.text(), ui.grp_owner.text())
+    return group
 

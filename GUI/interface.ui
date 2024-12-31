@@ -2845,6 +2845,19 @@ QCalendarWidget QToolButton:hover {
                                   </widget>
                                  </item>
                                  <item>
+                                  <widget class="QLabel" name="grp_owner">
+                                   <property name="font">
+                                    <font>
+                                     <family>Swis721 Blk BT</family>
+                                     <pointsize>12</pointsize>
+                                    </font>
+                                   </property>
+                                   <property name="text">
+                                    <string>Owner: </string>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
                                   <widget class="QLabel" name="GrpTotalExpense">
                                    <property name="font">
                                     <font>
@@ -2977,7 +2990,7 @@ QCalendarWidget QToolButton:hover {
                                 <x>0</x>
                                 <y>0</y>
                                 <width>412</width>
-                                <height>225</height>
+                                <height>219</height>
                                </rect>
                               </property>
                               <layout class="QVBoxLayout" name="verticalLayout_37">
@@ -3012,7 +3025,7 @@ QCalendarWidget QToolButton:hover {
                                 <x>0</x>
                                 <y>0</y>
                                 <width>412</width>
-                                <height>225</height>
+                                <height>218</height>
                                </rect>
                               </property>
                               <layout class="QVBoxLayout" name="verticalLayout_35">

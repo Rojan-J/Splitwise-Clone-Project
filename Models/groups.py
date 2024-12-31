@@ -1,4 +1,5 @@
 import sqlite3
+import json
 from datetime import date
 
 from users import Users
@@ -95,17 +96,6 @@ class Groups:
 
         #check if expenses are added correctly:
         print(f"Adding expense: group_id={self.group_id}, payer_id={payer}, amount={expense}, category={category}, date={expense_date}")
-
-        # add expense
-        cursor.execute("""
-            INSERT INTO group_expenses (group_id,groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares) 
-            VALUES (?, ?, ?, ?, ?,?,?, ?, ?, ?, ?)
-        """, (self.group_id, self.group_name, payer, ",".join(contributors), expense, category, str(expense_date), description , split_type, proportions, shares))
-        expense_id = cursor.lastrowid
-
-        print(f"Expense added with ID: {expense_id}")
-        
-        contributions=[]
         if split_type=="equally":
             amount_per_user=float(expense)/len(contributors)
             contributions=[(contributor, amount_per_user) for contributor in contributors]
@@ -114,23 +104,45 @@ class Groups:
             if not proportions or len(proportions)!=len(contributors):
                 raise ValueError("proportionss must match the number of contributors for expense split.")
             
-            contributions=[(contributor,expense*(percentage)) for contributor, percentage in proportion.items()]
+            contributions=[(contributor,float(expense)*(percentage)) for contributor, percentage in proportions.items()]
             
         elif split_type=="share":
             total_share=sum(shares.values())
-            contributions=[(contributor,expense*(share/total_share))for contributor, share in shares.items()]
+            contributions=[(contributor,float(expense)*(share/total_share))for contributor, share in shares.items()]
             
             
         else:
             raise ValueError(f"Invalid split_type:{split_type}")
+
+        json_shares = json.dumps(shares)
+        json_proportions = json.dumps(proportions)
+        # add expense
+        cursor.execute("""
+            INSERT INTO group_expenses (group_id,groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares) 
+            VALUES (?, ?, ?, ?, ?,?,?, ?, ?, ?, ?)
+        """, (self.group_id, self.group_name, payer, ",".join(contributors), expense, category, str(expense_date), description , split_type, json_proportions, json_shares))
+        expense_id = cursor.lastrowid
+
+        print(f"Expense added with ID: {expense_id}")
+        
+        contributions=[]
+
             
         for contributor,contribution in contributions:
+            if split_type == "share":
+                share = f"{split_type} :{shares[contributor]}"
+
+            elif split_type == "equally":
+                share = "equal split"
+            
+            else:
+                share = f"{split_type} :{proportions[contributor]}"
             proportion=contribution/float(expense)
                 
             cursor.execute("""
-                INSERT INTO expense_user (expense_id, total_expense,  username, amount_contributed, split_proportion, for_what, name)
-                VALUES (?, ?, ?,?,?, "group", ?)
-            """, (expense_id, expense, contributor, contribution, proportion, self.group_name))
+                INSERT INTO expense_user (expense_id, total_expense,  username, amount_contributed, split_proportion, for_what, name, share)
+                VALUES (?, ?, ?,?,?, "group", ?, ?)
+            """, (expense_id, expense, contributor, contribution, proportion, self.group_name, share))
 
         connection.commit()
         connection.close()     
