@@ -100,8 +100,8 @@ def create_group(ui, user):
     default_shares = None
     default_prop_j = None
     default_shares_j = None
-    connection=get_connection()
-    cursor=connection.cursor()
+    split=""
+
     
     
     group_name = ui.GrpNameInput.text()
@@ -111,7 +111,6 @@ def create_group(ui, user):
         Split = ui.verticalLayout_30.itemAt(SplitBtnNo).widget()
         if isinstance(Split, QtWidgets.QRadioButton) and Split.isChecked():
             split = Split.text()
-    print(split)
     if split != "equally":
         default_shares = get_shares(ui, "add_group")
         if split == "shares":
@@ -120,17 +119,38 @@ def create_group(ui, user):
         else:
             default_prop_j = json.dumps(default_shares)
             default_shares_j = None
-    widgets = [ui.LabelLabel, ui.AmountRExpenseLabel, ui.DaysLabel, ui.CategoryLabel_5]
-    for widget, data in enumerate([label, amount, days, category]):
-        if data == "":
+    if group_name != "" and group_no != 0 and members != [] and split !="":
+        add_group_to_dataset(group_name, user, members, split, default_shares_j, default_prop_j)
+        ui.GrpNameInput.setText("")
+        ui.NoMembersInput.setValue(0)
+        ui.GrpMembersInput.setText("")
+        for SplitBtnNo in range(11):
+            Split = ui.verticalLayout_30.itemAt(SplitBtnNo).widget()
+            if isinstance(Split, QtWidgets.QRadioButton) and Split.isChecked():
+                Split.setChecked(False)
+        
+        ui.rightMenuContainer.collapseMenu()
+        show_all_existing_groups(ui, user)
+    print(type(group_no), members)
+    widgets = [ui.GrpNameLabel, ui.NoMembersLabel, ui.GrpMembersLabel, ui.DefaultSplitLabel]
+    for widget, data in enumerate([group_name, group_no, members, split]):
+        if data == "" or data == [""] or not data:
             widgets[widget].setStyleSheet("color: red;")
         else:
             widgets[widget].setStyleSheet("color: white;")
-    if not isfloat(amount):
+
+    if not int(group_no) != len(members):
         widgets[1].setStyleSheet("color: red;")
+        widgets[2].setStyleSheet("color: red;")
+
     else:
         widgets[1].setStyleSheet("color: white;")
+        widgets[2].setStyleSheet("color: red;")
 
+
+def add_group_to_dataset(group_name, user, members, split, default_shares_j, default_prop_j):
+    connection=get_connection()
+    cursor=connection.cursor()
     group = Groups(group_name, user[2], split)
     cursor.execute("SELECT group_id FROM groups WHERE group_name = ? and group_owner = ?", (group_name, user[2], ))
     connection.commit()
@@ -144,13 +164,10 @@ def create_group(ui, user):
     connection.commit()
     connection.close()
 
-    ui.rightMenuContainer.collapseMenu()
-    show_all_existing_groups(ui, user)
+    
 
 def add_expense_page(ui, group, recover = True):
-    print("CALLED")
     if recover:
-        print("CAlled")
         layout = ui.scrollAreaWidgetContents_7.layout()
         # Iterate through the layout's items
         while layout.count():
@@ -178,7 +195,6 @@ def add_expense_page(ui, group, recover = True):
 
 
 def add_group_expense(ui, main_group):
-    print("YES")
     category = ""
     label = ui.GrpExpenseLabelInput.text()
     amount = ui.AmountInput.text()
@@ -189,7 +205,6 @@ def add_group_expense(ui, main_group):
 
     contributers = get_contributers(ui)
 
-    print(contributers)
 
     for categoryBtnNo in range(6):
         categoryBtn = ui.gridLayout_2.itemAt(categoryBtnNo).widget()
@@ -198,16 +213,12 @@ def add_group_expense(ui, main_group):
     if category == "":
          category = "etc."
 
-    print(category)
 
     for SplitTypeNo in range(4):
         SplitTypeBtn = ui.verticalLayout_22.itemAt(SplitTypeNo).widget()
         if SplitTypeBtn.isChecked():
             split_type = SplitTypeBtn.text()
 
-    print(split_type)
-    print(label, amount, selected_date, contributers, payer)
-    print(label == "" , amount == "" , selected_date == "" , isfloat(amount), contributers == [] , payer != "")
 
     if label != "" and amount != "" and selected_date != "" and isfloat(amount) and contributers != [] and payer != "" :
         if split_type == "share":
@@ -220,7 +231,7 @@ def add_group_expense(ui, main_group):
             main_group.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
         else:
             main_group.add_expenses(label,amount, payer, contributers, selected_date, category,description, split_type)
-        var_to_add = [str(amount), payer,",".join(contributers), selected_date.toString("yyyy-mm-dd"), category, split_type, description]
+        var_to_add = [str(amount), payer,",".join(contributers), selected_date.toString("yyyy-dd-mm"), category, split_type, description]
         row_position = ui.ExpensesTable.rowCount()
         ui.ExpensesTable.insertRow(row_position)
         for col, value in enumerate(var_to_add):
@@ -320,7 +331,7 @@ def get_shares(ui, page):
     elif page == "add_group":
         layout = ui.scrollAreaWidgetContents_10.layout()
     i= 1
-    while i != layout.count():
+    while i < layout.count():
         label_item = layout.itemAt(i)
         share_item = layout.itemAt(i + 1)
         label_widget = label_item.widget()
