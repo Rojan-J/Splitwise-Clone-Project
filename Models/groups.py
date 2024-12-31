@@ -4,14 +4,15 @@ from datetime import date
 
 from users import Users
 
-from 
+
 
 import sys
 import os
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Utils/currency_conversion"))
 from db_operations import *
 
-from currency_conversion(all_currencies) import convert_to_IRR
+from currency_conversion_all_currencies import convert_to_IRR
 
 
 class Groups:
