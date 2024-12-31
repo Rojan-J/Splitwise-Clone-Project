@@ -3,13 +3,14 @@ from datetime import date
 
 import sys
 import os
+import json
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
 from db_operations import *
 from groups import *
 import sqlite3
 
-def show_all_existing_groups(ui, user, grpbtns):
+def show_all_existing_groups(ui, user):
     groups = get_groups_by_username(user[2])
     grpbtns = dict()
     GroupsBox = dict()
@@ -21,7 +22,7 @@ def show_all_existing_groups(ui, user, grpbtns):
             widget.deleteLater()
     for  group in groups:
         
-        group_id, group_name = group[2:]
+        group_id, group_name = group[2:4]
         connection=get_connection()
         cursor=connection.cursor()
         cursor.execute("SELECT group_owner FROM groups WHERE group_name = ? and group_id = ?", (group_name, group_id, ))
@@ -37,6 +38,10 @@ def show_all_existing_groups(ui, user, grpbtns):
         ui.GrpFrame.setObjectName(f"{group_name}Frame")
         ui.verticalLayout_100 = QtWidgets.QVBoxLayout(ui.GrpFrame)
         ui.verticalLayout_100.setObjectName("verticalLayout_100")
+        ui.GrpFrame.setStyleSheet("*{\n"
+"    background-color: #2c313c;\n"
+"    border-radius: 10px\n"
+"}")
 
         ui.namelabel = QtWidgets.QLabel(ui.GrpFrame)
         font = QtGui.QFont()
@@ -80,20 +85,21 @@ def specific_group_page(ui,grp : Groups):
     ui.grp_owner.setText(f"Owner: {grp.group_owner}")
     ui.GrpTotalExpense.setText(f"Total Expense: {grp.get_total_expenses_of_group()[0]}")
     expenses = get_expenses_of_grp_by_grp_id(grp.group_id)
-    print(grp.members)
-
     header = ui.ExpensesTable.horizontalHeader()
     header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
     for expense in expenses:
         row_position = ui.ExpensesTable.rowCount()
         ui.ExpensesTable.insertRow(row_position)
-        var_to_add = [str(expense[5]), expense[3], expense[4], str(expense[7]), expense[6], expense[9], expense[8]]
+        var_to_add = [expense[1], str(expense[5]), expense[3], expense[4], expense[7], expense[6], expense[9], expense[8]]
         for col, value in enumerate(var_to_add):
             ui.ExpensesTable.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
     
     ui.AddExpensesBtn.clicked.connect(lambda: add_expense_page(ui, grp))
 
 def create_group(ui, user):
+    default_shares = None
+    default_prop_j = None
+    default_shares_j = None
     connection=get_connection()
     cursor=connection.cursor()
     
@@ -105,16 +111,41 @@ def create_group(ui, user):
         Split = ui.verticalLayout_30.itemAt(SplitBtnNo).widget()
         if isinstance(Split, QtWidgets.QRadioButton) and Split.isChecked():
             split = Split.text()
-
+    print(split)
+    if split != "equally":
+        default_shares = get_shares(ui, "add_group")
+        if split == "shares":
+            default_shares_j = json.dumps(default_shares)
+            default_prop_j = None
+        else:
+            default_prop_j = json.dumps(default_shares)
+            default_shares_j = None
+    widgets = [ui.LabelLabel, ui.AmountRExpenseLabel, ui.DaysLabel, ui.CategoryLabel_5]
+    for widget, data in enumerate([label, amount, days, category]):
+        if data == "":
+            widgets[widget].setStyleSheet("color: red;")
+        else:
+            widgets[widget].setStyleSheet("color: white;")
+    if not isfloat(amount):
+        widgets[1].setStyleSheet("color: red;")
+    else:
+        widgets[1].setStyleSheet("color: white;")
 
     group = Groups(group_name, user[2], split)
     cursor.execute("SELECT group_id FROM groups WHERE group_name = ? and group_owner = ?", (group_name, user[2], ))
+    connection.commit()
     new_group = cursor.fetchone()
-    cursor.execute("INSERT INTO user_group (user_id, username, group_id, group_name) VALUES (?, ?, ?, ?)", (user[0], user[2], new_group[0], group_name))    
+    cursor.execute("INSERT INTO user_group (user_id, username, group_id, group_name, default_split, default_shares, default_proportions) VALUES (?, ?, ?, ?, ?, ?, ?)", (user[0], user[2], new_group[0], group_name, split, default_shares_j, default_prop_j)) 
+    connection.commit()   
     for member in members:
+        if member == user[2]:
+            continue
         group.add_members(member)
     connection.commit()
-    connection.close()   
+    connection.close()
+
+    ui.rightMenuContainer.collapseMenu()
+    show_all_existing_groups(ui, user)
 
 def add_expense_page(ui, group, recover = True):
     print("CALLED")
@@ -181,46 +212,83 @@ def add_group_expense(ui, main_group):
     if label != "" and amount != "" and selected_date != "" and isfloat(amount) and contributers != [] and payer != "" :
         if split_type == "share":
             
-            shares = get_shares(ui)
+            shares = get_shares(ui, "add_expense")
             print(shares)
-            main_group.add_expenses(amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
+            main_group.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
         elif split_type == "percentage":
-            proportions = get_shares(ui)
-            main_group.add_expenses(amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
+            proportions = get_shares(ui, "add_expense")
+            main_group.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
         else:
-            main_group.add_expenses(amount, payer, contributers, selected_date, category,description, split_type)
-        var_to_add = [str(amount), payer,",".join(contributers), selected_date.toString(), category, split_type, description]
+            main_group.add_expenses(label,amount, payer, contributers, selected_date, category,description, split_type)
+        var_to_add = [str(amount), payer,",".join(contributers), selected_date.toString("yyyy-mm-dd"), category, split_type, description]
         row_position = ui.ExpensesTable.rowCount()
         ui.ExpensesTable.insertRow(row_position)
         for col, value in enumerate(var_to_add):
             ui.ExpensesTable.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
 
-def add_shares(ui, split_type, group):
-    contributers= get_contributers(ui)
-    ui.label = QtWidgets.QLabel(ui.scrollAreaWidgetContents_9)
-    font = QtGui.QFont()
-    font.setFamily("Swis721 Blk BT")
-    font.setPointSize(10)
-    ui.label.setFont(font)
-    ui.label.setObjectName("label")
-    ui.verticalLayout_25.addWidget(ui.label)
-    ui.label.setText(f"{split_type}s:")
-    for contributer in contributers:
-        ui.label_9 = QtWidgets.QLabel(ui.scrollAreaWidgetContents_9)
-        ui.label_9.setObjectName("label_9")
-        ui.verticalLayout_25.addWidget(ui.label_9)
-        ui.label_9.setText(contributer)
-        font = QtGui.QFont()
-        font.setFamily("Swis721 Blk BT")
-        font.setPointSize(8)
-        ui.label_9.setFont(font)
-        ui.spinBox = QtWidgets.QSpinBox(ui.scrollAreaWidgetContents_9)
-        ui.spinBox.setObjectName("spinBox")
-        font = QtGui.QFont()
-        font.setFamily("Swis721 Blk BT")
-        font.setPointSize(8)
-        ui.spinBox.setFont(font)
-        ui.verticalLayout_25.addWidget(ui.spinBox)
+def add_shares(ui, split_type, page):
+    if page=="add_expense":
+        layout = ui.scrollAreaWidgetContents_9.layout()
+    else:
+        layout = ui.scrollAreaWidgetContents_10.layout()
+    while layout.count():
+        item = layout.takeAt(0)  # Get the first item
+        widget = item.widget()  # Get the widget
+        widget.deleteLater()
+    if split_type != "equally":
+        if page=="add_expense":
+            contributers= get_contributers(ui)
+            ui.label = QtWidgets.QLabel(ui.scrollAreaWidgetContents_9)
+            font = QtGui.QFont()
+            font.setFamily("Swis721 Blk BT")
+            font.setPointSize(10)
+            ui.label.setFont(font)
+            ui.label.setObjectName("label")
+            ui.verticalLayout_25.addWidget(ui.label)
+            ui.label.setText(f"{split_type}s:")
+            for contributer in contributers:
+                ui.label_9 = QtWidgets.QLabel(ui.scrollAreaWidgetContents_9)
+                ui.label_9.setObjectName("label_9")
+                ui.verticalLayout_25.addWidget(ui.label_9)
+                ui.label_9.setText(contributer)
+                font = QtGui.QFont()
+                font.setFamily("Swis721 Blk BT")
+                font.setPointSize(8)
+                ui.label_9.setFont(font)
+                ui.spinBox = QtWidgets.QSpinBox(ui.scrollAreaWidgetContents_9)
+                ui.spinBox.setObjectName("spinBox")
+                font = QtGui.QFont()
+                font.setFamily("Swis721 Blk BT")
+                font.setPointSize(8)
+                ui.spinBox.setFont(font)
+                ui.verticalLayout_25.addWidget(ui.spinBox)
+        if page =="add_group":
+            members = get_members(ui)
+            ui.label = QtWidgets.QLabel(ui.scrollAreaWidgetContents_10)
+            font = QtGui.QFont()
+            font.setFamily("Swis721 Blk BT")
+            font.setPointSize(10)
+            ui.label.setFont(font)
+            ui.label.setObjectName("label")
+            ui.verticalLayout_27.addWidget(ui.label)
+            ui.label.setText(f"{split_type}s:")
+            for member in members:
+                ui.label_9 = QtWidgets.QLabel(ui.scrollAreaWidgetContents_10)
+                ui.label_9.setObjectName("label_9")
+                ui.verticalLayout_27.addWidget(ui.label_9)
+                ui.label_9.setText(member)
+                font = QtGui.QFont()
+                font.setFamily("Swis721 Blk BT")
+                font.setPointSize(8)
+                ui.label_9.setFont(font)
+                ui.spinBox = QtWidgets.QSpinBox(ui.scrollAreaWidgetContents_10)
+                ui.spinBox.setObjectName("spinBox")
+                font = QtGui.QFont()
+                font.setFamily("Swis721 Blk BT")
+                font.setPointSize(8)
+                ui.spinBox.setFont(font)
+                ui.verticalLayout_27.addWidget(ui.spinBox)
+
 
 def isfloat(value):
     try:
@@ -240,9 +308,17 @@ def get_contributers(ui):
             contributers.append(contributer)
     return contributers
 
-def get_shares(ui):
+def get_members(ui):
+    members = ui.GrpMembersInput.toPlainText().split("\n")
+    return members
+
+
+def get_shares(ui, page):
     shares = dict()
-    layout = ui.scrollAreaWidgetContents_9.layout()
+    if page == "add_expense":
+        layout = ui.scrollAreaWidgetContents_9.layout()
+    elif page == "add_group":
+        layout = ui.scrollAreaWidgetContents_10.layout()
     i= 1
     while i != layout.count():
         label_item = layout.itemAt(i)

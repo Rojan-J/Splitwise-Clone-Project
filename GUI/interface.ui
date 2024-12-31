@@ -3744,7 +3744,7 @@ QCalendarWidget QToolButton:hover {
                       <property name="title">
                        <string/>
                       </property>
-                      <layout class="QVBoxLayout" name="verticalLayout_30" stretch="0,0,0,0,0,0,0,0,0,0,0">
+                      <layout class="QVBoxLayout" name="verticalLayout_30" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0">
                        <property name="spacing">
                         <number>23</number>
                        </property>
@@ -3836,31 +3836,68 @@ QCalendarWidget QToolButton:hover {
                           </font>
                          </property>
                          <property name="text">
-                          <string>Equal</string>
+                          <string>equally</string>
                          </property>
                         </widget>
                        </item>
                        <item>
-                        <widget class="QRadioButton" name="Percentage">
+                        <widget class="QRadioButton" name="share">
                          <property name="font">
                           <font>
                            <family>Swis721 Blk BT</family>
                           </font>
                          </property>
                          <property name="text">
-                          <string>Shares</string>
+                          <string>share</string>
                          </property>
                         </widget>
                        </item>
                        <item>
-                        <widget class="QRadioButton" name="Unequal">
+                        <widget class="QRadioButton" name="percentage">
                          <property name="font">
                           <font>
                            <family>Swis721 Blk BT</family>
                           </font>
                          </property>
                          <property name="text">
-                          <string>Percentage</string>
+                          <string>percentage</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QFrame" name="frame_47">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_26">
+                          <item>
+                           <widget class="QScrollArea" name="scrollArea_11">
+                            <property name="widgetResizable">
+                             <bool>true</bool>
+                            </property>
+                            <widget class="QWidget" name="scrollAreaWidgetContents_10">
+                             <property name="geometry">
+                              <rect>
+                               <x>0</x>
+                               <y>0</y>
+                               <width>343</width>
+                               <height>18</height>
+                              </rect>
+                             </property>
+                             <layout class="QVBoxLayout" name="verticalLayout_27"/>
+                            </widget>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label">
+                         <property name="text">
+                          <string/>
                          </property>
                         </widget>
                        </item>

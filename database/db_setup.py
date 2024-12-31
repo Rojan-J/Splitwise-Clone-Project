@@ -47,6 +47,9 @@ def initialize_database():
             username TEXT NOT NULL,
             group_id INTEGER ,
             group_name TEXT NOT NULL,
+            default_split TEXT DEFAULT 'equally',
+            default_shares TEXT,
+            default_proportions TEXT,
             FOREIGN KEY(user_id) REFERENCES users(user_id),
             
             PRIMARY KEY(user_id, group_id)
@@ -57,6 +60,7 @@ def initialize_database():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS group_expenses (
             expense_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            label TEXT NOT NULL,
             group_id INTEGER,
             groupname TEXT NOT NULL,
             payername INTEGER,

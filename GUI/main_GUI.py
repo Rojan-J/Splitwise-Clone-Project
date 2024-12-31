@@ -159,7 +159,6 @@ class MainWindow(QMainWindow):
         self.ui = InterfacePageUI()
         self.ui.setupUi(self)
         self.user = user
-        self.groupbtns = dict()
         self.group = None
 
 
@@ -223,11 +222,16 @@ class MainWindow(QMainWindow):
         self.ui.FinalAddRecurrentExpenseBtn.clicked.connect(lambda: add_recurrent(self.ui, self.user))
 
         self.ui.FinalAddGrpBtn.clicked.connect(lambda: create_group(self.ui, self.user))
-        self.ui.GroupIcon.clicked.connect(lambda: show_all_existing_groups(self.ui, self.user, self.groupbtns))
+        self.ui.GroupIcon.clicked.connect(lambda: show_all_existing_groups(self.ui, self.user))
+
+        self.ui.ShareSplit.clicked.connect(lambda: add_shares(self.ui, "share", "add_expense"))
+        self.ui.PercentageSplit.clicked.connect(lambda: add_shares(self.ui, "percentage", "add_expense"))
+        self.ui.radioButton_7.clicked.connect(lambda: add_shares(self.ui, "equally", "add_expense"))
+
+        self.ui.share.clicked.connect(lambda: add_shares(self.ui, "share", "add_group"))
+        self.ui.percentage.clicked.connect(lambda: add_shares(self.ui, "percentage", "add_group"))
+        self.ui.Equal.clicked.connect(lambda: add_shares(self.ui, "equally", "add_group"))
         
-        self.group = take_group(self.ui)
-        self.ui.ShareSplit.clicked.connect(lambda: add_shares(self.ui, "share", self.group))
-        self.ui.PercentageSplit.clicked.connect(lambda: add_shares(self.ui, "percentage", self.group))
         
     
 
