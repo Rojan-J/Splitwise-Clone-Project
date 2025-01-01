@@ -102,14 +102,16 @@ class Groups:
 
         
         #check if expenses are added correctly:
-        print(f"Adding expense: group_id={self.group_id}, payer_id={payer}, amount={expense}, category={category}, date={expense_date}")
+        print(f"Adding expense: group_id={self.group_id}, payer_id={payer}, amount={expense}, category={category}, date={expense_date}, shares={shares}, proportions={proportions}")
 
+        json_shares = json.dumps(shares)
+        json_proportions = json.dumps(proportions)
 
         # add expense
         cursor.execute("""
-            INSERT INTO group_expenses (group_id,groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares, currency) 
-            VALUES (?, ?, ?, ?, ?,?,?,?, ?, ?, ?, ?)
-        """, (self.group_id, self.group_name, payer, ",".join(contributors), expense, category, str(expense_date), description , split_type, proportions, shares, currency))
+            INSERT INTO group_expenses (label, group_id,groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares, currency) 
+            VALUES (?, ?, ?, ?, ?, ?,?,?,?, ?, ?, ?, ?)
+        """, (label, self.group_id, self.group_name, payer, ",".join(contributors), expense, category, str(expense_date), description , split_type, json_proportions, json_shares, currency))
         expense_id = cursor.lastrowid
 
         print(f"Expense added with ID: {expense_id}")
@@ -120,10 +122,9 @@ class Groups:
             contributions=[(contributor, amount_per_user) for contributor in contributors]
             
         elif split_type=="percentage":
-            if not proportions or len(proportions)!=len(contributors) or sum(proportions.values()):
-                raise ValueError("proportionss must match the number of contributors for expense split.")
             
             contributions=[(contributor,float(expense)*(percentage)) for contributor, percentage in proportions.items()]
+            print(contributions)
             
         elif split_type=="share":
             if not shares or len(shares)!=len(contributors):
@@ -134,8 +135,7 @@ class Groups:
         else:
             raise ValueError(f"Invalid split_type:{split_type}")
 
-        json_shares = json.dumps(shares)
-        json_proportions = json.dumps(proportions)
+
         # add expense
         cursor.execute("""
             INSERT INTO group_expenses (label, group_id,groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares) 

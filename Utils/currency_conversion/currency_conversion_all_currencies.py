@@ -31,6 +31,3 @@ def convert_to_IRR(amount,date=None, from_c=None):
     return converted_amount
     
     
-#EXAMPLES TO CHECK IF IT DES WORK    
-amount_in_IRR = convert_to_IRR(100, date="2022-09-22", from_c="EUR")
-print(f"100 EUR to IRR on 2022-09-22: {amount_in_IRR}")

@@ -63,7 +63,7 @@ def initialize_database():
             label TEXT NOT NULL,
             group_id INTEGER,
             groupname TEXT NOT NULL,
-            payername INTEGER,
+            payername TEXT NOT NULL,
             contributers TEXT NOT NULL,
             amount REAL NOT NULL,
             category TEXT NOT NULL DEFAULT 'etc.',  -- Added category column,
