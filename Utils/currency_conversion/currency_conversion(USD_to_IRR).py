@@ -54,6 +54,8 @@ def convert_currency(amount, date=None, from_c="USD", to_c="IRR"):
     
 #     return IRR_based
 
+
+#examples to check if it does work
 result_1 = convert_currency(100, date="2022-09-22", from_c="USD", to_c="IRR")
 print(f"100 USD to IRR on 2022-09-22: {result_1}")
 
