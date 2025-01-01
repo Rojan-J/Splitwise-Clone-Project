@@ -20,6 +20,21 @@ def get_historical_rate(date):
     return USD_to_IRR
 
 
+def convert_currency(amount, date=None, from_c="USD", to_c="IRR"):
+    
+    target_date=date or datetime.now().strftime("%Y-%m-%d")
+    
+    USD_to_IRR=get_historical_rate(target_date)
+
+    if from_c=="USD" and to_c=="IRR":
+        return amount*USD_to_IRR
+    
+    else: #if same currency is added, no exchange needed
+        return amount
+    
+    
+
+
 # #fetch real-time exchange data
 # def exchange_rate(base_currency="IRR"):  
 #     #send the request
@@ -38,3 +53,9 @@ def get_historical_rate(date):
 #     IRR_based["IRR"]=1.0
     
 #     return IRR_based
+
+result_1 = convert_currency(100, date="2022-09-22", from_c="USD", to_c="IRR")
+print(f"100 USD to IRR on 2022-09-22: {result_1}")
+
+result_2 = convert_currency(200, from_c="USD", to_c="IRR")
+print(f"200 USD to IRR today: {result_2}")
