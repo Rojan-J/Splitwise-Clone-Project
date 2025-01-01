@@ -68,6 +68,7 @@ def initialize_database():
             split_type TEXT DEFAULT 'equally',
             proportions TEXT,
             shares TEXT,
+            currency TEXT DEFAULT 'IRR',
             FOREIGN KEY(group_id) REFERENCES groups(group_id)
 
         )

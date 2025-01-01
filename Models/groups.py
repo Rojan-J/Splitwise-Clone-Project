@@ -3,10 +3,15 @@ from datetime import date
 
 from users import Users
 
+from 
+
 import sys
 import os
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
 from db_operations import *
+
+from currency_conversion(all_currencies) import convert_to_IRR
+
 
 class Groups:
     def __init__(self, group_name, group_owner, split = "equally", expenses = [], members = [], debts = dict()):
@@ -43,7 +48,7 @@ class Groups:
             
             all_expenses  =get_group_expenses_by_group_id(self.group_id)
             for expense in all_expenses:
-                self.expenses.append([expense[5], expense[3], expense[4], expense[7], expense[6], expense[8], expense[9], expense[10], expense[11]])
+                self.expenses.append([expense[5], expense[3], expense[4], expense[7], expense[6], expense[8], expense[9], expense[10], expense[11], expense[12]])
 
         else:
             cursor.execute("INSERT INTO groups (group_name, group_owner) VALUES (?, ?)", (self.group_name, self.group_owner, ))
@@ -81,7 +86,7 @@ class Groups:
             connection.close()    
             
 
-    def add_expenses(self, expense, payer, contributors, expense_date = date.today(), category="etc.",description=None, split_type="equally", proportions=None, shares=None):
+    def add_expenses(self, expense, payer, contributors, expense_date = date.today(), category="etc.",description=None, split_type="equally", proportions=None, shares=None, currency="IRR"):
         
         #contributors is a list of users represented by their ids who are sharing the expense
         #contributions is a list that hold each contributor's share
@@ -90,17 +95,25 @@ class Groups:
         
         self.expenses.append([expense, payer, contributors, expense_date, category, description, split_type, proportions, shares])
         
+        if currency!="IRR":
+            expense=convert_to_IRR(expense,date=str(expense_date),from_c=currency)
+            
+        self.expenses.append([
+            expense, payer, contributors, expense_date, category, description, split_type, proportions, shares, currency])
+        
         connection = get_connection()
         cursor = connection.cursor()
 
+        
         #check if expenses are added correctly:
         print(f"Adding expense: group_id={self.group_id}, payer_id={payer}, amount={expense}, category={category}, date={expense_date}")
 
+
         # add expense
         cursor.execute("""
-            INSERT INTO group_expenses (group_id,groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares) 
-            VALUES (?, ?, ?, ?, ?,?,?, ?, ?, ?, ?)
-        """, (self.group_id, self.group_name, payer, ",".join(contributors), expense, category, str(expense_date), description , split_type, proportions, shares))
+            INSERT INTO group_expenses (group_id,groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares, currency) 
+            VALUES (?, ?, ?, ?, ?,?,?,?, ?, ?, ?, ?)
+        """, (self.group_id, self.group_name, payer, ",".join(contributors), expense, category, str(expense_date), description , split_type, proportions, shares, currency))
         expense_id = cursor.lastrowid
 
         print(f"Expense added with ID: {expense_id}")
