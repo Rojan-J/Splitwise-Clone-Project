@@ -97,11 +97,11 @@ def show_all_existing_friends(ui, user):
 
 
     for friend, btn in friendsbtn.items():
-        btn.clicked.connect(lambda _, f= friend: specific_friend_page(ui, f))
+        btn.clicked.connect(lambda _, f= friend: specific_friend_page(ui, f, user[2]))
 
 
 
-def specific_friend_page(ui, friend: Friends):
+def specific_friend_page(ui, friend: Friends, username):
     ui.mainPages.setCurrentWidget(ui.FriendPage)
     ui.FriendName.setText(friend.friend_name)
     profile = friend.friend_profile
@@ -122,10 +122,21 @@ def specific_friend_page(ui, friend: Friends):
         for col, value in enumerate(var_to_add):
             ui.TableOfExpenses.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
     
-    ui.AddExpensesBtn.clicked.connect(lambda: add_expense_page_friend(ui, friend))
+    ui.AddFriendExpenseBtn.clicked.connect(lambda: add_expense_page_friend(ui, friend, username))
 
-def add_expense_page_friend(ui, friend: Friends):
-    pass
+def add_expense_page_friend(ui, friend: Friends, username, recover= True):
+    if recover:
+        ui.MeCh.setText(f"{username}")
+        ui.FrCh.setText(f"{friend.friend_name}")
+        layout = ui.scrollAreaWidgetContents_21.layout()
+        # Iterate through the layout's items
+        while layout.count():
+            item = layout.takeAt(0)  # Remove the first item in the layout
+            widget = item.widget()
+            widget.deleteLater()
+
+
+    ui.FinalAddFriendExpenseBtn.clicked.connect(lambda: add_friend_expense(ui, friend, username))
 
 def create_friend(ui, user):
     default_shares = None
@@ -155,7 +166,7 @@ def create_friend(ui, user):
         if isinstance(Split, QtWidgets.QRadioButton) and Split.isChecked():
             split = Split.text()
     if split != "equally":
-        default_shares = get_shares_friend(ui)
+        default_shares = get_shares_friend(ui, "add_friend")
         if split == "share":
             default_shares_j = json.dumps(default_shares)
             default_prop_j = None
@@ -177,7 +188,7 @@ def create_friend(ui, user):
             Split = layout.itemAt(SplitBtnNo).widget()
             if isinstance(Split, QtWidgets.QRadioButton) and Split.isChecked():
                 Split.setChecked(False)
-        add_shares_friend(ui, "equally", friend_name, user[2])
+        add_shares_friend(ui, "equally", friend_name, user[2], "add_friend")
         
         ui.rightMenuContainer.collapseMenu()
         show_all_existing_friends(ui, user)
@@ -213,9 +224,10 @@ def add_friend_to_dataset(friend_name, friend_email, user, split, default_shares
     friend.add_friend(user[2], user[3], split , default_shares_j, default_prop_j)
 
 
-def get_shares_friend(ui):
+def get_shares_friend(ui, page):
     shares = dict()
-    layout = ui.scrollAreaWidgetContents_11.layout()
+    if page=="add_friend": layout = ui.scrollAreaWidgetContents_11.layout()
+    elif page=="add_expense": layout  = ui.scrollAreaWidgetContents_21.layout()
     i= 1
     while i < layout.count():
         label_item = layout.itemAt(i)
@@ -229,39 +241,44 @@ def get_shares_friend(ui):
 
     return shares
 
-def add_shares_friend(ui, split_type, friendname, username):
-    layout = ui.scrollAreaWidgetContents_11.layout()
+def add_shares_friend(ui, split_type, friendname, username, page):
+    if page=="add_friend": 
+        layout = ui.scrollAreaWidgetContents_11.layout()
+        scroll = ui.scrollAreaWidgetContents_11
+    elif page == "add_expense" :  
+        layout = ui.scrollAreaWidgetContents_21.layout()
+        scroll = ui.scrollAreaWidgetContents_21
     while layout.count():
         item = layout.takeAt(0)  # Get the first item
         widget = item.widget()  # Get the widget
         widget.deleteLater()
     if split_type != "equally":
         contributers=[friendname, username]
-        ui.label = QtWidgets.QLabel(ui.scrollAreaWidgetContents_11)
+        ui.label = QtWidgets.QLabel(scroll)
         font = QtGui.QFont()
         font.setFamily("Swis721 Blk BT")
         font.setPointSize(10)
         ui.label.setFont(font)
         ui.label.setObjectName("label")
-        ui.verticalLayout_29.addWidget(ui.label)
+        layout.addWidget(ui.label)
         ui.label.setText(f"{split_type}s:")
         for contributer in contributers:
-            ui.label_9 = QtWidgets.QLabel(ui.scrollAreaWidgetContents_11)
+            ui.label_9 = QtWidgets.QLabel(scroll)
             ui.label_9.setObjectName("label_9")
-            ui.verticalLayout_29.addWidget(ui.label_9)
+            layout.addWidget(ui.label_9)
             ui.label_9.setText(contributer)
             font = QtGui.QFont()
             font.setFamily("Swis721 Blk BT")
             font.setPointSize(8)
             ui.label_9.setFont(font)
-            ui.spinBox = QtWidgets.QSpinBox(ui.scrollAreaWidgetContents_11)
+            ui.spinBox = QtWidgets.QSpinBox(scroll)
             ui.spinBox.setObjectName("spinBox")
             font = QtGui.QFont()
             font.setFamily("Swis721 Blk BT")
             font.setPointSize(8)
             ui.spinBox.setFont(font)
             ui.spinBox.setValue(0)
-            ui.verticalLayout_29.addWidget(ui.spinBox)
+            layout.addWidget(ui.spinBox)
 
 
 def isfloat(value):
@@ -271,3 +288,171 @@ def isfloat(value):
     except:  
         return False
     
+def add_friend_expense(ui, friend, username):
+    category = ""
+    label = ui.FriendExpenseLabelInput.text()
+    amount = ui.AmountInputFr.text()
+    selected_date = ui.calendarWidget.selectedDate().toString("yyyy-dd-MM")
+    print(selected_date)
+    payer = ui.PayerInputFr.text()
+    description = ui.DiscriptionInputFr.toPlainText()
+    split_type = "default split"
+    default = False
+    error_def_perc = False
+
+    contributers = []
+    ui.MeCh.setText(f"{username}")
+    ui.FrCh.setText(f"{friend.friend_name}")
+    if ui.MeCh.isChecked():
+        contributers.append(username)
+    if ui.FrCh.isChecked():
+        contributers.append(friend.friend_name)
+
+
+
+    for categoryBtnNo in range(6):
+        categoryBtn = ui.gridLayout_13.itemAt(categoryBtnNo).widget()
+        if categoryBtn.isChecked():
+              category = categoryBtn.text()
+    if category == "":
+         category = "etc."
+
+
+    for SplitTypeNo in range(4):
+        SplitTypeBtn = ui.verticalLayout_56.itemAt(SplitTypeNo).widget()
+        if SplitTypeBtn.isChecked():
+            split_type = SplitTypeBtn.text()
+
+    if split_type == "share" or split_type == "percentage":
+            shares = get_shares_friend(ui, "add_expense")
+
+
+    if split_type == "default split":
+        default = True
+        defaults = get_default_split_friend(friend.friendship_id, friend.friend_name)
+        default_split = defaults[-3]
+        default_shares = defaults[-2]
+        default_proportions = defaults[-1]
+        if default_shares:
+            default_shares = json.loads(default_shares)
+        if  default_proportions:
+            default_proportions = json.loads(default_proportions)
+        split_type = default_split
+        if split_type == "share":
+            shares = dict()
+            for contributer in contributers:
+                shares[contributer] = default_shares[contributer]
+        elif split_type == "percentage":
+            shares = default_proportions
+    
+        
+    def total_perc(split_type):
+        if split_type == "percentage":
+            if  default == False:
+                shares = get_shares_friend(ui, "add_expense")
+            else:
+                shares = default_proportions
+            if sum(shares.values()) != 100:
+                return False
+        return True
+        
+
+
+    widgets = [ui.FrienndExpenseLabel, ui.AmountLabelFr, ui.PayerLabelFr, ui.ContributersLabelFr]
+
+    error = 0
+    
+    for widget, data in enumerate([label, amount, payer, contributers]):
+        if data == "" or data == [] or not data:
+            widgets[widget].setStyleSheet("color: red;")
+            ui.ErrorLabelFrEx.setText("Fill out all required inforamtion!")
+            ui.ErrorLabelFrEx.setStyleSheet("color : red;")
+            error = 1
+    
+
+        else:
+            widgets[widget].setStyleSheet("color: white;")
+            ui.ErrorLabelFrEx.setText("")
+            error = 0
+
+    if payer not in [friend.friend_name, username]:
+        widgets[1].setStyleSheet("color: red;")
+        widgets[2].setStyleSheet("color: red;")
+        if error == 0:
+            ui.ErrorLabelFrEx.setText("Payer is not accepted!")
+            ui.ErrorLabelFrEx.setStyleSheet("color : red;")
+            error = 2
+
+    else:
+        error = 0
+        widgets[1].setStyleSheet("color: white;")
+        widgets[2].setStyleSheet("color: white;")
+        ui.ErrorLabelFrEx.setText("")
+
+    
+    
+    if split_type == "percentage" and default == False:
+        if not total_perc(split_type):
+            ui.label.setStyleSheet("color: red;")
+            if error == 0:
+                ui.ErrorLabelFrEx.setText("Enter correct percentages!")
+                ui.ErrorLabelFrEx.setStyleSheet("color : red;")
+                
+                error =3
+        else:
+            ui.ErrorLabelFrEx.setText("")
+            ui.ErrorLabelFrEx.setStyleSheet("color : white;")
+            ui.label.setStyleSheet("color: white;")
+            error = 0
+    
+    if default == True and split_type == "percentage":
+        if len(contributers) != 2:
+            error_def_perc = True
+            ui.SplitLabelFrFr.setStyleSheet("color: red;")
+            if error == 0:
+                ui.ErrorLabelFrEx.setText("Your default split is percentage based; This mode of split is applicable only when both are contributed!")
+                ui.ErrorLabelFrEx.setStyleSheet("color : red;")
+
+            
+
+    if error_def_perc == False and label != "" and amount != "" and selected_date != "" and isfloat(amount) and contributers != [] and payer != ""  and payer in [friend.friend_name, username] and total_perc(split_type):
+        ui.FrienndExpenseLabel.setStyleSheet("color: white;")
+        ui.AmountLabelFr.setStyleSheet("color: white;")
+        ui.PayerLabelFr.setStyleSheet("color: white;")
+        ui.ContributersLabelFr.setStyleSheet("color: white;")
+        ui.SplitLabelFr.setStyleSheet("color: white;")
+        ui.ErrorLabelFrEx.setText("")
+        ui.ErrorLabelFrEx.setStyleSheet("color : white;")
+        if split_type == "share":
+            shares = shares
+            friend.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
+        elif split_type == "percentage":
+            proportions = shares
+            friend.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
+        else:
+            friend.add_expenses(label,amount, payer, contributers, selected_date, category,description, split_type)
+        
+        if default == True : split_title =f"default ({split_type})"
+        else: split_title = split_type
+        var_to_add = [label, payer, str(amount),",".join(contributers), selected_date, category, split_title, description]
+        row_position = ui.TableOfExpenses.rowCount()
+        ui.TableOfExpenses.insertRow(row_position)
+        for col, value in enumerate(var_to_add):
+            ui.TableOfExpenses.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
+
+        ui.FriendExpenseLabelInput.setText("")
+        ui.AmountInputFr.setText("")
+        ui.PayerInputFr.setText("")
+        ui.DiscriptionInputFr.setText("")
+        split_type = "equally"
+        add_shares_friend(ui, split_type, friend.friend_name, username, "add_expense")
+        for SplitTypeNo in range(4):
+            ui.verticalLayout_56.itemAt(SplitTypeNo).widget().setChecked(False)
+        layout = ui.scrollAreaWidgetContents_14.layout()
+        for i in range(layout.count()):
+            layout.itemAt(i).widget().setChecked(False)
+        for categoryBtnNo in range(6):
+            ui.gridLayout_13.itemAt(categoryBtnNo).widget().setChecked(False)
+        ui.GrpTotalExpense.setText(f"Total Expense: {friend.get_total_expenses_of_friend()[0]}")
+        
+        ui.rightMenuContainer.collapseMenu()

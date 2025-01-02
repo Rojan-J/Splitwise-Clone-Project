@@ -310,6 +310,19 @@ def get_default_split(group_id, group_name):
     connection.close()
     return defaults
 
+def get_default_split_friend(frienship_id, friend_name):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM user_friends WHERE friendship_id = ? AND friend_name = ?
+    ''', (frienship_id,  friend_name))
+    
+    #fetch the first matching row
+    defaults=cursor.fetchone()
+    connection.close()
+    return defaults
+
+
 
 def get_friends_by_username(username):
     connection=get_connection()
