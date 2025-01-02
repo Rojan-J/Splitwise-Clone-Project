@@ -94,9 +94,7 @@ class Groups:
         #contributions is a list that hold each contributor's share
         #contributor represents the user's id who contributed
         #contribution represents the amount that the contributor has paid
-        
-        self.expenses.append([label, expense, payer, contributors, expense_date, category, description, split_type, proportions, shares])
-        
+                
         connection = get_connection()
         cursor = connection.cursor()
 
@@ -134,18 +132,7 @@ class Groups:
             
         else:
             raise ValueError(f"Invalid split_type:{split_type}")
-
-
-        # add expense
-        cursor.execute("""
-            INSERT INTO group_expenses (label, group_id,groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares) 
-            VALUES (?, ?, ?, ?, ?, ?,?,?, ?, ?, ?, ?)
-        """, (label, self.group_id, self.group_name, payer, ",".join(contributors), expense, category, str(expense_date), description , split_type, json_proportions, json_shares))
-        expense_id = cursor.lastrowid
-
-        print(f"Expense added with ID: {expense_id}")
         
-        contributions=[]
 
             
         for contributor,contribution in contributions:

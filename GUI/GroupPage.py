@@ -134,6 +134,7 @@ def create_group(ui, user):
             Split = ui.verticalLayout_30.itemAt(SplitBtnNo).widget()
             if isinstance(Split, QtWidgets.QRadioButton) and Split.isChecked():
                 Split.setChecked(False)
+        add_shares(ui, "equally", "add_group")
         
         ui.rightMenuContainer.collapseMenu()
         show_all_existing_groups(ui, user)
@@ -148,7 +149,7 @@ def create_group(ui, user):
             widgets[widget].setStyleSheet("color: white;")
             ui.ErrorLabel.setText("")
 
-    if  int(group_no) != len(get_members(ui)):
+    if group_no != "" and int(group_no) != len(get_members(ui)):
         widgets[1].setStyleSheet("color: red;")
         widgets[2].setStyleSheet("color: red;")
         ui.ErrorLabel.setText("Number of Members does't match the list of their user name!")
@@ -272,6 +273,25 @@ def add_group_expense(ui, main_group):
         ui.ExpensesTable.insertRow(row_position)
         for col, value in enumerate(var_to_add):
             ui.ExpensesTable.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
+
+        ui.GrpExpenseLabelInput.setText("")
+        ui.AmountInput.setText("")
+        ui.PayerInput.setText("")
+        ui.DiscriptionInput.setText("")
+        split_type = "equally"
+        add_shares(ui, split_type, "add_expense")
+        for SplitTypeNo in range(4):
+            ui.verticalLayout_22.itemAt(SplitTypeNo).widget().setChecked(False)
+        layout = ui.scrollAreaWidgetContents_7.layout()
+        for i in range(layout.count()):
+            layout.itemAt(i).widget().setChecked(False)
+        for categoryBtnNo in range(6):
+            ui.gridLayout_2.itemAt(categoryBtnNo).widget().setChecked(False)
+        ui.GrpTotalExpense.setText(f"Total Expense: {main_group.get_total_expenses_of_group()[0]}")
+        
+        ui.rightMenuContainer.collapseMenu()
+        
+
 
     widgets = [ui.GrpExpenseLabelLabel, ui.AmountLabel, ui.PayerLabel, ui.ContributersLabel]
 
