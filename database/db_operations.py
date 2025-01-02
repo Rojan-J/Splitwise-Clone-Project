@@ -347,3 +347,21 @@ def get_friends_profile_by_friendship_id(friendship_id):
     friend =cursor.fetchone()
     connection.close()
     return friend
+
+def edit_friend_database(friendship_id, friend_profile, default_split, default_share, default_prop):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        UPDATE friends
+        SET friend_profile = ?
+        WHERE friendship_id = ?;
+    ''', (friend_profile, friendship_id, ))
+
+    cursor.execute('''
+        UPDATE user_friends
+        SET default_split = ?, default_shares = ? , default_proportions = ?
+        WHERE friendship_id = ?;
+    ''', (default_split, default_share, default_prop, friendship_id, ))
+    
+
+    connection.close()

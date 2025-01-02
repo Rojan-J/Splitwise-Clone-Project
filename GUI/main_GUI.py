@@ -250,7 +250,12 @@ class MainWindow(QMainWindow):
         self.ui.EqualFr.clicked.connect(lambda: add_shares_friend(self.ui, "equally", self.ui.FriendName.text(), self.user[2], "add_expense"))
         self.ui.ShareFr.clicked.connect(lambda: add_shares_friend(self.ui, "share", self.ui.FriendName.text(), self.user[2], "add_expense"))
         self.ui.PercFr.clicked.connect(lambda: add_shares_friend(self.ui, "percentage", self.ui.FriendName.text(), self.user[2], "add_expense"))
+
+        self.ui.EqualFriend_2.clicked.connect(lambda: add_shares_friend(self.ui, "equally", self.ui.FriendName.text(), self.user[2], "edit_friend"))
+        self.ui.ShareFriend_2.clicked.connect(lambda: add_shares_friend(self.ui, "share", self.ui.FriendName.text(), self.user[2], "edit_friend"))
+        self.ui.PercentageFriend_2.clicked.connect(lambda: add_shares_friend(self.ui, "percentage", self.ui.FriendName.text(), self.user[2], "edit_friend"))
         
+
         
     
 

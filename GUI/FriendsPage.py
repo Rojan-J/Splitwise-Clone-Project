@@ -123,6 +123,7 @@ def specific_friend_page(ui, friend: Friends, username):
             ui.TableOfExpenses.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
     
     ui.AddFriendExpenseBtn.clicked.connect(lambda: add_expense_page_friend(ui, friend, username))
+    ui.AddFriendBtn_2.clicked.connect(lambda: edit_friend(ui, friend, username ))
 
 def add_expense_page_friend(ui, friend: Friends, username, recover= True):
     if recover:
@@ -228,6 +229,7 @@ def get_shares_friend(ui, page):
     shares = dict()
     if page=="add_friend": layout = ui.scrollAreaWidgetContents_11.layout()
     elif page=="add_expense": layout  = ui.scrollAreaWidgetContents_21.layout()
+    elif page == "edit_friend": layout = ui.scrollAreaWidgetContents_17.layout()
     i= 1
     while i < layout.count():
         label_item = layout.itemAt(i)
@@ -248,6 +250,9 @@ def add_shares_friend(ui, split_type, friendname, username, page):
     elif page == "add_expense" :  
         layout = ui.scrollAreaWidgetContents_21.layout()
         scroll = ui.scrollAreaWidgetContents_21
+    elif page == "edit_friend":
+        layout = ui.scrollAreaWidgetContents_17.layout()
+        scroll = ui.scrollAreaWidgetContents_17
     while layout.count():
         item = layout.takeAt(0)  # Get the first item
         widget = item.widget()  # Get the widget
@@ -289,10 +294,11 @@ def isfloat(value):
         return False
     
 def add_friend_expense(ui, friend, username):
+
     category = ""
     label = ui.FriendExpenseLabelInput.text()
     amount = ui.AmountInputFr.text()
-    selected_date = ui.calendarWidget.selectedDate().toString("yyyy-dd-MM")
+    selected_date = ui.DateInputFr.selectedDate().toString("yyyy-dd-MM")
     print(selected_date)
     payer = ui.PayerInputFr.text()
     description = ui.DiscriptionInputFr.toPlainText()
@@ -416,6 +422,7 @@ def add_friend_expense(ui, friend, username):
             
 
     if error_def_perc == False and label != "" and amount != "" and selected_date != "" and isfloat(amount) and contributers != [] and payer != ""  and payer in [friend.friend_name, username] and total_perc(split_type):
+
         ui.FrienndExpenseLabel.setStyleSheet("color: white;")
         ui.AmountLabelFr.setStyleSheet("color: white;")
         ui.PayerLabelFr.setStyleSheet("color: white;")
@@ -456,3 +463,57 @@ def add_friend_expense(ui, friend, username):
         ui.GrpTotalExpense.setText(f"Total Expense: {friend.get_total_expenses_of_friend()[0]}")
         
         ui.rightMenuContainer.collapseMenu()
+
+
+
+def edit_friend(ui, friend, username):
+    default_shares_j = None
+    default_prop_j = None
+
+    percent_total = True
+    if ui.MaleProfileBtn_2.isChecked():
+        friend_profile = 1
+    elif ui.LadyProfileBtn_2.isChecked():
+        friend_profile = 0
+    layout = ui.split_frame_2.layout()
+    count = layout.count()
+    for SplitBtnNo in range(count):
+        Split = layout.itemAt(SplitBtnNo).widget()
+        print(Split)
+        if isinstance(Split, QtWidgets.QRadioButton) and Split.isChecked():
+            split = Split.text()
+    if split != "equally":
+        default_shares = get_shares_friend(ui, "edit_friend")
+        if split == "share":
+            default_shares_j = json.dumps(default_shares)
+            default_prop_j = None
+        else:
+            default_prop_j = json.dumps(default_shares)
+            default_shares_j = None
+    
+    if split == "percentage":
+        if sum(default_shares.values()) != 100:
+            percent_total = False
+
+    if  split !=""  and percent_total:
+        print("Yes")
+        edit_friend_database(friend.friendship_id, friend_profile, split, default_shares_j, default_prop_j)
+        for SplitBtnNo in range(count):
+            Split = layout.itemAt(SplitBtnNo).widget()
+            if isinstance(Split, QtWidgets.QRadioButton) and Split.isChecked():
+                Split.setChecked(False)
+        add_shares_friend(ui, "equally", friend.friend_name, username, "edit_friend")
+        
+        ui.rightMenuContainer.collapseMenu()
+        specific_friend_page(ui, friend, username)
+    
+    
+    if split == "percentage":
+        if not percent_total:
+            ui.ErrorLabel3_2.setText("Enter correct percentages!")
+            ui.ErrorLabel3_2.setStyleSheet("color : red;")
+            ui.label.setStyleSheet("color: red;")
+        else:
+            ui.ErrorLabel3_2.setText("")
+            ui.ErrorLabel3_2.setStyleSheet("color : white;")
+            ui.label.setStyleSheet("color: white;")
