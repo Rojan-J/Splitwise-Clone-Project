@@ -18,7 +18,7 @@ def update_existing_group(group_name,file_path):
     if not all(column in data.columns for column in required_col):
         raise ValueError("The Excel file is missing required columns.")
     
-    connection=get_connection()
+    connection = sqlite3.connect(r"C:/Users/LENOVO/OneDrive/Documents/GitHub/Splitwise-Clone-Project/database/database.db")
     cursor=connection.cursor()
     
     #check if the group exists:
@@ -138,6 +138,8 @@ def update_existing_group(group_name,file_path):
     connection.commit()
     connection.close()
     
+    
+update_existing_group("Test_group1", r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database\transaction import\TestExcel_GroupUpdate.xlsx")
     
             
     
