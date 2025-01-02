@@ -64,7 +64,7 @@ class Groups:
         
         
 
-    def add_members(self, username):
+    def add_members(self, username, split, default_shares_j, default_prop_j):
         if username not in self.members:
             self.members.append(username)
             
@@ -83,7 +83,7 @@ class Groups:
             
             #add member to the group
             print_table_columns("user_group")
-            cursor.execute("INSERT INTO user_group (user_id, username, group_id, group_name) VALUES (?, ?, ?, ?)", (user_id, username, self.group_id, self.group_name))
+            cursor.execute("INSERT INTO user_group (user_id, username, group_id, group_name, default_split, default_shares, default_proportions) VALUES (?, ?, ?, ?, ?, ?, ?)", (user_id, username, self.group_id, self.group_name, split, default_shares_j, default_prop_j))
             connection.commit()
             connection.close()    
             
