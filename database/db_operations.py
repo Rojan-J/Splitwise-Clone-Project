@@ -58,13 +58,13 @@ def add_group(group_name):
     connection.commit()
     connection.close()
 
-def add_friends(friendship_id, user_name, friends_name, default_split = "equally", default_shares_j = None, default_proportions_j = None):
+def add_friends(friendship_id, user_name, friends_name, friend_email,  default_split = "equally", default_shares_j = None, default_proportions_j = None):
     connection = get_connection()
     cursor=connection.cursor()
     cursor.execute('''
-        INSERT INTO user_friends (friendship_id, username, friend_name, default_split, default_shares, default_proportions) 
-        VALUES (?, ?, ?, ?, ?, ?)
-    ''', (friendship_id, user_name, friends_name, default_split, default_shares_j, default_proportions_j, ))
+        INSERT INTO user_friends (friendship_id, username, friend_name, friend_email, default_split, default_shares, default_proportions) 
+        VALUES (?, ?, ?,?, ?, ?, ?)
+    ''', (friendship_id, user_name, friends_name,friend_email, default_split, default_shares_j, default_proportions_j, ))
     connection.commit()
     connection.close()
 
@@ -297,3 +297,16 @@ def get_default_split(group_id, group_name):
     defaults=cursor.fetchone()
     connection.close()
     return defaults
+
+
+def get_friends_by_username(username):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM user_friends WHERE username = ?
+    ''', (username, ))
+    
+    #fetch the first matching row
+    friends=cursor.fetchall()
+    connection.close()
+    return friends

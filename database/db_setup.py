@@ -89,7 +89,6 @@ def initialize_database():
             for_what TEXT NOT NULL,
             name TEXT NOT NULL,
             share REAL,  -- Share for share-based splits,
-            FOREIGN KEY(expense_id) REFERENCES group_expenses(expense_id),
             FOREIGN KEY(username) REFERENCES users(username)
         )
     ''')
@@ -143,6 +142,7 @@ def initialize_database():
             friendship_id INTEGER,
             username TEXT NOT NULL,
             friend_name TEXT NOT NULL,
+            friend_email TEXT NOT NULL,
             default_split TEXT DEFAULT 'equally',
             default_shares TEXT,
             default_proportions TEXT,

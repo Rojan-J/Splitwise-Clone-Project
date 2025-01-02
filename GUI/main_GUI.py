@@ -32,6 +32,7 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ProfilePage import *
 from GroupPage import *
+from FriendsPage import *
 
 ########################################################################
 ## MAIN WINDOW CLASS
@@ -232,6 +233,8 @@ class MainWindow(QMainWindow):
         self.ui.share.clicked.connect(lambda: add_shares(self.ui, "share", "add_group"))
         self.ui.percentage.clicked.connect(lambda: add_shares(self.ui, "percentage", "add_group"))
         self.ui.Equal.clicked.connect(lambda: add_shares(self.ui, "equally", "add_group"))
+
+        self.ui.FriendsIcon.clicked.connect(lambda: show_all_existing_friends(self.ui, self.user))
         
         
     

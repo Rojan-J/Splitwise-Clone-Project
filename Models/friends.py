@@ -52,8 +52,8 @@ class Friends:
         
         
 
-    def add_friend(self, username, split = "equally", default_shares_j = None, default_proportions_j = None):
-        add_friends(self.friendship_id, username, self.friend_name, split, default_shares_j, default_proportions_j)
+    def add_friend(self, username, user_email, split = "equally", default_shares_j = None, default_proportions_j = None):
+        add_friends(self.friendship_id, username, self.friend_name, self.friend_email, split, default_shares_j, default_proportions_j)
         connection=get_connection()
         cursor=connection.cursor()
         
@@ -70,7 +70,7 @@ class Friends:
         
         #add member to the group
         print_table_columns("user_group")
-        add_friends(self.friendship_id, self.friend_name, username, split, default_shares_j, default_proportions_j)
+        add_friends(self.friendship_id, self.friend_name, username, user_email, split, default_shares_j, default_proportions_j)
         connection.commit()
         connection.close()    
             
@@ -120,7 +120,7 @@ class Friends:
         else:
             raise ValueError(f"Invalid split_type:{split_type}")
         
-
+        print(contributions)
             
         for contributor,contribution in contributions:
             if split_type == "share":
