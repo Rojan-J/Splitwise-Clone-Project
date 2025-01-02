@@ -100,4 +100,21 @@ def show_all_existing_friends(ui, user):
 
 
 def specific_friend_page(ui, friend: Friends):
+    ui.mainPages.setCurrentWidget(ui.FriendPage)
+    ui.FriendName.setText(friend.friend_name)
+    expenses = get_expenses_of_friend_by_friendship_id(friend.friendship_id)
+    ui.TableOfExpenses.setRowCount(0)
+    header = ui.TableOfExpenses.horizontalHeader()
+    header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+    for expense in expenses:
+        print(expense)
+        row_position = ui.TableOfExpenses.rowCount()
+        ui.TableOfExpenses.insertRow(row_position)
+        var_to_add = [expense[1], expense[3],str(expense[5]), expense[4], expense[7], expense[6], expense[9], expense[8]]
+        for col, value in enumerate(var_to_add):
+            ui.TableOfExpenses.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
+    
+    ui.AddExpensesBtn.clicked.connect(lambda: add_expense_page_friend(ui, friend))
+
+def add_expense_page_friend(ui, friend: Friends):
     pass

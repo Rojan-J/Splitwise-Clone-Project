@@ -2581,6 +2581,46 @@ QCalendarWidget QToolButton:hover {
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
+                         <column>
+                          <property name="text">
+                           <string>Label</string>
+                          </property>
+                         </column>
+                         <column>
+                          <property name="text">
+                           <string>Payer</string>
+                          </property>
+                         </column>
+                         <column>
+                          <property name="text">
+                           <string>Amount</string>
+                          </property>
+                         </column>
+                         <column>
+                          <property name="text">
+                           <string>Contributers</string>
+                          </property>
+                         </column>
+                         <column>
+                          <property name="text">
+                           <string>Date</string>
+                          </property>
+                         </column>
+                         <column>
+                          <property name="text">
+                           <string>Category</string>
+                          </property>
+                         </column>
+                         <column>
+                          <property name="text">
+                           <string>Split</string>
+                          </property>
+                         </column>
+                         <column>
+                          <property name="text">
+                           <string>Description</string>
+                          </property>
+                         </column>
                         </widget>
                        </item>
                       </layout>
