@@ -235,6 +235,11 @@ class MainWindow(QMainWindow):
         self.ui.Equal.clicked.connect(lambda: add_shares(self.ui, "equally", "add_group"))
 
         self.ui.FriendsIcon.clicked.connect(lambda: show_all_existing_friends(self.ui, self.user))
+        self.ui.AddFriendBtn.clicked.connect(lambda: create_friend(self.ui, self.user))
+
+        self.ui.EqualFriend.clicked.connect(lambda: add_shares_friend(self.ui, "equally", self.ui.NameInput.text(), self.user[2]))
+        self.ui.ShareFriend.clicked.connect(lambda: add_shares_friend(self.ui, "share", self.ui.NameInput.text(), self.user[2]))
+        self.ui.PercentageFriend.clicked.connect(lambda: add_shares_friend(self.ui, "percentage", self.ui.NameInput.text(), self.user[2]))
         
         
     

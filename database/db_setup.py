@@ -133,7 +133,7 @@ def initialize_database():
             friend_name TEXT NOT NULL,
             friend_email TEXT NOT NULL,
             username TEXT NOT NULL,
-
+            friend_profile INTEGER DEFAULT 0, 
             FOREIGN KEY(username) REFERENCES users(username)    
         )
     ''')

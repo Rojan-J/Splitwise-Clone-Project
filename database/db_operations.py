@@ -322,3 +322,15 @@ def get_friends_by_username(username):
     friends=cursor.fetchall()
     connection.close()
     return friends
+
+def get_friends_profile_by_friendship_id(friendship_id):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT friend_profile FROM friends WHERE friendship_id = ?
+    ''', (friendship_id, ))
+    
+    #fetch the first matching row
+    friend =cursor.fetchone()
+    connection.close()
+    return friend

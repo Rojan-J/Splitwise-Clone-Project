@@ -16,32 +16,37 @@ from currency_conversion_all_currencies import convert_to_IRR
 
 
 class Friends:
-    def __init__(self, username, friend_name, friends_email,  split = "equally", expenses = [], debts = dict()):
+    def __init__(self, username, friend_name, friends_email, friend_profile,  split = "equally", expenses = [], debts = dict()):
+        print("'profile is", friend_profile)
         self.friend_name = friend_name
         self.friendship_id = None
         self.expenses = expenses
         self.debts = debts
         self.friend_email = friends_email
+        self.friend_profile = friend_profile
         self.load_from_database(username)
+        print(self.friend_name, self.friend_profile)
+
 
         
     def load_from_database(self, username):
         connection=get_connection()
         cursor=connection.cursor()
         
-        cursor.execute("SELECT friendship_id FROM friends WHERE (friend_name = ? and username = ?) or (friend_name = ? and username = ?)", (self.friend_name, username, username, self.friend_name))
+        cursor.execute("SELECT * FROM friends WHERE (friend_name = ? and username = ?) or (friend_name = ? and username = ?)", (self.friend_name, username, username, self.friend_name))
         friend = cursor.fetchone()
-        
+        print(friend)
         #check if group exists and fetch members of the group
         if friend:
             self.friendship_id = friend[0]
+            self.friend_profile = friend[-1]
             
             all_expenses = get_friend_expenses_by_friendship_id(self.friendship_id)
             for expense in all_expenses:
                 self.expenses.append([expense[1],expense[5], expense[3], expense[4], expense[7], expense[6], expense[8], expense[9], expense[10], expense[11]])
 
         else:
-            cursor.execute("INSERT INTO friends (username, friend_name, friend_email) VALUES (?, ?, ?)", (username, self.friend_name, self.friend_email, ))
+            cursor.execute("INSERT INTO friends (username, friend_name, friend_email, friend_profile) VALUES (?, ?, ?, ?)", (username, self.friend_name, self.friend_email, self.friend_profile, ))
             
             self.friendship_id = cursor.lastrowid
             print(f"friend '{self.friend_name}' created with friendship_id: {self.friendship_id}")
@@ -69,7 +74,6 @@ class Friends:
 
         
         #add member to the group
-        print_table_columns("user_group")
         add_friends(self.friendship_id, self.friend_name, username, user_email, split, default_shares_j, default_proportions_j)
         connection.commit()
         connection.close()    
