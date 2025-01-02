@@ -262,3 +262,15 @@ def get_expenses_of_grp_by_grp_id(group_id):
     expenses=cursor.fetchall()
     connection.close()
     return expenses
+
+def get_default_split(group_id, group_name):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM user_group WHERE group_id = ? AND group_name = ?
+    ''', (group_id,  group_name))
+    
+    #fetch the first matching row
+    defaults=cursor.fetchone()
+    connection.close()
+    return defaults

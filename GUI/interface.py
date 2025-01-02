@@ -33,6 +33,11 @@ class Ui_MainWindow(object):
 "    background-color: rgba(0, 0, 0, 180);\n"
 "    color: white; \n"
 "}\n"
+"\n"
+"QTextBrowser {\n"
+"    background-color:#2c313c;\n"
+"}\n"
+"\n"
 "#centralwidget{\n"
 "    background-color: #1f232a;\n"
 "}\n"
@@ -609,7 +614,7 @@ class Ui_MainWindow(object):
         self.scrollArea_9.setWidgetResizable(True)
         self.scrollArea_9.setObjectName("scrollArea_9")
         self.scrollAreaWidgetContents_15 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_15.setGeometry(QtCore.QRect(0, 0, 455, 328))
+        self.scrollAreaWidgetContents_15.setGeometry(QtCore.QRect(0, 0, 455, 341))
         self.scrollAreaWidgetContents_15.setObjectName("scrollAreaWidgetContents_15")
         self.horizontalLayout_50 = QtWidgets.QHBoxLayout(self.scrollAreaWidgetContents_15)
         self.horizontalLayout_50.setObjectName("horizontalLayout_50")
@@ -1561,7 +1566,7 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName("scrollArea_2")
         self.scrollAreaWidgetContents_3 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 401, 1218))
+        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 465, 1218))
         self.scrollAreaWidgetContents_3.setObjectName("scrollAreaWidgetContents_3")
         self.verticalLayout_45 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_3)
         self.verticalLayout_45.setObjectName("verticalLayout_45")
@@ -1891,7 +1896,7 @@ class Ui_MainWindow(object):
         self.scrollArea_17.setWidgetResizable(True)
         self.scrollArea_17.setObjectName("scrollArea_17")
         self.scrollAreaWidgetContents_18 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_18.setGeometry(QtCore.QRect(0, 0, 262, 214))
+        self.scrollAreaWidgetContents_18.setGeometry(QtCore.QRect(0, 0, 262, 218))
         self.scrollAreaWidgetContents_18.setObjectName("scrollAreaWidgetContents_18")
         self.horizontalLayout_56 = QtWidgets.QHBoxLayout(self.scrollAreaWidgetContents_18)
         self.horizontalLayout_56.setObjectName("horizontalLayout_56")
@@ -1974,7 +1979,7 @@ class Ui_MainWindow(object):
         self.scrollArea_5.setWidgetResizable(True)
         self.scrollArea_5.setObjectName("scrollArea_5")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 208, 454))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 208, 466))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.horizontalLayout_33 = QtWidgets.QHBoxLayout(self.scrollAreaWidgetContents_2)
         self.horizontalLayout_33.setObjectName("horizontalLayout_33")
@@ -2510,7 +2515,7 @@ class Ui_MainWindow(object):
         self.scrollArea_6.setWidgetResizable(True)
         self.scrollArea_6.setObjectName("scrollArea_6")
         self.scrollAreaWidgetContents_8 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_8.setGeometry(QtCore.QRect(0, 0, 387, 1001))
+        self.scrollAreaWidgetContents_8.setGeometry(QtCore.QRect(0, -468, 387, 1057))
         self.scrollAreaWidgetContents_8.setObjectName("scrollAreaWidgetContents_8")
         self.horizontalLayout_23 = QtWidgets.QHBoxLayout(self.scrollAreaWidgetContents_8)
         self.horizontalLayout_23.setObjectName("horizontalLayout_23")
@@ -2752,14 +2757,17 @@ class Ui_MainWindow(object):
         self.DiscriptionLabel.setObjectName("DiscriptionLabel")
         self.verticalLayout_43.addWidget(self.DiscriptionLabel)
         self.DiscriptionInput = QtWidgets.QTextEdit(self.AddExpenseBox)
-        self.DiscriptionInput.setObjectName("DiscriptionInput")
-        self.verticalLayout_43.addWidget(self.DiscriptionInput)
-        self.ErrorLabel2 = QtWidgets.QLabel(self.AddExpenseBox)
         font = QtGui.QFont()
         font.setFamily("Swis721 Blk BT")
         font.setPointSize(10)
+        self.DiscriptionInput.setFont(font)
+        self.DiscriptionInput.setObjectName("DiscriptionInput")
+        self.verticalLayout_43.addWidget(self.DiscriptionInput)
+        self.ErrorLabel2 = QtWidgets.QTextBrowser(self.AddExpenseBox)
+        font = QtGui.QFont()
+        font.setFamily("Swis721 Blk BT")
+        font.setPointSize(12)
         self.ErrorLabel2.setFont(font)
-        self.ErrorLabel2.setText("")
         self.ErrorLabel2.setObjectName("ErrorLabel2")
         self.verticalLayout_43.addWidget(self.ErrorLabel2)
         self.FinalAddExpenseBtn = QtWidgets.QPushButton(self.AddExpenseBox)
@@ -2784,7 +2792,7 @@ class Ui_MainWindow(object):
         self.scrollArea_7.setWidgetResizable(True)
         self.scrollArea_7.setObjectName("scrollArea_7")
         self.scrollAreaWidgetContents_13 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_13.setGeometry(QtCore.QRect(0, 0, 384, 698))
+        self.scrollAreaWidgetContents_13.setGeometry(QtCore.QRect(0, 0, 384, 702))
         self.scrollAreaWidgetContents_13.setObjectName("scrollAreaWidgetContents_13")
         self.horizontalLayout_41 = QtWidgets.QHBoxLayout(self.scrollAreaWidgetContents_13)
         self.horizontalLayout_41.setObjectName("horizontalLayout_41")

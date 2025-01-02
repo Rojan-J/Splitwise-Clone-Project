@@ -149,7 +149,8 @@ def create_group(ui, user):
             widgets[widget].setStyleSheet("color: white;")
             ui.ErrorLabel.setText("")
 
-    if group_no != "" and int(group_no) != len(get_members(ui)):
+    if group_no != "" and group_no != len(members):
+        print(group_no, members, len(members), len(members) == group_no)
         widgets[1].setStyleSheet("color: red;")
         widgets[2].setStyleSheet("color: red;")
         ui.ErrorLabel.setText("Number of Members does't match the list of their user name!")
@@ -226,9 +227,9 @@ def add_group_expense(ui, main_group):
     payer = ui.PayerInput.text()
     description = ui.DiscriptionInput.toPlainText()
     split_type = "equally"
+    default = False
 
     contributers = get_contributers(ui)
-    percent_total = True
 
 
 
@@ -245,13 +246,33 @@ def add_group_expense(ui, main_group):
         if SplitTypeBtn.isChecked():
             split_type = SplitTypeBtn.text()
 
-    if split_type != "equally":
-        shares = get_shares(ui, "add_expense")
-        print("COUNT", ui.verticalLayout_25.count())
+    if split_type == "share" or split_type == "percentage":
+            shares = get_shares(ui, "add_expense")
+            print("COUNT", ui.verticalLayout_25.count())
+
+    if split_type == "default split":
+        default = True
+        defaults = get_default_split(main_group.group_id, main_group.group_name)
+        default_split = defaults[-3]
+        default_shares = defaults[-1]
+        default_proportions = defaults[-2]
+        if default_shares:
+            default_shares = json.loads(default_shares)
+        if  default_proportions:
+            default_proportions = json.loads(default_proportions)
+        split_type = default_split
+        if split_type == "share":
+            shares = default_shares
+        elif split_type == "percentage":
+            shares = default_proportions
+    
         
     def total_perc(split_type):
         if split_type == "percentage":
-            shares = get_shares(ui, "add_expense")
+            if  default == False:
+                shares = get_shares(ui, "add_expense")
+            else:
+                shares = default_proportions
             if sum(shares.values()) != 100:
                 print("No")
                 print(shares.values())
@@ -434,6 +455,7 @@ def get_contributers(ui):
 
 def get_members(ui):
     members = ui.GrpMembersInput.toPlainText().split("\n")
+    if members == [""]: members =[]
     return members
 
 

@@ -33,6 +33,11 @@ QLineEdit, QTextEdit {
     background-color: rgba(0, 0, 0, 180);
     color: white; 
 }
+
+QTextBrowser {
+	background-color:#2c313c;
+}
+
 #centralwidget{
 	background-color: #1f232a;
 }
@@ -1123,7 +1128,7 @@ QCalendarWidget QToolButton:hover {
                       <x>0</x>
                       <y>0</y>
                       <width>455</width>
-                      <height>328</height>
+                      <height>341</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_50">
@@ -2778,7 +2783,7 @@ QCalendarWidget QToolButton:hover {
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>401</width>
+                      <width>465</width>
                       <height>1218</height>
                      </rect>
                     </property>
@@ -3410,7 +3415,7 @@ QCalendarWidget QToolButton:hover {
                          <x>0</x>
                          <y>0</y>
                          <width>262</width>
-                         <height>214</height>
+                         <height>218</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_56">
@@ -3572,7 +3577,7 @@ QCalendarWidget QToolButton:hover {
                          <x>0</x>
                          <y>0</y>
                          <width>208</width>
-                         <height>454</height>
+                         <height>466</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_33">
@@ -4594,9 +4599,9 @@ QCalendarWidget QToolButton:hover {
                        <property name="geometry">
                         <rect>
                          <x>0</x>
-                         <y>0</y>
+                         <y>-468</y>
                          <width>387</width>
-                         <height>1001</height>
+                         <height>1057</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_23">
@@ -5032,18 +5037,22 @@ QCalendarWidget QToolButton:hover {
                             </widget>
                            </item>
                            <item>
-                            <widget class="QTextEdit" name="DiscriptionInput"/>
-                           </item>
-                           <item>
-                            <widget class="QLabel" name="ErrorLabel2">
+                            <widget class="QTextEdit" name="DiscriptionInput">
                              <property name="font">
                               <font>
                                <family>Swis721 Blk BT</family>
                                <pointsize>10</pointsize>
                               </font>
                              </property>
-                             <property name="text">
-                              <string/>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QTextBrowser" name="ErrorLabel2">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>12</pointsize>
+                              </font>
                              </property>
                             </widget>
                            </item>
@@ -5092,7 +5101,7 @@ QCalendarWidget QToolButton:hover {
                          <x>0</x>
                          <y>0</y>
                          <width>384</width>
-                         <height>698</height>
+                         <height>702</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_41">
