@@ -1,1 +1,6 @@
+API=
 037306f9ecd64a4fa2d900d558c17b4f
+
+Account=
+https://openexchangerates.org/account/usage
+(Rojan Jaleh- pass=ronil_project)

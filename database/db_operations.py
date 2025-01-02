@@ -1,51 +1,36 @@
 import sqlite3
 
 def get_connection():
-    connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")
+    connection=sqlite3.connect("database.db")
 
     connection.execute("PRAGMA foreign_keys=ON")  #enable foreign key support
     
     return connection
 
-def add_user(name, username,email,password_hash,profile=0, is_registered=True, balance=0, temp = False):
+def add_user(username,email,password_hash, is_registered=True):
     connection=get_connection()
     cursor=connection.cursor()
     
     cursor.execute('''
-        INSERT INTO users (name, username, email, password_hash, is_registered, profile, balance, temp)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    ''', (name, username, email, password_hash, is_registered, profile, balance, temp))
+        INSERT INTO users (username, email, password_hash, is_registered)
+        VALUES (?, ?, ?, ?)
+    ''', (username, email, password_hash, is_registered))
     
     connection.commit()
     connection.close()
     
-def get_user_by_email (email, username):
+    
+def get_user_by_email (email):
     connection=get_connection()
     cursor=connection.cursor()
     cursor.execute('''
-        SELECT * FROM users WHERE email = ? or username = ?
-    ''', (email,username, ))
+        SELECT * FROM users WHERE email = ?
+    ''', (email,))
     
     #fetch the first matching row
     user=cursor.fetchone()
     connection.close()
     return user
-
-def get_all_usernames():
-    all_usernames = []
-
-    connection=get_connection()
-    cursor=connection.cursor()
-
-    # Execute the query to fetch all usernames
-    cursor.execute('SELECT username FROM users;')
-    usernames = cursor.fetchall()
-
-    for username in usernames:
-        all_usernames.append(username[0])
-    
-    connection.close()
-    return all_usernames
 
 
 def add_group(group_name):
@@ -67,15 +52,16 @@ def get_all_groups():
     connection.close()
     return groups
 
-def add_user_to_group(user_id,username, group_id, groupname):
+def add_user_to_group(user_id,group_id):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
-        INSERT INTO user_group (user_id,username, group_id, groupname)
-        VALUES (?, ?, ?, ?)
-    ''', (user_id,username, group_id, groupname))
+        INSERT INTO user_group (user_id, group_id)
+        VALUES (?, ?)
+    ''', (user_id, group_id))
     connection.commit()
     connection.close()
+    
     
 def add_temp_user_to_group(temp_user_id, group_id, temp_member_name, temp_member_email):
     connection = get_connection()
@@ -89,53 +75,29 @@ def add_temp_user_to_group(temp_user_id, group_id, temp_member_name, temp_member
     
     
     
-def add_expanse(group_id, groupname, payername, contributers, amount, category, date, description=None, split_type = "equally", proportions = None, shares = None):
+def add_expanse(group_id,payer_id,amount,category,date,description=None):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
-        INSERT INTO group_expenses (group_id,groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ''', (group_id, groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares))
+        INSERT INTO expenses (group_id, payer_id, amount, category, date, description)
+        VALUES (?, ?, ?, ?, ?, ?)
+    ''', (group_id, payer_id, amount, category, date, description))
     connection.commit()
     connection.close()
     
 
 #to add a single user's contribution to an expense    
-def add_contribution(expense_id, total_expense, username,amount_contributed, groupname, split_proportion=None, share=None, for_what = "groups"):
+def add_contribution(expense_id,user_id,amount_contributed, split_proportion=None, share=None):
     connection = get_connection()
     cursor = connection.cursor()
     
     cursor.execute('''
-            INSERT INTO expense_user (expense_id, total_expense,  username, amount_contributed, split_proportion, for_what, name)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', (expense_id, total_expense, username, amount_contributed,split_proportion, for_what, groupname))
+            INSERT INTO expense_user (expense_id, user_id, amount_contributed, split_proportion, share)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (expense_id, user_id, amount_contributed, split_proportion, share))
 
     connection.commit()
     connection.close()
-
-def get_groups_by_username(username):
-    connection=get_connection()
-    cursor=connection.cursor()
-    cursor.execute('''
-        SELECT * FROM user_group WHERE username = ?
-    ''', (username, ))
-    
-    #fetch the first matching row
-    groups=cursor.fetchall()
-    connection.close()
-    return groups
-
-def get_group_expenses_by_group_id(group_id):
-    connection=get_connection()
-    cursor=connection.cursor()
-    cursor.execute('''
-        SELECT * FROM group_expenses WHERE group_id = ?
-    ''', (group_id, ))
-    
-    #fetch the first matching row
-    expenses=cursor.fetchall()
-    connection.close()
-    return expenses
     
     
 #to add contributions for multiple users based on their percentage shares 
@@ -197,16 +159,6 @@ def add_debt(debtor_id,creditor_id,amount):
     ''', (debtor_id, creditor_id, amount))
     connection.commit()
     connection.close()
-
-def add_recurrent_expense(username, user_id, label, amount, days, category, paid = "Paid"):
-    connection = get_connection()
-    cursor = connection.cursor()
-    cursor.execute('''
-        INSERT INTO recurrent_expenses (username, user_id, label, days_of_month, amount, category, paid)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    ''', (username, user_id, label, days, amount, category, paid))
-    connection.commit()
-    connection.close()
     
 
 def update_debt_status(debt_id,status):
@@ -217,48 +169,5 @@ def update_debt_status(debt_id,status):
     ''', (status, debt_id))
     connection.commit()
     connection.close()
-
-def update_name(user_name, new_name):
-    connection = get_connection()
-    cursor = connection.cursor()
-    cursor.execute('''
-        UPDATE users SET name = ? WHERE username = ?
-    ''', (new_name, user_name))
-    connection.commit()
-    connection.close()
-
     
-
-def update_balance(user_name, balance):
-    connection = get_connection()
-    cursor = connection.cursor()
-    cursor.execute('''
-        UPDATE users SET balance = ? WHERE username = ?
-    ''', (balance, user_name))
-    connection.commit()
-    connection.close()
-
-
-def get_recurrent_expense_by_username(username):
-    connection=get_connection()
-    cursor=connection.cursor()
-    cursor.execute('''
-        SELECT * FROM recurrent_expenses WHERE username = ?
-    ''', (username, ))
     
-    #fetch the first matching row
-    recurrent=cursor.fetchall()
-    connection.close()
-    return recurrent
-
-def get_expenses_of_grp_by_grp_id(group_id):
-    connection=get_connection()
-    cursor=connection.cursor()
-    cursor.execute('''
-        SELECT * FROM group_expenses WHERE group_id = ?
-    ''', (group_id, ))
-    
-    #fetch the first matching row
-    expenses=cursor.fetchall()
-    connection.close()
-    return expenses
