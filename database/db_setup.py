@@ -1,7 +1,7 @@
 import sqlite3
 
 def initialize_database():
-    connection=sqlite3.connect(r"C:/Users/LENOVO/OneDrive/Documents/GitHub/Splitwise-Clone-Project/database/database.db")  #create database file
+    connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")  #create database file
 
     cursor=connection.cursor()  # to interact with the database
     
@@ -125,6 +125,50 @@ def initialize_database():
             paid TEXT NOT NULL DEFAULT 'Paid',
             FOREIGN KEY(username) REFERENCES users(username),
             FOREIGN KEY(user_id) REFERENCES users(user_id)
+        )
+    ''')
+    
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS friends (
+            friendship_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            friend_name TEXT NOT NULL,
+            friend_email TEXT NOT NULL,
+            username TEXT NOT NULL,
+
+            FOREIGN KEY(username) REFERENCES users(username)    
+        )
+    ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS user_friends (
+            friendship_id INTEGER,
+            username TEXT NOT NULL,
+            friend_name TEXT NOT NULL,
+            default_split TEXT DEFAULT 'equally',
+            default_shares TEXT,
+            default_proportions TEXT,
+            FOREIGN KEY(username) REFERENCES users(username),
+            FOREIGN KEY(friendship_id) REFERENCES friends(friendship_id)  
+        )
+    ''')
+
+
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS friend_expenses (
+            expense_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            label TEXT NOT NULL,
+            friendship_id INTEGER,
+            payername TEXT NOT NULL,
+            contributers TEXT NOT NULL,
+            amount REAL NOT NULL,
+            category TEXT NOT NULL DEFAULT 'etc.',  -- Added category column,
+            date TEXT NOT NULL,
+            description TEXT,
+            split_type TEXT DEFAULT 'equally',
+            proportions TEXT,
+            shares TEXT,
+            currency TEXT DEFAULT 'IRR',
+            FOREIGN KEY(friendship_id) REFERENCES friends(friendship_id)
+
         )
     ''')
 

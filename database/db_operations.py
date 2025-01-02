@@ -57,8 +57,31 @@ def add_group(group_name):
     ''', (group_name,))
     connection.commit()
     connection.close()
+
+def add_friends(friendship_id, user_name, friends_name, default_split = "equally", default_shares_j = None, default_proportions_j = None):
+    connection = get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        INSERT INTO user_friends (friendship_id, username, friend_name, default_split, default_shares, default_proportions) 
+        VALUES (?, ?, ?, ?, ?, ?)
+    ''', (friendship_id, user_name, friends_name, default_split, default_shares_j, default_proportions_j, ))
+    connection.commit()
+    connection.close()
+
+def get_friend_expenses_by_friendship_id(friendship_id):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM friend_expenses WHERE friendship_id = ?
+    ''', (friendship_id, ))
     
-    
+    #fetch the first matching row
+    expenses=cursor.fetchall()
+    connection.close()
+    return expenses
+
+
+
 def get_all_groups():
     connection = get_connection()
     cursor = connection.cursor()
