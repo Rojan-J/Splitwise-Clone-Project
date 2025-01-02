@@ -4,7 +4,8 @@ from datetime import date
 
 from users import Users
 
-
+#r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"
+#rr"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils\currency_conversion"
 
 import sys
 import os
