@@ -1,111 +1,264 @@
-
-from PyQt5 import QtCore, QtGui, QtWidgets
-from datetime import date
-
-import sys
-import os
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
-from db_operations import *
-from groups import *
 import sqlite3
 
-def show_all_existing_groups(ui, user, grpbtns):
-    groups = get_groups_by_username(user[2])
-    grpbtns = dict()
-    GroupsBox = dict()
-    GroupGroups = dict()
-    while ui.verticalLayout_20.count():
-                item = ui.verticalLayout_20.takeAt(0)  # Get the first item
-                widget = item.widget()  # Get the widget
-                if widget:
-                    widget.deleteLater()
-    for  group in groups:
-        
-        group_id, group_name = group[2:]
-        connection=get_connection()
-        cursor=connection.cursor()
-        cursor.execute("SELECT group_owner FROM groups WHERE group_name = ? and group_id = ?", (group_name, group_id, ))
-        group_owners = cursor.fetchone()
-        group_owner = group_owners[0]
-        group_grp = Groups(group_name, group_owner)
-        GroupGroups[group_name] = group_grp
+def get_connection():
+    connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")
 
-        ui.GrpFrame = QtWidgets.QFrame(ui.GroupsGrid)
-        ui.GrpFrame.setEnabled(True)
-        ui.GrpFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        ui.GrpFrame.setFrameShadow(QtWidgets.QFrame.Raised)
-        ui.GrpFrame.setObjectName(f"{group_name}Frame")
-        ui.verticalLayout_100 = QtWidgets.QVBoxLayout(ui.GrpFrame)
-        ui.verticalLayout_100.setObjectName("verticalLayout_100")
+    connection.execute("PRAGMA foreign_keys=ON")  #enable foreign key support
+    
+    return connection
 
-        ui.namelabel = QtWidgets.QLabel(ui.GrpFrame)
-        font = QtGui.QFont()
-        font.setFamily("Swis721 Blk BT")
-        font.setPointSize(18)
-        ui.namelabel.setFont(font)
-        ui.namelabel.setObjectName("namelabel")
-        ui.namelabel.setText(f"{group_name}")
-        ui.verticalLayout_100.addWidget(ui.namelabel)
-
-        ui.expenselabel = QtWidgets.QLabel(ui.GrpFrame)
-        font = QtGui.QFont()
-        font.setFamily("Swis721 Blk BT")
-        font.setPointSize(13)
-        ui.expenselabel.setFont(font)
-        ui.expenselabel.setObjectName("expenselabel")
-        ui.expenselabel.setText(f"Total expense: {group_grp.get_total_expenses_of_group()[0]}")
-        ui.verticalLayout_100.addWidget(ui.expenselabel)
-
-        ui.GrpBtn = QtWidgets.QPushButton(ui.GrpFrame)
-        ui.GrpBtn.setText("")
-        icon23 = QtGui.QIcon()
-        icon23.addPixmap(QtGui.QPixmap(":/icons2/icons2/log-in.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        ui.GrpBtn.setIcon(icon23)
-        ui.GrpBtn.setIconSize(QtCore.QSize(32, 32))
-        ui.GrpBtn.setObjectName(f"{group_name}")
-        ui.verticalLayout_100.addWidget(ui.GrpBtn, 0, QtCore.Qt.AlignRight)
-        grpbtns[group_grp] = ui.GrpBtn
-
-        ui.verticalLayout_20.addWidget(ui.GrpFrame)
-
-    for group, btn in grpbtns.items():
-        btn.clicked.connect(lambda _, g=group: specific_group_page(ui, g))
-
-
-
-
-def specific_group_page(ui,grp : Groups):
-    ui.mainPages.setCurrentWidget(ui.GrpPage)
-    ui.GrpName.setText(grp.group_name)
-    ui.GrpTotalExpense.setText(f"Total Expense: {grp.get_total_expenses_of_group()[0]}")
-    expenses = get_expenses_of_grp_by_grp_id(grp.group_id)
-    for expense in expenses:
-        row_position = ui.ExpensesTable.rowCount()
-        ui.ExpensesTable.insertRow(row_position)
-        var_to_add = [expense[2], str(expense[5]), expense[4], expense[6]]
-        for col, value in enumerate(var_to_add):
-            ui.ExpensesTable.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
-
-def create_group(ui, user):
+def add_user(name, username,email,password_hash,profile=0, is_registered=True, balance=0, temp = False):
     connection=get_connection()
     cursor=connection.cursor()
     
+    cursor.execute('''
+        INSERT INTO users (name, username, email, password_hash, is_registered, profile, balance, temp)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (name, username, email, password_hash, is_registered, profile, balance, temp))
     
-    group_name = ui.GrpNameInput.text()
-    group_no = ui.NoMembersInput.value()
-    members = ui.GrpMembersInput.toPlainText().split("\n")
-    for SplitBtnNo in range(11):
-        Split = ui.verticalLayout_30.itemAt(SplitBtnNo).widget()
-        if isinstance(Split, QtWidgets.QRadioButton) and Split.isChecked():
-            split = Split.text()
-
-
-    group = Groups(group_name, user[2], split)
-    cursor.execute("SELECT group_id FROM groups WHERE group_name = ? and group_owner = ?", (group_name, user[2], ))
-    new_group = cursor.fetchone()
-    cursor.execute("INSERT INTO user_group (user_id, username, group_id, group_name) VALUES (?, ?, ?, ?)", (user[0], user[2], new_group[0], group_name))    
-    for member in members:
-        group.add_members(member)
     connection.commit()
-    connection.close()   
+    connection.close()
+    
+def get_user_by_email (email, username):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM users WHERE email = ? or username = ?
+    ''', (email,username, ))
+    
+    #fetch the first matching row
+    user=cursor.fetchone()
+    connection.close()
+    return user
+
+def get_all_usernames():
+    all_usernames = []
+
+    connection=get_connection()
+    cursor=connection.cursor()
+
+    # Execute the query to fetch all usernames
+    cursor.execute('SELECT username FROM users;')
+    usernames = cursor.fetchall()
+
+    for username in usernames:
+        all_usernames.append(username[0])
+    
+    connection.close()
+    return all_usernames
+
+
+def add_group(group_name):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        INSERT INTO groups (group_name)
+        VALUES (?)
+    ''', (group_name,))
+    connection.commit()
+    connection.close()
+    
+    
+def get_all_groups():
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('SELECT * FROM groups')
+    groups = cursor.fetchall()
+    connection.close()
+    return groups
+
+def add_user_to_group(user_id,username, group_id, groupname):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        INSERT INTO user_group (user_id,username, group_id, groupname)
+        VALUES (?, ?, ?, ?)
+    ''', (user_id,username, group_id, groupname))
+    connection.commit()
+    connection.close()
+    
+def add_temp_user_to_group(temp_user_id, group_id, temp_member_name, temp_member_email):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        INSERT INTO user_group (temp_user_id, group_id, temp_memmber_name, temp_member_email)
+        VALUES (?, ?, ?, ?)
+    ''', (temp_user_id, group_id, temp_member_name, temp_member_email))
+    connection.commit()
+    connection.close()
+    
+    
+    
+def add_expanse(group_id, groupname, payername, contributers, amount, category, date, description=None, split_type = "equally", proportions = None, shares = None):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        INSERT INTO group_expenses (group_id,groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (group_id, groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares))
+    connection.commit()
+    connection.close()
+    
+
+#to add a single user's contribution to an expense    
+def add_contribution(expense_id, total_expense, username,amount_contributed, groupname, split_proportion=None, share=None, for_what = "groups"):
+    connection = get_connection()
+    cursor = connection.cursor()
+    
+    cursor.execute('''
+            INSERT INTO expense_user (expense_id, total_expense,  username, amount_contributed, split_proportion, for_what, name)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (expense_id, total_expense, username, amount_contributed,split_proportion, for_what, groupname))
+
+    connection.commit()
+    connection.close()
+
+def get_groups_by_username(username):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM user_group WHERE username = ?
+    ''', (username, ))
+    
+    #fetch the first matching row
+    groups=cursor.fetchall()
+    connection.close()
+    return groups
+
+def get_group_expenses_by_group_id(group_id):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM group_expenses WHERE group_id = ?
+    ''', (group_id, ))
+    
+    #fetch the first matching row
+    expenses=cursor.fetchall()
+    connection.close()
+    return expenses
+    
+    
+#to add contributions for multiple users based on their percentage shares 
+def add_percentage_contributions(expense_id,user_contributions):
+    connection=get_connection()
+    cursor=connection.cursor()
+    
+    cursor.execute('''
+        SELECT amount FROM expenses WHERE expense_id = ?
+    ''', (expense_id,))
+    expense = cursor.fetchone()
+    
+    total_amount = expense[0]
+    
+    total_percentage = sum(percentage for _, percentage in user_contributions)
+    if total_percentage != 1.0:
+        raise ValueError("Total percentage must sum up to 100% (1.0).")
+
+    for user_id, percentage in user_contributions:
+        amount_contributed = total_amount * percentage
+        cursor.execute('''
+            INSERT INTO expense_user (expense_id, user_id, amount_contributed, split_proportion)
+            VALUES (?, ?, ?, ?)
+        ''', (expense_id, user_id, amount_contributed, percentage))
+    
+    connection.commit()
+    connection.close()
+    
+    
+def add_share_contributions(expense_id, user_contributions):
+    connection=get_connection()
+    cursor=connection.cursor()
+        
+    cursor.execute('''
+        SELECT amount FROM expenses WHERE expense_id = ?
+    ''', (expense_id,))
+    expense = cursor.fetchone()  
+      
+    total_amount = expense[0]
+    total_shares = sum(share for _, share in user_contributions)
+    
+    for user_id, share in user_contributions:
+        amount_contributed = (share / total_shares) * total_amount
+        cursor.execute('''
+            INSERT INTO expense_user (expense_id, user_id, amount_contributed, share)
+            VALUES (?, ?, ?, ?)
+        ''', (expense_id, user_id, amount_contributed, share))
+    
+    connection.commit()
+    connection.close()
+      
+    
+def add_debt(debtor_id,creditor_id,amount):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        INSERT INTO debts (debtor_id, creditor_id, amount)
+        VALUES (?, ?, ?)
+    ''', (debtor_id, creditor_id, amount))
+    connection.commit()
+    connection.close()
+
+def add_recurrent_expense(username, user_id, label, amount, days, category, paid = "Paid"):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        INSERT INTO recurrent_expenses (username, user_id, label, days_of_month, amount, category, paid)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    ''', (username, user_id, label, days, amount, category, paid))
+    connection.commit()
+    connection.close()
+    
+
+def update_debt_status(debt_id,status):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        UPDATE debts SET status = ? WHERE debt_id = ?
+    ''', (status, debt_id))
+    connection.commit()
+    connection.close()
+
+def update_name(user_name, new_name):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        UPDATE users SET name = ? WHERE username = ?
+    ''', (new_name, user_name))
+    connection.commit()
+    connection.close()
+
+    
+
+def update_balance(user_name, balance):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        UPDATE users SET balance = ? WHERE username = ?
+    ''', (balance, user_name))
+    connection.commit()
+    connection.close()
+
+
+def get_recurrent_expense_by_username(username):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM recurrent_expenses WHERE username = ?
+    ''', (username, ))
+    
+    #fetch the first matching row
+    recurrent=cursor.fetchall()
+    connection.close()
+    return recurrent
+
+def get_expenses_of_grp_by_grp_id(group_id):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM group_expenses WHERE group_id = ?
+    ''', (group_id, ))
+    
+    #fetch the first matching row
+    expenses=cursor.fetchall()
+    connection.close()
+    return expenses
