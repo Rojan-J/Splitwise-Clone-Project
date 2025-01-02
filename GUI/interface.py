@@ -2047,6 +2047,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_28 = QtWidgets.QVBoxLayout(self.frame_50)
         self.verticalLayout_28.setObjectName("verticalLayout_28")
         self.scrollArea_12 = QtWidgets.QScrollArea(self.frame_50)
+        font = QtGui.QFont()
+        font.setFamily("Swis721 Blk BT")
+        font.setPointSize(12)
+        self.scrollArea_12.setFont(font)
         self.scrollArea_12.setWidgetResizable(True)
         self.scrollArea_12.setObjectName("scrollArea_12")
         self.scrollAreaWidgetContents_11 = QtWidgets.QWidget()
@@ -3058,7 +3062,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.centerMenupages.setCurrentIndex(0)
         self.mainPages.setCurrentIndex(0)
-        self.rightMenuPages.setCurrentIndex(1)
+        self.rightMenuPages.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

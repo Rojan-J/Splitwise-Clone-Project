@@ -3339,7 +3339,7 @@ QCalendarWidget QToolButton:hover {
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>1</number>
+                   <number>2</number>
                   </property>
                   <widget class="QWidget" name="AddNewMemberPage">
                    <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -3699,6 +3699,12 @@ QCalendarWidget QToolButton:hover {
                              <layout class="QVBoxLayout" name="verticalLayout_28">
                               <item>
                                <widget class="QScrollArea" name="scrollArea_12">
+                                <property name="font">
+                                 <font>
+                                  <family>Swis721 Blk BT</family>
+                                  <pointsize>12</pointsize>
+                                 </font>
+                                </property>
                                 <property name="widgetResizable">
                                  <bool>true</bool>
                                 </property>
