@@ -241,6 +241,17 @@ def update_debt_status(debt_id,status):
     connection.commit()
     connection.close()
 
+def update_group_debts(group_id):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute ('''
+        DELETE FROM debts
+        WHERE group_id = ?;
+    ''', (group_id, ))
+    connection.commit()
+    connection.close()
+
+
 def update_name(user_name, new_name):
     connection = get_connection()
     cursor = connection.cursor()

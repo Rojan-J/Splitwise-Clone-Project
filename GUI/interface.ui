@@ -3207,7 +3207,7 @@ QCalendarWidget QToolButton:hover {
                                     </font>
                                    </property>
                                    <property name="text">
-                                    <string>Original Graph</string>
+                                    <string/>
                                    </property>
                                   </widget>
                                  </item>
@@ -3974,7 +3974,7 @@ p, li { white-space: pre-wrap; }
                        <property name="geometry">
                         <rect>
                          <x>0</x>
-                         <y>0</y>
+                         <y>-52</y>
                          <width>379</width>
                          <height>694</height>
                         </rect>

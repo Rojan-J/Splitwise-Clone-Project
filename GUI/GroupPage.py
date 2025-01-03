@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import date
+import matplotlib.pyplot as plt
 
 import sys
 import os
@@ -106,6 +107,8 @@ def specific_group_page(ui,grp : Groups):
     
     ui.AddExpensesBtn.clicked.connect(lambda: add_expense_page(ui, grp))
     ui.DebtGraphBtn.clicked.connect(lambda: show_graph(grp, ui))
+    ui.closeGraphBtn.clicked.connect(lambda: clear_graph(ui))
+    ui.ExpenseGraphBtn.clicked.connect(lambda: show_expenses_graph(grp, ui))
 
 def create_group(ui, user):
     default_shares = None
@@ -758,3 +761,84 @@ def show_simplified_graph(group: Groups, ui):
             ui.weight.setFont(font)
             ui.weight.setObjectName(f"{(debtor, creditor)}")
             layout_2.addWidget(ui.weight)
+
+    update_group_debts(group.group_id)
+
+    for (debtor, creditor), debt in group.debts.items():
+        debt = debt["capacity"]
+        if debtor != creditor:
+            add_debt(group.group_id, debtor, creditor, debt)
+
+    specific_group_page(ui,group)
+    
+
+def clear_graph(ui):
+    layout = ui.scrollAreaWidgetContents_23.layout()
+    while layout.count():
+        item = layout.takeAt(0)  # Get the first item
+        widget = item.widget()  # Get the widget
+        widget.deleteLater()
+
+    layout_2 = ui.scrollAreaWidgetContents_6.layout()
+    while layout_2.count():
+        item = layout_2.takeAt(0)  # Get the first item
+        widget = item.widget()  # Get the widget
+        widget.deleteLater()
+    ui.GraphTitle.setText("")
+
+
+def show_expenses_graph(group, ui):
+    all_expenses = group.get_expenses_by_category()
+    categories = list(all_expenses.keys())
+    amounts = list(all_expenses.values())
+    # Create the pie chart
+    plt.figure(figsize=(8, 6))  # Set figure size
+    plt.pie(
+        amounts, 
+        labels=categories, 
+        autopct='%1.1f%%',  
+        startangle=90,      
+        colors=plt.cm.Paired.colors,  
+    )
+
+    # Add a 
+    plt.title("Expense Distribution")
+
+    png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_pie_plot.png"
+    # Save as PNG
+    plt.savefig(png_path)
+
+    layout = ui.scrollAreaWidgetContents_23.layout()
+    while layout.count():
+        item = layout.takeAt(0)  # Get the first item
+        widget = item.widget()  # Get the widget
+        widget.deleteLater()
+    
+    ui.graph = QtWidgets.QLabel(ui.scrollAreaWidgetContents_23)
+    pixmap = QtGui.QPixmap(png_path)
+    ui.graph.setPixmap(pixmap)
+    ui.graph.setScaledContents(True)  # Scale the image to fit the frame
+
+    # Set a layout for the frame and add the label
+    layout.setContentsMargins(0, 0, 0, 0)  # Optional: Remove margins
+    layout.addWidget(ui.graph)
+    font = QtGui.QFont()
+    font.setFamily("Swis721 Blk BT")
+    font.setPointSize(14)
+    font.setBold(False)
+    font.setWeight(50)
+    
+    ui.pushButton.setText("")
+    ui.GraphTitle.setText("Expenses in each category")
+    ui.GraphTitle.setFont(font)
+
+    layout_2 = ui.scrollAreaWidgetContents_6.layout()
+    while layout_2.count():
+        item = layout_2.takeAt(0)  # Get the first item
+        widget = item.widget()  # Get the widget
+        widget.deleteLater()
+
+
+    
+
+    
