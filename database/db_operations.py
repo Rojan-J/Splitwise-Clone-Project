@@ -1,7 +1,7 @@
 import sqlite3
 
 def get_connection():
-    connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")
+    connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database\database.db")
 
     connection.execute("PRAGMA foreign_keys=ON")  #enable foreign key support
     
@@ -57,8 +57,31 @@ def add_group(group_name):
     ''', (group_name,))
     connection.commit()
     connection.close()
+
+def add_friends(friendship_id, user_name, friends_name, friend_email,  default_split = "equally", default_shares_j = None, default_proportions_j = None):
+    connection = get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        INSERT INTO user_friends (friendship_id, username, friend_name, friend_email, default_split, default_shares, default_proportions) 
+        VALUES (?, ?, ?,?, ?, ?, ?)
+    ''', (friendship_id, user_name, friends_name,friend_email, default_split, default_shares_j, default_proportions_j, ))
+    connection.commit()
+    connection.close()
+
+def get_friend_expenses_by_friendship_id(friendship_id):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM friend_expenses WHERE friendship_id = ?
+    ''', (friendship_id, ))
     
-    
+    #fetch the first matching row
+    expenses=cursor.fetchall()
+    connection.close()
+    return expenses
+
+
+
 def get_all_groups():
     connection = get_connection()
     cursor = connection.cursor()
@@ -262,3 +285,28 @@ def get_expenses_of_grp_by_grp_id(group_id):
     expenses=cursor.fetchall()
     connection.close()
     return expenses
+
+def get_default_split(group_id, group_name):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM user_group WHERE group_id = ? AND group_name = ?
+    ''', (group_id,  group_name))
+    
+    #fetch the first matching row
+    defaults=cursor.fetchone()
+    connection.close()
+    return defaults
+
+
+def get_friends_by_username(username):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM user_friends WHERE username = ?
+    ''', (username, ))
+    
+    #fetch the first matching row
+    friends=cursor.fetchall()
+    connection.close()
+    return friends
