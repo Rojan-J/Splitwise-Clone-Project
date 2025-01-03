@@ -4,12 +4,12 @@ from datetime import date
 import sys
 import os
 import json
-#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
-# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
+#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
 
 
@@ -17,6 +17,7 @@ from db_operations import *
 from groups import *
 import sqlite3
 from graph import *
+from debt_simplification import *
 
 def show_all_existing_groups(ui, user):
     groups = get_groups_by_username(user[2])
@@ -682,15 +683,78 @@ def save_new_member_with_expenses(ui,group,new_member_name):
         
         #the ErrorLabel3 is not generated correctly yet
 def show_graph(group, ui):
+    layout = ui.scrollAreaWidgetContents_23.layout()
+    while layout.count():
+        item = layout.takeAt(0)  # Get the first item
+        widget = item.widget()  # Get the widget
+        widget.deleteLater()
     graph = Graph(group)
     graph.plot_graph()
-    ui.graph = QtWidgets.QLabel(ui.frame_17)
+    ui.graph = QtWidgets.QLabel(ui.scrollAreaWidgetContents_23)
     pixmap = QtGui.QPixmap("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_plot.png")
     ui.graph.setPixmap(pixmap)
     ui.graph.setScaledContents(True)  # Scale the image to fit the frame
 
     # Set a layout for the frame and add the label
-    ui.graphlayout = QtWidgets.QVBoxLayout(ui.frame_17)
-    ui.graphlayout.setContentsMargins(0, 0, 0, 0)  # Optional: Remove margins
-    ui.graphlayout.addWidget(ui.graph)
+    layout.setContentsMargins(0, 0, 0, 0)  # Optional: Remove margins
+    layout.addWidget(ui.graph)
+    font = QtGui.QFont()
+    font.setFamily("Swis721 Blk BT")
+    font.setPointSize(10)
+    font.setBold(False)
+    font.setWeight(50)
     
+    ui.pushButton.setText("Simplify the graph")
+    ui.pushButton.setFont(font)
+    layout_2 = ui.scrollAreaWidgetContents_6.layout()
+    while layout_2.count():
+        item = layout_2.takeAt(0)  # Get the first item
+        widget = item.widget()  # Get the widget
+        widget.deleteLater()
+    for (debtor, creditor), debt in group.debts.items():
+        debt = debt["capacity"]
+        ui.weight = QtWidgets.QLabel(ui.scrollAreaWidgetContents_6)
+        ui.weight.setText(f"{debtor} owes {creditor} {debt} R")
+        ui.weight.setFont(font)
+        ui.weight.setObjectName(f"{(debtor, creditor)}")
+        layout_2.addWidget(ui.weight)
+    ui.pushButton.clicked.connect(lambda: show_simplified_graph(group, ui))
+
+def show_simplified_graph(group: Groups, ui):
+    debt_simplification = Debtsimplification(group)
+    debt_simplification.creating_simplified_graph()
+    layout = ui.scrollAreaWidgetContents_23.layout()
+    while layout.count():
+        item = layout.takeAt(0)  # Get the first item
+        widget = item.widget()  # Get the widget
+        widget.deleteLater()
+    ui.GraphTitle.setText("Simplified Graph")
+    ui.graph = QtWidgets.QLabel(ui.scrollAreaWidgetContents_23)
+    pixmap = QtGui.QPixmap("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_plot.png")
+    ui.graph.setPixmap(pixmap)
+    ui.graph.setScaledContents(True)  # Scale the image to fit the frame
+
+    # Set a layout for the frame and add the label
+    layout.setContentsMargins(0, 0, 0, 0)  # Optional: Remove margins
+    layout.addWidget(ui.graph)
+    font = QtGui.QFont()
+    font.setFamily("Swis721 Blk BT")
+    font.setPointSize(10)
+    font.setBold(False)
+    font.setWeight(50)
+    
+    ui.pushButton.setText("")
+    ui.pushButton.setFont(font)
+    layout_2 = ui.scrollAreaWidgetContents_6.layout()
+    while layout_2.count():
+        item = layout_2.takeAt(0)  # Get the first item
+        widget = item.widget()  # Get the widget
+        widget.deleteLater()
+    for (debtor, creditor), debt in group.debts.items():
+        if debtor != creditor:
+            debt = debt["capacity"]
+            ui.weight = QtWidgets.QLabel(ui.scrollAreaWidgetContents_6)
+            ui.weight.setText(f"{debtor} owes {creditor} {debt} R")
+            ui.weight.setFont(font)
+            ui.weight.setObjectName(f"{(debtor, creditor)}")
+            layout_2.addWidget(ui.weight)

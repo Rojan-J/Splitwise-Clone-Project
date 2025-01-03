@@ -50,19 +50,7 @@ class Graph():
                     edge_color= 'skyblue'
                 )
 
-            x1, y1 = pos[u]
-            x2, y2 = pos[v]
-            label_pos = (x2 - 0.1 * (x2 - x1), y2 - 0.1 * (y2 - y1))  # Adjust the 0.1 factor as needed
-
-            # Add the label near the arrowhead
-            plt.text(
-                label_pos[0], label_pos[1], f"w={capacity}",
-                fontsize=12, color='black', ha='center', va='center'
-            )
-        
         plt.tight_layout()
-
-        plt.title(f"Financial Graph of group {self.graph_name}")
         png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_plot.png"
         plt.savefig(png_path)
         plt.show()
