@@ -4,8 +4,8 @@ from datetime import date
 import sys
 import os
 import json
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
@@ -519,46 +519,161 @@ def take_group(ui):
 
 
 #R
-def add_new_member_to_group(ui,group):
+
+def get_group_expenses(group_id):
+    
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute("""
+            SELECT expense_id, label
+            FROM group_expenses
+            WHERE group_id = ?
+        """, (group_id,))
+        expenses = cursor.fetchall()
+        print(f"Debug: Group ID being passed: {group_id}")
+
+        print(f"Fetched expenses for group {group_id}: {expenses}")
+        
+        return expenses
+    except sqlite3.Error as e:
+        print(f"Database Error: {str(e)}")
+        return []
+    finally:
+        if 'connection' in locals() and connection:
+            connection.close()
+    
+
+
+def add_new_member_to_group(ui):
+    
+    group = take_group(ui)
+        
+    if group is None:
+        ui.ErrorAddMember.setText("Group not found!")
+        ui.ErrorAddMember.setStyleSheet("color: red;")
+        return
+    
     new_member_name=ui.NewMemberInput.text().strip()
     
     if not new_member_name: #if the user didnt type anything
         ui.NewMemberLabel.setStyleSheet("color:red;")
-        ui.ErrorLabel13.setText("Please enter a valid member name")
-        ui.ErrorLabel3.setStyleSheet("color: red;")
+        ui.ErrorAddMember.setText("Please enter a valid member name")
+        ui.ErrorAddMember.setStyleSheet("color: red;")
         return
     
     
     if new_member_name in group.members:
         ui.NewMemberLabel.setStyleSheet("color: red;")
-        ui.ErrorLabel3.setText("Member already exists in the group!")
-        ui.ErrorLabel3.setStyleSheet("color: red;")
+        ui.ErrorAddMember.setText("Member already exists in the group!")
+        ui.ErrorAddMember.setStyleSheet("color: red;")
         return
     
     
     try:
+        
+        # Ensure layout exists
+        if not ui.scrollAreaWidgetContents_19.layout():
+            expense_layout = QtWidgets.QVBoxLayout(ui.scrollAreaWidgetContents_19)
+            ui.scrollAreaWidgetContents_19.setLayout(expense_layout)
+        else:
+            expense_layout = ui.scrollAreaWidgetContents_19.layout()
+
+        # Clear previous widgets
+        while expense_layout.count():
+            item = expense_layout.takeAt(0)
+            widget = item.widget()
+            if widget:
+                widget.deleteLater()
+
+        print(f"Debug: Group ID being used hereeeee: {group.group_id}")
+        
+        existing_expenses=get_group_expenses(group.group_id)
+        expense_layout=ui.scrollAreaWidgetContents_19.layout()
+        
+        for expense_id,label in existing_expenses:
+            checkbox = QtWidgets.QCheckBox(ui.scrollAreaWidgetContents_19)
+            checkbox.setObjectName(f"expense_{expense_id}")
+            checkbox.setText(label)
+            expense_layout.addWidget(checkbox)
+        
+        if not hasattr(group, 'split_type'):
+            group.split_type = "equally"  
+        if not hasattr(group, 'default_shares'):
+            group.default_shares = {}  
+        if not hasattr(group, 'default_proportions'):
+            group.default_proportions = {} 
+            
+        ui.FinalAddMemberBtn.clicked.connect(lambda: save_new_member_with_expenses(ui, group, new_member_name))
+
+            
+            
         connection=get_connection()
         cursor=connection.cursor()
         
         cursor.execute("""
-            INSERT INTO user_group (group_id, group_name, username)
-            VALUES (?, ?, ?)
-        """, (group.group_id, group.group_name, new_member_name))
+            INSERT INTO user_group (group_id, group_name, username, default_split, default_shares, default_proportions)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (group.group_id, group.group_name, new_member_name, group.split_type, json.dumps(group.default_shares), json.dumps(group.default_proportions)))
         
         connection.commit()
+        
+        connection.commit()
+        group.add_members(new_member_name, group.split_type, json.dumps(group.default_shares), json.dumps(group.default_proportions))
+        
+        
+        members_layout = ui.scrollAreaWidgetContents_7.layout()
+        ui.checkBox_2 = QtWidgets.QCheckBox(ui.scrollAreaWidgetContents_7)
+        ui.checkBox_2.setObjectName(new_member_name)
+        ui.checkBox_2.setText(new_member_name)
+        members_layout.addWidget(ui.checkBox_2)
+        
+        
+
+    except sqlite3.Error as e:
+        ui.ErrorAddMember.setText(f"Database Error: {str(e)}")
+        ui.ErrorAddMember.setStyleSheet("color: red;")
+    finally:
         connection.close()
-        
-        group.add_members(new_member_name,group.split_type)
-        
-        ui.NewMemberInput.clear()
-        ui.NewMemberLabel.setStyleSheet("color: white;")
-        ui.ErrorLabel3.setText(f"{new_member_name} successfully added to the group!")
-        ui.ErrorLabel3.setStyleSheet("color: green;")
-        
-        layout = ui.scrollAreaWidgetContents_7.layout()
-        new_checkbox = QtWidgets.QCheckBox(ui.scrollAreaWidgetContents_7)
-        new_checkbox.setText(new_member_name)
-        layout.addWidget(new_checkbox)
+ 
+ 
+
+def save_new_member_with_expenses(ui,group,new_member_name):
+    selected_expenses=[]
+    layout = ui.scrollAreaWidgetContents_19.layout()
+    
+    for i in range(layout.count()):
+        checkbox = layout.itemAt(i).widget()
+        if checkbox.isChecked():
+            selected_expenses.append(int(checkbox.objectName().replace("expense_", "")))  # Extract expense ID
+
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+
+
+        cursor.execute("""
+            INSERT INTO user_group (group_id, group_name, username, default_split, default_shares, default_proportions)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (group.group_id, group.group_name, new_member_name, group.split_type, 
+              json.dumps(group.default_shares), json.dumps(group.default_proportions)))
+
+        cursor.execute("SELECT user_id FROM users WHERE username = ?", (new_member_name,))
+        user_id = cursor.fetchone()[0]
+
+        for expense_id in selected_expenses:
+            cursor.execute("""
+                INSERT INTO expense_user (expense_id, username, amount_contributed, split_proportion, for_what, name, share)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (expense_id, new_member_name, 0, 0, "group", group.group_name, "equal_split"))
+
+        connection.commit()
+
+    
+        group.add_members(new_member_name, group.split_type, json.dumps(group.default_shares), json.dumps(group.default_proportions))
+        ui.NewMemberLabel.setStyleSheet("color: green;")
+        ui.ErrorAddMember.setText(f"Member {new_member_name} added successfully!")
+        ui.ErrorAddMember.setStyleSheet("color: green;")
 
     except sqlite3.Error as e:
         ui.ErrorLabel3.setText(f"Database error: {e}")

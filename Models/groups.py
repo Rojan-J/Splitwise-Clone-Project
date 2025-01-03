@@ -11,12 +11,12 @@ from users import Users
 #"C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Utils/currency_conversion
 import sys
 import os
-# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
-# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils\currency_conversion"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils\currency_conversion"))
 
 
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Utils/currency_conversion"))
+#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Utils/currency_conversion"))
 
 from db_operations import *
 
@@ -24,14 +24,20 @@ from currency_conversion_all_currencies import convert_to_IRR
 
 
 class Groups:
-    def __init__(self, group_name, group_owner, split = "equally", expenses = [], members = [], debts = dict()):
+    def __init__(self, group_name, group_owner, split = "equally", expenses = [], members = [], debts = dict(),default_shares=None, default_proportions=None):
         self.group_name = group_name
         self.group_id = None
         self.members = members
         self.expenses = expenses
         self.debts = debts
         self.group_owner = group_owner
+        
+        self.split_type = split
+        self.default_shares = default_shares if default_shares is not None else {}
+        self.default_proportions = default_proportions if default_proportions is not None else {}
+        
         self.load_from_database()
+    
 
         
     def load_from_database(self):
