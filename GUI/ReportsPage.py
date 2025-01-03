@@ -12,7 +12,6 @@ from db_operations import *
 
 
 def show_total_expenses(username, ui):
-    user = get_user_by_email (username, username)
     all_expenses = total_expenses_of_user(username)
     ui.label_24.setText(f"Total Expenses: {cal_total_expense(all_expenses)}")
     group_expenses = total_expenses_of(all_expenses, "group")

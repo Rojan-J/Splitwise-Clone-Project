@@ -42,6 +42,7 @@ from ProfilePage import *
 from GroupPage import *
 from FriendsPage import *
 from ReportsPage import *
+from DebtsPage import *
 #from SearchPage import*
 
 ########################################################################
@@ -263,6 +264,9 @@ class MainWindow(QMainWindow):
         self.ui.FinalAddMemberBtn.clicked.connect(lambda: add_new_member_to_group(self.ui))
 
         self.ui.ReportsIcon.clicked.connect(lambda: show_total_expenses(self.user[2], self.ui))
+        
+
+        self.ui.DebtsBtn.clicked.connect(lambda: show_all_debts(self.user[2], self.ui))
 
         
     
