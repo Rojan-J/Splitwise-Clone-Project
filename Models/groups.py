@@ -127,9 +127,10 @@ class Groups:
             
         elif split_type=="share":
             if not shares or len(shares)!=len(contributors):
-                total_share=sum(shares.values())
-                contributions=[(contributor,float(expense)*(share/total_share))for contributor, share in shares.items()]
-            
+                raise ValueError(f"Invalid split_type:{split_type}")
+            total_share=sum(shares.values())
+            contributions=[(contributor,float(expense)*(share/total_share))for contributor, share in shares.items()]
+        
             
         else:
             raise ValueError(f"Invalid split_type:{split_type}")

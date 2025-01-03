@@ -105,11 +105,15 @@ def specific_friend_page(ui, friend: Friends, username):
     ui.mainPages.setCurrentWidget(ui.FriendPage)
     ui.FriendName.setText(friend.friend_name)
     profile = friend.friend_profile
+    print("New Prof:", profile)
     icon22 = QtGui.QIcon()
     if profile == 0:
         icon22.addPixmap(QtGui.QPixmap(":/images/219969.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
     else:
-        icon22.addPixmap(QtGui.QPixmap(":/images/219986.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)    
+        print("HEY")
+        icon22.addPixmap(QtGui.QPixmap(":/images/219986.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)  
+    ui.FriendProfile.setIcon(icon22)
+    ui.FriendProfile.setIconSize(QtCore.QSize(80, 80))  
     expenses = get_expenses_of_friend_by_friendship_id(friend.friendship_id)
     ui.TableOfExpenses.setRowCount(0)
     header = ui.TableOfExpenses.horizontalHeader()
@@ -123,7 +127,7 @@ def specific_friend_page(ui, friend: Friends, username):
             ui.TableOfExpenses.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
     
     ui.AddFriendExpenseBtn.clicked.connect(lambda: add_expense_page_friend(ui, friend, username))
-    ui.AddFriendBtn_2.clicked.connect(lambda: edit_friend(ui, friend, username ))
+    ui.AddFriendBtn_2.clicked.connect(lambda: edit_friend(ui, friend, username))
 
 def add_expense_page_friend(ui, friend: Friends, username, recover= True):
     if recover:
@@ -295,11 +299,10 @@ def isfloat(value):
     
 def add_friend_expense(ui, friend, username):
 
-    category = ""
+    category = "etc."
     label = ui.FriendExpenseLabelInput.text()
     amount = ui.AmountInputFr.text()
     selected_date = ui.DateInputFr.selectedDate().toString("yyyy-dd-MM")
-    print(selected_date)
     payer = ui.PayerInputFr.text()
     description = ui.DiscriptionInputFr.toPlainText()
     split_type = "default split"
@@ -345,6 +348,7 @@ def add_friend_expense(ui, friend, username):
             default_proportions = json.loads(default_proportions)
         split_type = default_split
         if split_type == "share":
+            print(default_shares)
             shares = dict()
             for contributer in contributers:
                 shares[contributer] = default_shares[contributer]
@@ -469,12 +473,14 @@ def add_friend_expense(ui, friend, username):
 def edit_friend(ui, friend, username):
     default_shares_j = None
     default_prop_j = None
-
+    print(friend.friendship_id)
     percent_total = True
     if ui.MaleProfileBtn_2.isChecked():
         friend_profile = 1
+        friend.friend_profile = 1
     elif ui.LadyProfileBtn_2.isChecked():
         friend_profile = 0
+        friend.friend_profile = 0
     layout = ui.split_frame_2.layout()
     count = layout.count()
     for SplitBtnNo in range(count):
@@ -482,6 +488,8 @@ def edit_friend(ui, friend, username):
         print(Split)
         if isinstance(Split, QtWidgets.QRadioButton) and Split.isChecked():
             split = Split.text()
+
+    print(split)
     if split != "equally":
         default_shares = get_shares_friend(ui, "edit_friend")
         if split == "share":
@@ -496,6 +504,7 @@ def edit_friend(ui, friend, username):
             percent_total = False
 
     if  split !=""  and percent_total:
+        print(friend_profile)
         print("Yes")
         edit_friend_database(friend.friendship_id, friend_profile, split, default_shares_j, default_prop_j)
         for SplitBtnNo in range(count):

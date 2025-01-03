@@ -349,6 +349,7 @@ def get_friends_profile_by_friendship_id(friendship_id):
     return friend
 
 def edit_friend_database(friendship_id, friend_profile, default_split, default_share, default_prop):
+    print("Profile is:", friend_profile)
     connection=get_connection()
     cursor=connection.cursor()
     cursor.execute('''
@@ -363,5 +364,5 @@ def edit_friend_database(friendship_id, friend_profile, default_split, default_s
         WHERE friendship_id = ?;
     ''', (default_split, default_share, default_prop, friendship_id, ))
     
-
+    connection.commit()
     connection.close()

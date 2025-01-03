@@ -80,12 +80,11 @@ class Friends:
             
 
     def add_expenses(self,label, expense, payer, contributors, expense_date = date.today(), category="etc.",description=None, split_type="equally", proportions=None, shares=None, currency = "IRR"):
-        
         #contributors is a list of users represented by their ids who are sharing the expense
         #contributions is a list that hold each contributor's share
         #contributor represents the user's id who contributed
         #contribution represents the amount that the contributor has paid
-                
+        print(label, expense, payer, contributors, expense_date , category,description, split_type, proportions, shares, currency ) 
         connection = get_connection()
         cursor = connection.cursor()
 
@@ -116,9 +115,11 @@ class Friends:
             print(contributions)
             
         elif split_type=="share":
+            print(shares, contributors)
             if not shares or len(shares)!=len(contributors):
-                total_share=sum(shares.values())
-                contributions=[(contributor,float(expense)*(share/total_share))for contributor, share in shares.items()]
+                raise ValueError(f"Invalid split_type:{split_type}")
+            total_share=sum(shares.values())
+            contributions=[(contributor,float(expense)*(share/total_share))for contributor, share in shares.items()]
             
             
         else:
@@ -127,6 +128,8 @@ class Friends:
         print(contributions)
             
         for contributor,contribution in contributions:
+            print(label, expense, payer, contributors, expense_date , category,description, split_type, proportions, shares, currency )
+
             if split_type == "share":
                 share = f"{split_type} :{shares[contributor]}"
 
