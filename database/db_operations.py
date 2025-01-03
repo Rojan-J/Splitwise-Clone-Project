@@ -417,8 +417,20 @@ def total_user_owes(username):
     connection=get_connection()
     cursor=connection.cursor()
     cursor.execute('''
-        SELECT * FROM simplified_debts WHERE debtor_name = ? and status = pending
-    ''', (username, ))
+        SELECT * FROM simplified_debts WHERE debtor_name = ? and status = ?
+    ''', (username, "pending", ))
+    
+    #fetch the first matching row
+    owes=cursor.fetchall()
+    connection.close()
+    return owes
+
+def total_user_owed(username):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM simplified_debts WHERE creditor_name = ? and status = ?
+    ''', (username, "pending",  ))
     
     #fetch the first matching row
     owes=cursor.fetchall()
