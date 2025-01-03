@@ -2,13 +2,12 @@ import sys
 import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..","Models")))
-from groups import Groups
 from users import Users
 from graph import Graph
 
 
 class Debtsimplification:
-    def __init__(self, group:Groups):
+    def __init__(self, group):
         self.group=group
         self.simplified_debts=[]
         
@@ -53,13 +52,13 @@ class Debtsimplification:
     
     
     def upgrade_group_debts(self,simplified_debts):
-        self.group.debts.clear()
+        self.group.simplified_debts.clear()
         for debtor,creditor,amount in simplified_debts:
-            if(debtor,creditor) not in self.group.debts:
-                self.group.debts[(debtor,creditor)]={"capacity":amount,"flow":0}
+            if(debtor,creditor) not in self.group.simplified_debts:
+                self.group.simplified_debts[(debtor,creditor)]={"capacity":amount}
                 
             else:
-                self.group.debts[(debtor,creditor)]["capacity"]+=amount
+                self.group.simplified_debts[(debtor,creditor)]["capacity"]+=amount
                         
             
     def final_simplifying(self):
@@ -75,6 +74,7 @@ class Debtsimplification:
     def creating_simplified_graph(self):
         self.final_simplifying()
         simplified_graph = Graph(self.group)
+        simplified_graph.graph_type = "simplified"
         simplified_graph.plot_graph() 
                
             

@@ -114,6 +114,22 @@ def initialize_database():
         )
     ''')
 
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS simplified_debts (
+            debt_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            group_id INTEGER,
+            debtor_name TEXT NOT NULL, 
+            creditor_name TEXT NOT NULL,
+            amount REAL NOT NULL,
+            status TEXT DEFAULT 'pending',
+            FOREIGN KEY(debtor_name) REFERENCES users(username),
+            FOREIGN KEY(creditor_name) REFERENCES users(username),
+            FOREIGN KEY(group_id) REFERENCES groups(group_id)
+                   
+
+        )
+    ''')
+
     #Create Recurrnt Expenses for user
 
     cursor.execute('''

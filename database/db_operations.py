@@ -221,6 +221,16 @@ def add_debt(group_id, debtor_id,creditor_id,amount):
     connection.commit()
     connection.close()
 
+def add_simplified_debt(group_id, debtor_id,creditor_id,amount):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        INSERT INTO simplified_debts (group_id, debtor_name, creditor_name, amount)
+        VALUES (?, ?, ?, ?)
+    ''', (group_id, debtor_id, creditor_id, amount))
+    connection.commit()
+    connection.close()
+
 def add_recurrent_expense(username, user_id, label, amount, days, category, paid = "Paid"):
     connection = get_connection()
     cursor = connection.cursor()
@@ -245,7 +255,7 @@ def update_group_debts(group_id):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute ('''
-        DELETE FROM debts
+        DELETE FROM simplified_debts
         WHERE group_id = ?;
     ''', (group_id, ))
     connection.commit()

@@ -7,11 +7,10 @@ import numpy as np
 sys.path.append(os.path.abspath("./Project/Splitwise-Clone-Project/Models"))
 
 # Import the class
-from groups import Groups
 
 
 class Graph():
-    def __init__(self, group: Groups):
+    def __init__(self, group):
         self.graph = nx.MultiDiGraph()
         self.group =group
         self.graph_type = "Original"
@@ -25,6 +24,9 @@ class Graph():
         for (u, v), attributes in self.group.debts.items():
             if u != v:
                 self.graph.add_edge(u, v, capacity=attributes["capacity"])
+        for (u, v), attributes in self.group.simplified_debts.items():
+            if u != v:
+                self.simplified_graph.add_edge(u, v, capacity=attributes["capacity"])
 
     def plot_graph(self):
         count = 0
@@ -34,7 +36,7 @@ class Graph():
         plt.figure(figsize=(8, 6))
         nx.draw_networkx_labels(graph, pos, font_size= 15)
         # Draw edges with different connection styles for parallel edges
-        
+
         for u, v, data in graph.edges(data=True):
             if u != v: 
                 count += 1
@@ -50,6 +52,7 @@ class Graph():
                     edge_color= 'skyblue'
                 )
 
+        
         plt.tight_layout()
         png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_plot.png"
         plt.savefig(png_path)

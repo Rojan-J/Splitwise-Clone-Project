@@ -13,6 +13,9 @@ import os
 
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Utils/currency_conversion"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
+
+from debt_simplification import *
 
 from db_operations import *
 
@@ -26,6 +29,7 @@ class Groups:
         self.members = members
         self.expenses = expenses
         self.debts = debts
+        self.simplified_debts = self.debts.copy()
         self.group_owner = group_owner
         
         self.split_type = split
@@ -176,6 +180,14 @@ class Groups:
         connection.commit()
         connection.close()     
         self.cal_debts(contributions, payer)
+        debt_simplification = Debtsimplification(self)
+        debt_simplification.creating_simplified_graph()
+        update_group_debts(self.group_id)
+
+        for (debtor, creditor), debt in self.debts.items():
+            debt = debt["capacity"]
+            if debtor != creditor:
+                add_simplified_debt(self.group_id, debtor, creditor, debt)
         
 
         

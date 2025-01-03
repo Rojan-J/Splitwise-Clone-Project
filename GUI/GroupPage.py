@@ -753,7 +753,7 @@ def show_simplified_graph(group: Groups, ui):
         item = layout_2.takeAt(0)  # Get the first item
         widget = item.widget()  # Get the widget
         widget.deleteLater()
-    for (debtor, creditor), debt in group.debts.items():
+    for (debtor, creditor), debt in group.simplified_debts.items():
         if debtor != creditor:
             debt = debt["capacity"]
             ui.weight = QtWidgets.QLabel(ui.scrollAreaWidgetContents_6)
@@ -764,10 +764,10 @@ def show_simplified_graph(group: Groups, ui):
 
     update_group_debts(group.group_id)
 
-    for (debtor, creditor), debt in group.debts.items():
+    for (debtor, creditor), debt in group.simplified_debts.items():
         debt = debt["capacity"]
         if debtor != creditor:
-            add_debt(group.group_id, debtor, creditor, debt)
+            add_simplified_debt(group.group_id, debtor, creditor, debt)
 
     specific_group_page(ui,group)
     
@@ -791,12 +791,18 @@ def show_expenses_graph(group, ui):
     all_expenses = group.get_expenses_by_category()
     categories = list(all_expenses.keys())
     amounts = list(all_expenses.values())
+
+
+    def autopct_amount(pct, values):
+        total = sum(values)
+        amount = int(round(pct * total / 100.0))
+        return f"{amount} R"
     # Create the pie chart
     plt.figure(figsize=(8, 6))  # Set figure size
     plt.pie(
         amounts, 
         labels=categories, 
-        autopct='%1.1f%%',  
+        autopct=lambda pct: autopct_amount(pct, amounts),  
         startangle=90,      
         colors=plt.cm.Paired.colors,  
     )
@@ -839,6 +845,5 @@ def show_expenses_graph(group, ui):
         widget.deleteLater()
 
 
-    
 
     
