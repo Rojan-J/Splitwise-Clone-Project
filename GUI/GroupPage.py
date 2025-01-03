@@ -5,7 +5,11 @@ import sys
 import os
 import json
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+#r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"
+
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
+#r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"
+
 from db_operations import *
 from groups import *
 import sqlite3
