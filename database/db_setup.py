@@ -48,7 +48,7 @@ def initialize_database():
         CREATE TABLE IF NOT EXISTS user_group (
             user_id INTEGER,
             username TEXT NOT NULL,
-            group_id INTEGER ,
+            group_id INTEGER,
             group_name TEXT NOT NULL,
             default_split TEXT DEFAULT 'equally',
             default_shares TEXT,
@@ -90,7 +90,9 @@ def initialize_database():
             amount_contributed REAL NOT NULL,
             split_proportion REAL,  -- Add this column,
             for_what TEXT NOT NULL,
-            id TEXT NOT NULL,
+            name TEXT NOT NULL,
+            date TEXT NOT NULL,
+            category TEXT NOT NULL,
             share REAL,  -- Share for share-based splits,
             FOREIGN KEY(username) REFERENCES users(username)
         )
@@ -101,30 +103,28 @@ def initialize_database():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS debts (
             debt_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            group_id,
-            debtor_id INTEGER,
-            creditor_id INTEGER,
-            temp_debtor_id INTEGER,
-            temp_creditor_id INTEGER,
+            group_id INTEGER,
+            debtor_name INTEGER,
+            creditor_name INTEGER,
             amount REAL NOT NULL,
             status TEXT DEFAULT 'pending',
-            FOREIGN KEY(debtor_id) REFERENCES users(user_id),
-            FOREIGN KEY(creditor_id) REFERENCES users(user_id),
-            UNIQUE(temp_debtor_id, temp_creditor_id)
+            FOREIGN KEY(debtor_name) REFERENCES users(username),
+            FOREIGN KEY(creditor_name) REFERENCES users(username)
         )
     ''')
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS simplified_debts (
             debt_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            group_id INTEGER,
+            for_what TEXT NOT NULL,
+            id Integer TEXT NOT NULL,
+            name TEXT NOT NULL, 
             debtor_name TEXT NOT NULL, 
-            creditor_name TEXT NOT NULL,
+            creditor_name TEXT,
             amount REAL NOT NULL,
             status TEXT DEFAULT 'pending',
             FOREIGN KEY(debtor_name) REFERENCES users(username),
-            FOREIGN KEY(creditor_name) REFERENCES users(username),
-            FOREIGN KEY(group_id) REFERENCES groups(group_id)
+            FOREIGN KEY(creditor_name) REFERENCES users(username)
                    
 
         )

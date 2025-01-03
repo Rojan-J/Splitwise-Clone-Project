@@ -173,21 +173,21 @@ class Groups:
             proportion=contribution/float(expense)
                 
             cursor.execute("""
-                INSERT INTO expense_user (expense_id, total_expense,  username, amount_contributed, split_proportion, for_what, name, share)
-                VALUES (?, ?, ?,?,?, "group", ?, ?)
-            """, (expense_id, expense, contributor, contribution, proportion, self.group_name, share))
+                INSERT INTO expense_user (expense_id, total_expense,  username, amount_contributed, split_proportion, for_what, name, share, date, category)
+                VALUES (?, ?, ?,?,?, "group", ?, ?, ?, ?)
+            """, (expense_id, expense, contributor, contribution, proportion, self.group_name, share, expense_date, category))
 
         connection.commit()
         connection.close()     
         self.cal_debts(contributions, payer)
         debt_simplification = Debtsimplification(self)
         debt_simplification.creating_simplified_graph()
-        update_group_debts(self.group_id)
+        update_group_debts(self.group_id, self.group_name)
 
         for (debtor, creditor), debt in self.debts.items():
             debt = debt["capacity"]
             if debtor != creditor:
-                add_simplified_debt(self.group_id, debtor, creditor, debt)
+                add_simplified_debt(self.group_id, self.group_name, debtor, creditor, debt)
         
 
         

@@ -149,9 +149,9 @@ class Friends:
             friend_name = cursor.fetchone()[0]
                 
             cursor.execute("""
-                INSERT INTO expense_user (expense_id, total_expense,  username, amount_contributed, split_proportion, for_what, name, share)
+                INSERT INTO expense_user (expense_id, total_expense,  username, amount_contributed, split_proportion, for_what, name, share, date, category)
                 VALUES (?, ?, ?,?,?, "friend", ?, ?)
-            """, (expense_id, expense, contributor, contribution, proportion, friend_name, share))
+            """, (expense_id, expense, contributor, contribution, proportion, friend_name, share, expense_date, category))
 
         connection.commit()
         connection.close()     

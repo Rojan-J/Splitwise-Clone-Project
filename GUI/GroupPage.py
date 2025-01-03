@@ -764,12 +764,12 @@ def show_simplified_graph(group: Groups, ui):
             ui.weight.setObjectName(f"{(debtor, creditor)}")
             layout_2.addWidget(ui.weight)
 
-    update_group_debts(group.group_id)
+    update_group_debts(group.group_id, group.group_name)
 
     for (debtor, creditor), debt in group.simplified_debts.items():
         debt = debt["capacity"]
         if debtor != creditor:
-            add_simplified_debt(group.group_id, debtor, creditor, debt)
+            add_simplified_debt(group.group_id, group.group_name, debtor, creditor, debt)
 
     specific_group_page(ui,group)
     

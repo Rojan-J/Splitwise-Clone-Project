@@ -221,13 +221,13 @@ def add_debt(group_id, debtor_id,creditor_id,amount):
     connection.commit()
     connection.close()
 
-def add_simplified_debt(group_id, debtor_id,creditor_id,amount):
+def add_simplified_debt(group_id, group_name, debtor_name,creditor_name,amount):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
-        INSERT INTO simplified_debts (group_id, debtor_name, creditor_name, amount)
-        VALUES (?, ?, ?, ?)
-    ''', (group_id, debtor_id, creditor_id, amount))
+        INSERT INTO simplified_debts (id, name, debtor_name, creditor_name, amount, for_what)
+        VALUES (?, ?, ?, ?, ?, "group")
+    ''', (group_id, group_name, debtor_name, creditor_name, amount))
     connection.commit()
     connection.close()
 
@@ -251,13 +251,13 @@ def update_debt_status(debt_id,status):
     connection.commit()
     connection.close()
 
-def update_group_debts(group_id):
+def update_group_debts(group_id, group_name):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute ('''
         DELETE FROM simplified_debts
-        WHERE group_id = ?;
-    ''', (group_id, ))
+        WHERE id = ? and name = ?;
+    ''', (group_id, group_name, ))
     connection.commit()
     connection.close()
 
