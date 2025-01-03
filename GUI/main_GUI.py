@@ -18,11 +18,12 @@ from interface import Ui_MainWindow as InterfacePageUI
 
 
 import ctypes
-#os.chdir(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\GUI")   #to change the current working directory
+os.chdir(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\GUI")   #to change the current working directory
 
-os.chdir("Project/Splitwise-Clone-Project/GUI")   #to change the current working directory
+#os.chdir("Project/Splitwise-Clone-Project/GUI")   #to change the current working directory
 
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 
 from db_operations import add_user, get_user_by_email, add_group, get_all_groups, get_all_usernames
@@ -171,6 +172,7 @@ class MainWindow(QMainWindow):
         self.user = user
         self.group = None
 
+        
 
         ########################################################################
         # APPLY JSON STYLESHEET
@@ -257,6 +259,7 @@ class MainWindow(QMainWindow):
         self.ui.ShareFriend_2.clicked.connect(lambda: add_shares_friend(self.ui, "share", self.ui.FriendName.text(), self.user[2], "edit_friend"))
         self.ui.PercentageFriend_2.clicked.connect(lambda: add_shares_friend(self.ui, "percentage", self.ui.FriendName.text(), self.user[2], "edit_friend"))
         
+        self.ui.FinalAddMemberBtn.clicked.connect(lambda: add_new_member_to_group(self.ui))
 
         
     

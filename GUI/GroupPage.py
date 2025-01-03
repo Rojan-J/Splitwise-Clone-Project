@@ -4,12 +4,12 @@ from datetime import date
 import sys
 import os
 import json
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
-# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
+#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
 
 
 from db_operations import *
@@ -516,50 +516,66 @@ def take_group(ui):
 
 
 #R
-def add_new_member_to_group(ui,group):
+def add_new_member_to_group(ui):
+    
+    group = take_group(ui)
+        
+    if group is None:
+        ui.ErrorAddMember.setText("Group not found!")
+        ui.ErrorAddMember.setStyleSheet("color: red;")
+        return
+    
     new_member_name=ui.NewMemberInput.text().strip()
     
     if not new_member_name: #if the user didnt type anything
         ui.NewMemberLabel.setStyleSheet("color:red;")
-        ui.ErrorLabel13.setText("Please enter a valid member name")
-        ui.ErrorLabel3.setStyleSheet("color: red;")
+        ui.ErrorAddMember.setText("Please enter a valid member name")
+        ui.ErrorAddMember.setStyleSheet("color: red;")
         return
     
     
     if new_member_name in group.members:
         ui.NewMemberLabel.setStyleSheet("color: red;")
-        ui.ErrorLabel3.setText("Member already exists in the group!")
-        ui.ErrorLabel3.setStyleSheet("color: red;")
+        ui.ErrorAddMember.setText("Member already exists in the group!")
+        ui.ErrorAddMember.setStyleSheet("color: red;")
         return
     
     
     try:
+        
+        if not hasattr(group, 'split_type'):
+            group.split_type = "equally"  
+        if not hasattr(group, 'default_shares'):
+            group.default_shares = {}  
+        if not hasattr(group, 'default_proportions'):
+            group.default_proportions = {} 
+            
+            
         connection=get_connection()
         cursor=connection.cursor()
         
         cursor.execute("""
-            INSERT INTO user_group (group_id, group_name, username)
-            VALUES (?, ?, ?)
-        """, (group.group_id, group.group_name, new_member_name))
+            INSERT INTO user_group (group_id, group_name, username, default_split, default_shares, default_proportions)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (group.group_id, group.group_name, new_member_name, group.split_type, json.dumps(group.default_shares), json.dumps(group.default_proportions)))
         
         connection.commit()
-        connection.close()
         
-        group.add_members(new_member_name,group.split_type)
+        connection.commit()
+        group.add_members(new_member_name, group.split_type, json.dumps(group.default_shares), json.dumps(group.default_proportions))
         
-        ui.NewMemberInput.clear()
-        ui.NewMemberLabel.setStyleSheet("color: white;")
-        ui.ErrorLabel3.setText(f"{new_member_name} successfully added to the group!")
-        ui.ErrorLabel3.setStyleSheet("color: green;")
         
-        layout = ui.scrollAreaWidgetContents_7.layout()
-        new_checkbox = QtWidgets.QCheckBox(ui.scrollAreaWidgetContents_7)
-        new_checkbox.setText(new_member_name)
-        layout.addWidget(new_checkbox)
+        members_layout = ui.scrollAreaWidgetContents_7.layout()
+        ui.checkBox_2 = QtWidgets.QCheckBox(ui.scrollAreaWidgetContents_7)
+        ui.checkBox_2.setObjectName(new_member_name)
+        ui.checkBox_2.setText(new_member_name)
+        members_layout.addWidget(ui.checkBox_2)
+        
+        
 
     except sqlite3.Error as e:
-        ui.ErrorLabel3.setText(f"Database error: {e}")
-        ui.ErrorLabel3.setStyleSheet("color: red;")
-        
-        
-        #the ErrorLabel3 is not generated correctly yet
+        ui.ErrorAddMember.setText(f"Database Error: {str(e)}")
+        ui.ErrorAddMember.setStyleSheet("color: red;")
+    finally:
+        connection.close()
+ 
