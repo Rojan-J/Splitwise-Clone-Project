@@ -10,11 +10,13 @@ sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone
 
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
 # sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
 
 
 from db_operations import *
 from groups import *
 import sqlite3
+from graph import *
 
 def show_all_existing_groups(ui, user):
     groups = get_groups_by_username(user[2])
@@ -102,6 +104,7 @@ def specific_group_page(ui,grp : Groups):
             ui.ExpensesTable.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
     
     ui.AddExpensesBtn.clicked.connect(lambda: add_expense_page(ui, grp))
+    ui.DebtGraphBtn.clicked.connect(lambda: show_graph(grp, ui))
 
 def create_group(ui, user):
     default_shares = None
@@ -563,3 +566,16 @@ def add_new_member_to_group(ui,group):
         
         
         #the ErrorLabel3 is not generated correctly yet
+def show_graph(group, ui):
+    graph = Graph(group)
+    graph.plot_graph()
+    ui.graph = QtWidgets.QLabel(ui.frame_17)
+    pixmap = QtGui.QPixmap("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_plot.png")
+    ui.graph.setPixmap(pixmap)
+    ui.graph.setScaledContents(True)  # Scale the image to fit the frame
+
+    # Set a layout for the frame and add the label
+    ui.graphlayout = QtWidgets.QVBoxLayout(ui.frame_17)
+    ui.graphlayout.setContentsMargins(0, 0, 0, 0)  # Optional: Remove margins
+    ui.graphlayout.addWidget(ui.graph)
+    

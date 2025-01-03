@@ -60,6 +60,17 @@ class Groups:
             for expense in all_expenses:
                 self.expenses.append([expense[1],expense[5], expense[3], expense[4], expense[7], expense[6], expense[8], expense[9], expense[10], expense[11]])
 
+            all_debts = get_groups_debts_by_group_id(self.group_id)
+            for debt in all_debts:
+                debtor = debt[2]
+                creditor = debt[3]
+                amount = debt[4]
+                if (debtor, creditor) not in self.debts:
+                    self.debts[(debtor, creditor)]= {"capacity": amount}
+                else:
+                    self.debts[(debtor, creditor)]["capacity"] += amount
+
+
         else:
             cursor.execute("INSERT INTO groups (group_name, group_owner) VALUES (?, ?)", (self.group_name, self.group_owner, ))
             
@@ -162,6 +173,7 @@ class Groups:
 
         connection.commit()
         connection.close()     
+        self.cal_debts(contributions, payer)
         
 
         
@@ -214,10 +226,13 @@ class Groups:
 
         for contributor ,contribution in contributions:
             if (contributor, payer) not in self.debts:
-                self.debts[(contributor, payer)]= {"capacity": contribution, "flow": 0}
+                self.debts[(contributor, payer)]= {"capacity": contribution}
             else:
                 self.debts[(contributor, payer)]["capacity"] += contribution
+
+            add_debt(self.group_id, contributor,payer,contribution)
                 
+        print(self.debts)
                 
                 
     def settle_debt(self,debtor,creditor,amount):
@@ -246,6 +261,7 @@ def print_table_columns(table_name):
         print(f"Column Name: {column[1]}, Data Type: {column[2]}")
     
     connection.close()
+
 
     
             

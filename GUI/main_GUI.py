@@ -37,7 +37,6 @@ ctypes.CDLL(cairo_path)
 
 from Custom_Widgets import *
 from PyQt5.QtWidgets import QApplication
-from PyQt5 import QtCore, QtGui, QtWidgets
 from ProfilePage import *
 from GroupPage import *
 from FriendsPage import *

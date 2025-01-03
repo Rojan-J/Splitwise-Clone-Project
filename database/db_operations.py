@@ -211,13 +211,13 @@ def add_share_contributions(expense_id, user_contributions):
     connection.close()
       
     
-def add_debt(debtor_id,creditor_id,amount):
+def add_debt(group_id, debtor_id,creditor_id,amount):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
-        INSERT INTO debts (debtor_id, creditor_id, amount)
-        VALUES (?, ?, ?)
-    ''', (debtor_id, creditor_id, amount))
+        INSERT INTO debts (group_id, debtor_name, creditor_name, amount)
+        VALUES (?, ?, ?, ?)
+    ''', (group_id, debtor_id, creditor_id, amount))
     connection.commit()
     connection.close()
 
@@ -366,3 +366,16 @@ def edit_friend_database(friendship_id, friend_profile, default_split, default_s
     
     connection.commit()
     connection.close()
+
+
+def get_groups_debts_by_group_id(group_id):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM debts WHERE group_id = ?
+    ''', (group_id, ))
+    
+    #fetch the first matching row
+    debts=cursor.fetchall()
+    connection.close()
+    return debts
