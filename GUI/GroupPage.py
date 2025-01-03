@@ -89,6 +89,7 @@ def specific_group_page(ui,grp : Groups):
     ui.grp_owner.setText(f"Owner: {grp.group_owner}")
     ui.GrpTotalExpense.setText(f"Total Expense: {grp.get_total_expenses_of_group()[0]}")
     expenses = get_expenses_of_grp_by_grp_id(grp.group_id)
+    ui.ExpensesTable.setRowCount(0)
     header = ui.ExpensesTable.horizontalHeader()
     header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
     for expense in expenses:
@@ -104,7 +105,7 @@ def create_group(ui, user):
     default_shares = None
     default_prop_j = None
     default_shares_j = None
-    split=""
+    split="equally"
     percent_total = True
 
     
@@ -119,7 +120,7 @@ def create_group(ui, user):
             split = Split.text()
     if split != "equally":
         default_shares = get_shares(ui, "add_group")
-        if split == "shares":
+        if split == "share":
             default_shares_j = json.dumps(default_shares)
             default_prop_j = None
         else:
@@ -142,37 +143,41 @@ def create_group(ui, user):
         
         ui.rightMenuContainer.collapseMenu()
         show_all_existing_groups(ui, user)
+    error  = 0 
     widgets = [ui.GrpNameLabel, ui.NoMembersLabel, ui.GrpMembersLabel, ui.DefaultSplitLabel]
+    print([group_name, group_no, members, split])
     for widget, data in enumerate([group_name, group_no, members, split]):
-        if data == "" or data == [""] or not data:
+        if data == "" or data == [] or data == 0:
             widgets[widget].setStyleSheet("color: red;")
             ui.ErrorLabel.setText("Fill out all inforamtion!")
             ui.ErrorLabel.setStyleSheet("color : red;")
+            error = 1
 
         else:
+            error =0
             widgets[widget].setStyleSheet("color: white;")
             ui.ErrorLabel.setText("")
-
-    if group_no != "" and int(group_no) != len(get_members(ui)):
-        widgets[1].setStyleSheet("color: red;")
-        widgets[2].setStyleSheet("color: red;")
-        ui.ErrorLabel.setText("Number of Members does't match the list of their user name!")
-        ui.ErrorLabel.setStyleSheet("color : red;")
-
-    else:
-        widgets[1].setStyleSheet("color: white;")
-        widgets[2].setStyleSheet("color: white;")
-        ui.ErrorLabel.setText("")
-    
-    if split == "percentage":
-        if not percent_total:
-            ui.ErrorLabel.setText("Enter correct percentages!")
+    if error == 0:
+        if group_no != "" and group_no != len(members):
+            widgets[1].setStyleSheet("color: red;")
+            widgets[2].setStyleSheet("color: red;")
+            ui.ErrorLabel.setText("Number of Members does't match the list of their user name!")
             ui.ErrorLabel.setStyleSheet("color : red;")
-            ui.label.setStyleSheet("color: red;")
+
         else:
+            widgets[1].setStyleSheet("color: white;")
+            widgets[2].setStyleSheet("color: white;")
             ui.ErrorLabel.setText("")
-            ui.ErrorLabel.setStyleSheet("color : white;")
-            ui.label.setStyleSheet("color: white;")
+    
+        if split == "percentage":
+            if not percent_total:
+                ui.ErrorLabel.setText("Enter correct percentages!")
+                ui.ErrorLabel.setStyleSheet("color : red;")
+                ui.label.setStyleSheet("color: red;")
+            else:
+                ui.ErrorLabel.setText("")
+                ui.ErrorLabel.setStyleSheet("color : white;")
+                ui.label.setStyleSheet("color: white;")
 
 
 def add_group_to_dataset(group_name, user, members, split, default_shares_j, default_prop_j):
@@ -187,7 +192,7 @@ def add_group_to_dataset(group_name, user, members, split, default_shares_j, def
     for member in members:
         if member == user[2]:
             continue
-        group.add_members(member)
+        group.add_members(member, split, default_shares_j, default_prop_j)
     connection.commit()
     connection.close()
 
@@ -229,10 +234,11 @@ def add_group_expense(ui, main_group):
     selected_date = ui.calendarWidget.selectedDate().toString("yyyy-dd-mm")
     payer = ui.PayerInput.text()
     description = ui.DiscriptionInput.toPlainText()
-    split_type = "equally"
+    split_type = "default split"
+    default = False
+    error_def_perc = False
 
     contributers = get_contributers(ui)
-    percent_total = True
 
 
 
@@ -249,51 +255,40 @@ def add_group_expense(ui, main_group):
         if SplitTypeBtn.isChecked():
             split_type = SplitTypeBtn.text()
 
-    if split_type != "equally":
-        shares = get_shares(ui, "add_expense")
-        print("COUNT", ui.verticalLayout_25.count())
+    if split_type == "share" or split_type == "percentage":
+            shares = get_shares(ui, "add_expense")
+            print("COUNT", ui.verticalLayout_25.count())
+
+    if split_type == "default split":
+        default = True
+        defaults = get_default_split(main_group.group_id, main_group.group_name)
+        default_split = defaults[-3]
+        default_shares = defaults[-2]
+        default_proportions = defaults[-1]
+        if default_shares:
+            default_shares = json.loads(default_shares)
+        if  default_proportions:
+            default_proportions = json.loads(default_proportions)
+        split_type = default_split
+        if split_type == "share":
+            shares = dict()
+            for contributer in contributers:
+                shares[contributer] = default_shares[contributer]
+        elif split_type == "percentage":
+            shares = default_proportions
+    
         
     def total_perc(split_type):
         if split_type == "percentage":
-            shares = get_shares(ui, "add_expense")
+            if  default == False:
+                shares = get_shares(ui, "add_expense")
+            else:
+                shares = default_proportions
             if sum(shares.values()) != 100:
                 print("No")
                 print(shares.values())
                 return False
         return True
-        
-
-    if label != "" and amount != "" and selected_date != "" and isfloat(amount) and contributers != [] and payer != ""  and payer in main_group.members and total_perc(split_type):
-        if split_type == "share":
-            shares = shares
-            main_group.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
-        elif split_type == "percentage":
-            proportions = shares
-            main_group.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
-        else:
-            main_group.add_expenses(label,amount, payer, contributers, selected_date, category,description, split_type)
-        var_to_add = [label, payer, str(amount),",".join(contributers), selected_date, category, split_type, description]
-        row_position = ui.ExpensesTable.rowCount()
-        ui.ExpensesTable.insertRow(row_position)
-        for col, value in enumerate(var_to_add):
-            ui.ExpensesTable.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
-
-        ui.GrpExpenseLabelInput.setText("")
-        ui.AmountInput.setText("")
-        ui.PayerInput.setText("")
-        ui.DiscriptionInput.setText("")
-        split_type = "equally"
-        add_shares(ui, split_type, "add_expense")
-        for SplitTypeNo in range(4):
-            ui.verticalLayout_22.itemAt(SplitTypeNo).widget().setChecked(False)
-        layout = ui.scrollAreaWidgetContents_7.layout()
-        for i in range(layout.count()):
-            layout.itemAt(i).widget().setChecked(False)
-        for categoryBtnNo in range(6):
-            ui.gridLayout_2.itemAt(categoryBtnNo).widget().setChecked(False)
-        ui.GrpTotalExpense.setText(f"Total Expense: {main_group.get_total_expenses_of_group()[0]}")
-        
-        ui.rightMenuContainer.collapseMenu()
         
 
 
@@ -331,7 +326,7 @@ def add_group_expense(ui, main_group):
 
     
     
-    if split_type == "percentage":
+    if split_type == "percentage" and default == False:
         if not total_perc(split_type):
             ui.label.setStyleSheet("color: red;")
             if error == 0:
@@ -344,6 +339,55 @@ def add_group_expense(ui, main_group):
             ui.ErrorLabel2.setStyleSheet("color : white;")
             ui.label.setStyleSheet("color: white;")
             error = 0
+    
+    if default == True and split_type == "percentage":
+        if len(contributers) != len(main_group.members):
+            error_def_perc = True
+            ui.SplitLabel.setStyleSheet("color: red;")
+            if error == 0:
+                ui.ErrorLabel2.setText("Your default split is percentage based; This mode of split is applicable only when all of the members are contributed!")
+                ui.ErrorLabel2.setStyleSheet("color : red;")
+
+            
+
+    if error_def_perc == False and label != "" and amount != "" and selected_date != "" and isfloat(amount) and contributers != [] and payer != ""  and payer in main_group.members and total_perc(split_type):
+        ui.SplitLabel.setStyleSheet("color: white;")
+        ui.ErrorLabel2.setText("")
+        ui.ErrorLabel2.setStyleSheet("color : white;")
+        if split_type == "share":
+            shares = shares
+            main_group.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
+        elif split_type == "percentage":
+            proportions = shares
+            main_group.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
+        else:
+            main_group.add_expenses(label,amount, payer, contributers, selected_date, category,description, split_type)
+        
+        if default == True : split_title =f"default ({split_type})"
+        else: split_title = split_type
+        var_to_add = [label, payer, str(amount),",".join(contributers), selected_date, category, split_title, description]
+        row_position = ui.ExpensesTable.rowCount()
+        ui.ExpensesTable.insertRow(row_position)
+        for col, value in enumerate(var_to_add):
+            ui.ExpensesTable.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
+
+        ui.GrpExpenseLabelInput.setText("")
+        ui.AmountInput.setText("")
+        ui.PayerInput.setText("")
+        ui.DiscriptionInput.setText("")
+        split_type = "equally"
+        add_shares(ui, split_type, "add_expense")
+        for SplitTypeNo in range(4):
+            ui.verticalLayout_22.itemAt(SplitTypeNo).widget().setChecked(False)
+        layout = ui.scrollAreaWidgetContents_7.layout()
+        for i in range(layout.count()):
+            layout.itemAt(i).widget().setChecked(False)
+        for categoryBtnNo in range(6):
+            ui.gridLayout_2.itemAt(categoryBtnNo).widget().setChecked(False)
+        ui.GrpTotalExpense.setText(f"Total Expense: {main_group.get_total_expenses_of_group()[0]}")
+        
+        ui.rightMenuContainer.collapseMenu()
+
 
 
     
@@ -438,6 +482,7 @@ def get_contributers(ui):
 
 def get_members(ui):
     members = ui.GrpMembersInput.toPlainText().split("\n")
+    if members == [""]: members =[]
     return members
 
 

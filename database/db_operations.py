@@ -286,6 +286,18 @@ def get_expenses_of_grp_by_grp_id(group_id):
     connection.close()
     return expenses
 
+def get_expenses_of_friend_by_friendship_id(friendship_id):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM friend_expenses WHERE friendship_id = ?
+    ''', (friendship_id, ))
+    
+    #fetch the first matching row
+    expenses=cursor.fetchall()
+    connection.close()
+    return expenses
+
 def get_default_split(group_id, group_name):
     connection=get_connection()
     cursor=connection.cursor()

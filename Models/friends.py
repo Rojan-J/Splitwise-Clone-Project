@@ -4,8 +4,7 @@ from datetime import date
 
 from users import Users
 
-#r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"
-#rr"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils\currency_conversion"
+
 
 import sys
 import os
@@ -16,48 +15,36 @@ from db_operations import *
 from currency_conversion_all_currencies import convert_to_IRR
 
 
-class Groups:
-    def __init__(self, group_name, group_owner, split = "equally", expenses = [], members = [], debts = dict()):
-        self.group_name = group_name
-        self.group_id = None
-        self.members = members
+class Friends:
+    def __init__(self, username, friend_name, friends_email,  split = "equally", expenses = [], debts = dict()):
+        self.friend_name = friend_name
+        self.friendship_id = None
         self.expenses = expenses
         self.debts = debts
-        self.group_owner = group_owner
-        self.load_from_database()
+        self.friend_email = friends_email
+        self.load_from_database(username)
 
         
-    def load_from_database(self):
-        self.members= []
+    def load_from_database(self, username):
         connection=get_connection()
         cursor=connection.cursor()
         
-        cursor.execute("SELECT group_id FROM groups WHERE group_name = ? and group_owner = ?", (self.group_name, self.group_owner, ))
-        group = cursor.fetchone()
+        cursor.execute("SELECT friendship_id FROM friends WHERE (friend_name = ? and username = ?) or (friend_name = ? and username = ?)", (self.friend_name, username, username, self.friend_name))
+        friend = cursor.fetchone()
         
         #check if group exists and fetch members of the group
-        if group:
-            self.group_id  =group[0]
-            cursor.execute("""
-                SELECT u.username
-                FROM users u
-                JOIN user_group ug ON u.username = ug.username
-                WHERE ug.group_name = ?
-            """, (self.group_name,))
-            members = cursor.fetchall()
+        if friend:
+            self.friendship_id = friend[0]
             
-            for member in members:
-                self.members.append(member[0])  #name=key, email=value
-            
-            all_expenses  =get_group_expenses_by_group_id(self.group_id)
+            all_expenses = get_friend_expenses_by_friendship_id(self.friendship_id)
             for expense in all_expenses:
                 self.expenses.append([expense[1],expense[5], expense[3], expense[4], expense[7], expense[6], expense[8], expense[9], expense[10], expense[11]])
 
         else:
-            cursor.execute("INSERT INTO groups (group_name, group_owner) VALUES (?, ?)", (self.group_name, self.group_owner, ))
+            cursor.execute("INSERT INTO friends (username, friend_name, friend_email) VALUES (?, ?, ?)", (username, self.friend_name, self.friend_email, ))
             
-            self.group_id = cursor.lastrowid
-            print(f"Group '{self.group_name}' created with group_id: {self.group_id}")
+            self.friendship_id = cursor.lastrowid
+            print(f"friend '{self.friend_name}' created with friendship_id: {self.friendship_id}")
         connection.commit()
         connection.close()
 
@@ -65,28 +52,27 @@ class Groups:
         
         
 
-    def add_members(self, username, split, default_shares_j, default_prop_j):
-        if username not in self.members:
-            self.members.append(username)
-            
-            connection=get_connection()
-            cursor=connection.cursor()
-            
-            # check if user already exists
-            user = get_user_by_email (username, username)
-            if user:
-                user_id = user[0]
-            else:
-                add_user(username, username, "Defaultmail@mail.com", "DefaultPass0", 0, True, 0, True)
-                cursor.execute("SELECT user_id FROM users WHERE username = ?", (username, ))
-                user = cursor.fetchone()
-                user_id = user[0]
-            
-            #add member to the group
-            print_table_columns("user_group")
-            cursor.execute("INSERT INTO user_group (user_id, username, group_id, group_name, default_split, default_shares, default_proportions) VALUES (?, ?, ?, ?, ?, ?, ?)", (user_id, username, self.group_id, self.group_name, split, default_shares_j, default_prop_j))
-            connection.commit()
-            connection.close()    
+    def add_friend(self, username, user_email, split = "equally", default_shares_j = None, default_proportions_j = None):
+        add_friends(self.friendship_id, username, self.friend_name, self.friend_email, split, default_shares_j, default_proportions_j)
+        connection=get_connection()
+        cursor=connection.cursor()
+        
+        # check if user already exists
+        friend = get_user_by_email (self.friend_email, self.friend_name)
+        if friend:
+            friend_id = friend[0]
+        else:
+            add_user(self.friend_name, self.friend_name, self.friend_email, "DefaultPass0", 0, True, 0, True)
+            cursor.execute("SELECT user_id FROM users WHERE username = ?", (self.friend_name, ))
+            friend = cursor.fetchone()
+            friend_id = friend[0]
+
+        
+        #add member to the group
+        print_table_columns("user_group")
+        add_friends(self.friendship_id, self.friend_name, username, user_email, split, default_shares_j, default_proportions_j)
+        connection.commit()
+        connection.close()    
             
 
     def add_expenses(self,label, expense, payer, contributors, expense_date = date.today(), category="etc.",description=None, split_type="equally", proportions=None, shares=None, currency = "IRR"):
@@ -101,16 +87,16 @@ class Groups:
 
         
         #check if expenses are added correctly:
-        print(f"Adding expense: group_id={self.group_id}, payer_id={payer}, amount={expense}, category={category}, date={expense_date}, shares={shares}, proportions={proportions}")
+        print(f"Adding expense: friendship_id={self.friendship_id}, payer={payer}, amount={expense}, category={category}, date={expense_date}, shares={shares}, proportions={proportions}")
 
         json_shares = json.dumps(shares)
         json_proportions = json.dumps(proportions)
 
         # add expense
         cursor.execute("""
-            INSERT INTO group_expenses (label, group_id,groupname, payername, contributers, amount, category, date, description, split_type, proportions, shares, currency) 
-            VALUES (?, ?, ?, ?, ?, ?,?,?,?, ?, ?, ?, ?)
-        """, (label, self.group_id, self.group_name, payer, ",".join(contributors), expense, category, str(expense_date), description , split_type, json_proportions, json_shares, currency))
+            INSERT INTO friend_expenses (label, friendship_id, payername, contributers, amount, category, date, description, split_type, proportions, shares, currency) 
+            VALUES (?, ?, ?, ?, ?,?,?,?, ?, ?, ?, ?)
+        """, (label, self.friendship_id, payer, ",".join(contributors), expense, category, str(expense_date), description , split_type, json_proportions, json_shares, currency))
         expense_id = cursor.lastrowid
 
         print(f"Expense added with ID: {expense_id}")
@@ -134,7 +120,7 @@ class Groups:
         else:
             raise ValueError(f"Invalid split_type:{split_type}")
         
-
+        print(contributions)
             
         for contributor,contribution in contributions:
             if split_type == "share":
@@ -146,11 +132,14 @@ class Groups:
             else:
                 share = f"{split_type} :{proportions[contributor]}"
             proportion=contribution/float(expense)
+
+            cursor.execute("SELECT friend_name FROM user_friends WHERE username = ?", (contributor, ))
+            friend_name = cursor.fetchone()[0]
                 
             cursor.execute("""
                 INSERT INTO expense_user (expense_id, total_expense,  username, amount_contributed, split_proportion, for_what, name, share)
-                VALUES (?, ?, ?,?,?, "group", ?, ?)
-            """, (expense_id, expense, contributor, contribution, proportion, self.group_name, share))
+                VALUES (?, ?, ?,?,?, "friend", ?, ?)
+            """, (expense_id, expense, contributor, contribution, proportion, friend_name, share))
 
         connection.commit()
         connection.close()     
@@ -163,14 +152,14 @@ class Groups:
         connection=get_connection()
         cursor=connection.cursor()
         
-        print(f"Retrieving expenses for group_id={self.group_id} and categorizing them.")
+        print(f"Retrieving expenses for friendship_id={self.friendship_id} and categorizing them.")
        
         cursor.execute("""
             SELECT category, SUM(amount)
-            FROM group_expenses
-            WHERE group_id = ? or groupname = ?
+            FROM friend_expenses
+            WHERE friendship_id = ?
             GROUP BY category
-        """, (self.group_id, self.group_name,))
+        """, (self.friendship_id,))
         
         expense_by_category=cursor.fetchall()
         print("Expenses retrieved:", expense_by_category)
@@ -182,18 +171,18 @@ class Groups:
         connection.close()
         return category_expenses
     
-    def get_total_expenses_of_group(self):
+    def get_total_expenses_of_friend(self):
 
         connection=get_connection()
         cursor=connection.cursor()
         
-        print(f"Retrieving expenses for group_id={self.group_id} and categorizing them.")
+        print(f"Retrieving expenses for friendship_id={self.friendship_id} and categorizing them.")
        
         cursor.execute("""
             SELECT SUM(amount)
-            FROM group_expenses
-            WHERE group_id = ? AND groupname = ?
-        """, (self.group_id, self.group_name,))
+            FROM friend_expenses
+            WHERE friendship_id = ?
+        """, (self.friendship_id, ))
         
         total_expenses=cursor.fetchone()
         
@@ -238,8 +227,4 @@ def print_table_columns(table_name):
         print(f"Column Name: {column[1]}, Data Type: {column[2]}")
     
     connection.close()
-
-    
-            
-
 
