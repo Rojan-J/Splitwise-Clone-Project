@@ -5,10 +5,12 @@ import sys
 import os
 import json
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-#r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"
+#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+
 
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
-#r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
+
 
 from db_operations import *
 from groups import *
@@ -511,3 +513,53 @@ def take_group(ui):
     group = Groups(ui.GrpName.text(), ui.grp_owner.text())
     return group
 
+
+
+#R
+def add_new_member_to_group(ui,group):
+    new_member_name=ui.NewMemberInput.text().strip()
+    
+    if not new_member_name: #if the user didnt type anything
+        ui.NewMemberLabel.setStyleSheet("color:red;")
+        ui.ErrorLabel13.setText("Please enter a valid member name")
+        ui.ErrorLabel3.setStyleSheet("color: red;")
+        return
+    
+    
+    if new_member_name in group.members:
+        ui.NewMemberLabel.setStyleSheet("color: red;")
+        ui.ErrorLabel3.setText("Member already exists in the group!")
+        ui.ErrorLabel3.setStyleSheet("color: red;")
+        return
+    
+    
+    try:
+        connection=get_connection()
+        cursor=connection.cursor()
+        
+        cursor.execute("""
+            INSERT INTO user_group (group_id, group_name, username)
+            VALUES (?, ?, ?)
+        """, (group.group_id, group.group_name, new_member_name))
+        
+        connection.commit()
+        connection.close()
+        
+        group.add_members(new_member_name,group.split_type)
+        
+        ui.NewMemberInput.clear()
+        ui.NewMemberLabel.setStyleSheet("color: white;")
+        ui.ErrorLabel3.setText(f"{new_member_name} successfully added to the group!")
+        ui.ErrorLabel3.setStyleSheet("color: green;")
+        
+        layout = ui.scrollAreaWidgetContents_7.layout()
+        new_checkbox = QtWidgets.QCheckBox(ui.scrollAreaWidgetContents_7)
+        new_checkbox.setText(new_member_name)
+        layout.addWidget(new_checkbox)
+
+    except sqlite3.Error as e:
+        ui.ErrorLabel3.setText(f"Database error: {e}")
+        ui.ErrorLabel3.setStyleSheet("color: red;")
+        
+        
+        #the ErrorLabel3 is not generated correctly yet
