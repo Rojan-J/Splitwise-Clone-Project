@@ -233,7 +233,7 @@ def add_group_expense(ui, main_group):
     label = ui.GrpExpenseLabelInput.text()
     print(label)
     amount = ui.AmountInput.text()
-    selected_date = ui.calendarWidget.selectedDate().toString("yyyy-dd-mm")
+    selected_date = ui.calendarWidget.selectedDate().toString("yyyy-dd-MM")
     payer = ui.PayerInput.text()
     description = ui.DiscriptionInput.toPlainText()
     split_type = "default split"

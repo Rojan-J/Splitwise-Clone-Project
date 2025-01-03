@@ -1,7 +1,7 @@
 import sqlite3
 
 def get_connection():
-    connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database\database.db")
+    connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")
 
     connection.execute("PRAGMA foreign_keys=ON")  #enable foreign key support
     
@@ -310,6 +310,19 @@ def get_default_split(group_id, group_name):
     connection.close()
     return defaults
 
+def get_default_split_friend(frienship_id, friend_name):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM user_friends WHERE friendship_id = ? AND friend_name = ?
+    ''', (frienship_id,  friend_name))
+    
+    #fetch the first matching row
+    defaults=cursor.fetchone()
+    connection.close()
+    return defaults
+
+
 
 def get_friends_by_username(username):
     connection=get_connection()
@@ -322,3 +335,33 @@ def get_friends_by_username(username):
     friends=cursor.fetchall()
     connection.close()
     return friends
+
+def get_friends_profile_by_friendship_id(friendship_id):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT friend_profile FROM friends WHERE friendship_id = ?
+    ''', (friendship_id, ))
+    
+    #fetch the first matching row
+    friend =cursor.fetchone()
+    connection.close()
+    return friend
+
+def edit_friend_database(friendship_id, friend_profile, default_split, default_share, default_prop):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        UPDATE friends
+        SET friend_profile = ?
+        WHERE friendship_id = ?;
+    ''', (friend_profile, friendship_id, ))
+
+    cursor.execute('''
+        UPDATE user_friends
+        SET default_split = ?, default_shares = ? , default_proportions = ?
+        WHERE friendship_id = ?;
+    ''', (default_split, default_share, default_prop, friendship_id, ))
+    
+
+    connection.close()
