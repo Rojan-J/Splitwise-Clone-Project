@@ -18,16 +18,18 @@ from interface import Ui_MainWindow as InterfacePageUI
 
 
 import ctypes
-os.chdir("Project/Splitwise-Clone-Project/GUI")   #to change the current working directory
-#r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\GUI"
+#os.chdir(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\GUI")   #to change the current working directory
 
+os.chdir("Project/Splitwise-Clone-Project/GUI")   #to change the current working directory
 
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-#r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"
+
+
 from db_operations import add_user, get_user_by_email, add_group, get_all_groups, get_all_usernames
 
 # Explicitly load the cairo DLL
 cairo_path = r"C:/Program Files/GTK3-Runtime Win64/bin/libcairo-2.dll"
+
 ctypes.CDLL(cairo_path)
 #r"C:\Program Files\GTK3-Runtime Win64\bin\libcairo-2.dll"
 
@@ -242,7 +244,8 @@ class MainWindow(QMainWindow):
 
         self.ui.FriendsIcon.clicked.connect(lambda: show_all_existing_friends(self.ui, self.user))
         
-        
+        self.ui.AddMembersBtn_7.clicked.connect(lambda: add_new_member_to_group(self.ui, self.group))
+
     
 
         
