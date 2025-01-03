@@ -9,9 +9,16 @@ sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone
 #sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 
+<<<<<<< HEAD
+#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
+#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"))
+=======
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
 #sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
+>>>>>>> 5fdfb2b8cdf77b5878a48b8fc8e6ae4dabb0ae1f
 
 
 from db_operations import *
@@ -649,7 +656,9 @@ def save_new_member_with_expenses(ui,group,new_member_name):
     for i in range(layout.count()):
         checkbox = layout.itemAt(i).widget()
         if checkbox.isChecked():
-            selected_expenses.append(int(checkbox.objectName().replace("expense_", "")))  # Extract expense ID
+            expense_id = int(checkbox.objectName().replace("expense_", ""))
+            expense_label = checkbox.text()
+            selected_expenses.append(expense_id)  # Extract expense ID
 
     try:
         connection = get_connection()
@@ -684,7 +693,6 @@ def save_new_member_with_expenses(ui,group,new_member_name):
         ui.ErrorLabel3.setStyleSheet("color: red;")
         
         
-        #the ErrorLabel3 is not generated correctly yet
 def show_graph(group, ui):
     layout = ui.scrollAreaWidgetContents_23.layout()
     while layout.count():

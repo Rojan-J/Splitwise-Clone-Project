@@ -4,7 +4,9 @@ import matplotlib.pyplot as plt
 import sys
 import os
 import numpy as np
-sys.path.append(os.path.abspath("./Project/Splitwise-Clone-Project/Models"))
+#sys.path.append(os.path.abspath("./Project/Splitwise-Clone-Project/Models"))
+
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
 
 # Import the class
 

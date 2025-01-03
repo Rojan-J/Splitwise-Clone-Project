@@ -41,6 +41,7 @@ from PyQt5.QtWidgets import QApplication
 from ProfilePage import *
 from GroupPage import *
 from FriendsPage import *
+from SearchPage import*
 
 ########################################################################
 ## MAIN WINDOW CLASS
