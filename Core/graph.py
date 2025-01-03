@@ -36,7 +36,25 @@ class Graph():
         else: graph = self.simplified_graph
         pos = nx.spring_layout(graph)
         plt.figure(figsize=(8, 6))
-        nx.draw_networkx_labels(graph, pos, font_size= 15)
+        in_degree_centrality = nx.in_degree_centrality(graph)
+        weighted_in_degree = dict(graph.in_degree(weight='weight'))
+        print(in_degree_centrality, weighted_in_degree)
+        central_node = max(weighted_in_degree, key=in_degree_centrality.get)
+
+        label_colors = {node: 'black' for node in graph.nodes()}
+        label_colors[central_node] = "red"
+
+
+        for node, (x, y) in pos.items():
+            plt.text(
+                x, y + 0.05,  # Adjust position slightly above the node
+                str(node),
+                fontsize=15,
+                color=label_colors.get(node, 'black'),  # Default to black if no color is defined
+                ha='center',
+                fontweight = "bold"
+            )
+
         # Draw edges with different connection styles for parallel edges
 
         for u, v, data in graph.edges(data=True):
@@ -58,6 +76,9 @@ class Graph():
         plt.tight_layout()
         png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_plot.png"
         plt.savefig(png_path)
+
+
+        
 
 
 
