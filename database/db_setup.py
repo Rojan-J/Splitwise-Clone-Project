@@ -90,7 +90,7 @@ def initialize_database():
             amount_contributed REAL NOT NULL,
             split_proportion REAL,  -- Add this column,
             for_what TEXT NOT NULL,
-            name TEXT NOT NULL,
+            id TEXT NOT NULL,
             share REAL,  -- Share for share-based splits,
             FOREIGN KEY(username) REFERENCES users(username)
         )

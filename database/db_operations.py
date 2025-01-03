@@ -400,3 +400,27 @@ def get_groups_debts_by_group_id(group_id):
     debts=cursor.fetchall()
     connection.close()
     return debts
+
+def total_expenses_of_user(username):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM expense_user WHERE username = ?
+    ''', (username, ))
+    
+    #fetch the first matching row
+    expenses=cursor.fetchall()
+    connection.close()
+    return expenses
+
+def total_user_owes(username):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM simplified_debts WHERE debtor_name = ? and status = pending
+    ''', (username, ))
+    
+    #fetch the first matching row
+    owes=cursor.fetchall()
+    connection.close()
+    return owes

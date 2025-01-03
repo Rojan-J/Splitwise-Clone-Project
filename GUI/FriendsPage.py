@@ -16,7 +16,6 @@ import matplotlib.pyplot as plt
 from db_operations import *
 from friends import *
 import sqlite3
-from friends import *
 
 def show_all_existing_friends(ui, user):
     friends = get_friends_by_username(user[2])

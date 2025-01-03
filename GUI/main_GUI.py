@@ -41,6 +41,7 @@ from PyQt5.QtWidgets import QApplication
 from ProfilePage import *
 from GroupPage import *
 from FriendsPage import *
+from ReportsPage import *
 #from SearchPage import*
 
 ########################################################################
@@ -260,6 +261,8 @@ class MainWindow(QMainWindow):
         self.ui.PercentageFriend_2.clicked.connect(lambda: add_shares_friend(self.ui, "percentage", self.ui.FriendName.text(), self.user[2], "edit_friend"))
         
         self.ui.FinalAddMemberBtn.clicked.connect(lambda: add_new_member_to_group(self.ui))
+
+        self.ui.ReportsIcon.clicked.connect(lambda: show_total_expenses(self.user[2], self.ui))
 
         
     
