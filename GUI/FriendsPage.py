@@ -7,6 +7,8 @@ import json
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
 
+import matplotlib.pyplot as plt
+
 #sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 #sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
 
@@ -133,6 +135,8 @@ def specific_friend_page(ui, friend: Friends, username):
     
     ui.AddFriendExpenseBtn.clicked.connect(lambda: add_expense_page_friend(ui, friend, username))
     ui.AddFriendBtn_2.clicked.connect(lambda: edit_friend(ui, friend, username))
+    ui.closeFrGraphBtn.clicked.connect(lambda: clear_graph_friend(ui))
+    ui.FriendsExpenseGraphBtn.clicked.connect(lambda: show_expenses_graph_friend(friend, ui))
 
 def add_expense_page_friend(ui, friend: Friends, username, recover= True):
     if recover:
@@ -531,3 +535,62 @@ def edit_friend(ui, friend, username):
             ui.ErrorLabel3_2.setText("")
             ui.ErrorLabel3_2.setStyleSheet("color : white;")
             ui.label.setStyleSheet("color: white;")
+
+def show_expenses_graph_friend(friend, ui):
+    all_expenses = friend.get_expenses_by_category()
+    categories = list(all_expenses.keys())
+    amounts = list(all_expenses.values())
+
+
+    def autopct_amount(pct, values):
+        total = sum(values)
+        amount = int(round(pct * total / 100.0))
+        return f"{amount} R"
+    # Create the pie chart
+    plt.figure(figsize=(8, 6))  # Set figure size
+    plt.pie(
+        amounts, 
+        labels=categories, 
+        autopct=lambda pct: autopct_amount(pct, amounts),  
+        startangle=90,      
+        colors=plt.cm.Paired.colors,  
+    )
+
+    # Add a 
+    plt.title("Expense Distribution")
+
+    png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_pie_plot.png"
+    # Save as PNG
+    plt.savefig(png_path)
+
+    layout = ui.scrollAreaWidgetContents_24.layout()
+    while layout.count():
+        item = layout.takeAt(0)  # Get the first item
+        widget = item.widget()  # Get the widget
+        widget.deleteLater()
+    
+    ui.graph = QtWidgets.QLabel(ui.scrollAreaWidgetContents_24)
+    pixmap = QtGui.QPixmap(png_path)
+    ui.graph.setPixmap(pixmap)
+    ui.graph.setScaledContents(True)  # Scale the image to fit the frame
+
+    # Set a layout for the frame and add the label
+    layout.setContentsMargins(0, 0, 0, 0)  # Optional: Remove margins
+    layout.addWidget(ui.graph)
+    font = QtGui.QFont()
+    font.setFamily("Swis721 Blk BT")
+    font.setPointSize(14)
+    font.setBold(False)
+    font.setWeight(50)
+    
+    ui.pushButton.setText("")
+    ui.GraphLabel.setText("Expenses in each category")
+    ui.GraphLabel.setFont(font)
+
+def clear_graph_friend(ui):
+    layout = ui.scrollAreaWidgetContents_24.layout()
+    while layout.count():
+        item = layout.takeAt(0)  # Get the first item
+        widget = item.widget()  # Get the widget
+        widget.deleteLater()
+    ui.GraphLabel.setText("")
