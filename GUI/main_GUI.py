@@ -19,12 +19,12 @@ from interface import Ui_MainWindow as InterfacePageUI
 
 import ctypes
 
-#os.chdir(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\GUI")   #to change the current working directory
+os.chdir(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\GUI")   #to change the current working directory
 
-os.chdir("Project/Splitwise-Clone-Project/GUI")   #to change the current working directory
+#os.chdir("Project/Splitwise-Clone-Project/GUI")   #to change the current working directory
 
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 
 from db_operations import add_user, get_user_by_email, add_group, get_all_groups, get_all_usernames
@@ -46,7 +46,6 @@ from ReportsPage import *
 from DebtsPage import *
 from SearchPage import *
 from CurrencyPage import *
-from NotificationPage import *
 
 ########################################################################
 ## MAIN WINDOW CLASS
@@ -167,52 +166,52 @@ class LoginWindow(QMainWindow):
                 self.open_interface_page()
 
 
-def validate_navigation(json_path, button_id):
-    """
-    Validate the navigation mapping for a specific button ID from the JSON file.
+# def validate_navigation(json_path, button_id):
+#     """
+#     Validate the navigation mapping for a specific button ID from the JSON file.
 
-    Parameters:
-    json_path (str): Path to the JSON file.
-    button_id (str): The ID of the button to debug.
+#     Parameters:
+#     json_path (str): Path to the JSON file.
+#     button_id (str): The ID of the button to debug.
 
-    Returns:
-    None
-    """
-    try:
-        # Load the JSON file
-        with open(json_path, "r") as file:
-            config = json.load(file)
+#     Returns:
+#     None
+#     """
+#     try:
+#         # Load the JSON file
+#         with open(json_path, "r") as file:
+#             config = json.load(file)
 
-        # Extract navigation buttons
-        navigation_buttons = config.get("navigationButtons", [])
-        navigation_buttons = config.get("navigationButtons", [])
-        print("Navigation Buttons:", navigation_buttons)
+#         # Extract navigation buttons
+#         navigation_buttons = config.get("navigationButtons", [])
+#         navigation_buttons = config.get("navigationButtons", [])
+#         print("Navigation Buttons:", navigation_buttons)
 
-        print("Loaded JSON Configuration:", json.dumps(config, indent=4))
+#         print("Loaded JSON Configuration:", json.dumps(config, indent=4))
 
-        if not navigation_buttons:
-            print("Error: 'navigationButtons' key is missing or empty in JSON.")
-            return
+#         if not navigation_buttons:
+#             print("Error: 'navigationButtons' key is missing or empty in JSON.")
+#             return
 
-        # Flatten the navigation buttons for easier lookup
-        navigation_mapping = {}
-        for button_group in navigation_buttons:
-            navigation_mapping.update(button_group)
+#         # Flatten the navigation buttons for easier lookup
+#         navigation_mapping = {}
+#         for button_group in navigation_buttons:
+#             navigation_mapping.update(button_group)
 
-        # Check if the button ID exists
-        if button_id in navigation_mapping:
-            target_page = navigation_mapping[button_id]
-            print(f"Button ID '{button_id}' is mapped to page '{target_page}'.")
-        else:
-            print(f"Error: Button ID '{button_id}' not found in navigation mapping.")
-            print("Available buttons:", list(navigation_mapping.keys()))
+#         # Check if the button ID exists
+#         if button_id in navigation_mapping:
+#             target_page = navigation_mapping[button_id]
+#             print(f"Button ID '{button_id}' is mapped to page '{target_page}'.")
+#         else:
+#             print(f"Error: Button ID '{button_id}' not found in navigation mapping.")
+#             print("Available buttons:", list(navigation_mapping.keys()))
 
-    except FileNotFoundError:
-        print(f"Error: JSON file '{json_path}' not found.")
-    except json.JSONDecodeError as e:
-        print(f"Error decoding JSON file: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+#     except FileNotFoundError:
+#         print(f"Error: JSON file '{json_path}' not found.")
+#     except json.JSONDecodeError as e:
+#         print(f"Error decoding JSON file: {e}")
+#     except Exception as e:
+#         print(f"An unexpected error occurred: {e}")
 
 
 
@@ -237,11 +236,11 @@ class MainWindow(QMainWindow):
         ########################################################################
         print("\nDebugging Navigation Mapping...")
         json_path = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), "style2.json")
-        validate_navigation(json_path, "SearchBtn")
+        # validate_navigation(json_path, "SearchBtn")
         ########################################################################
 
         self.show()
-        self.ui.ProfileBtn.clicked.connect(lambda: set_user(self.ui, self.user[2]))
+        set_user(self.ui, self.user)
 
         #CenterMenu Expanding
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
@@ -324,10 +323,11 @@ class MainWindow(QMainWindow):
 
         self.ui.MonthlyReportBtn.clicked.connect(lambda: add_custom_time_duration(self.ui))
         self.ui.TotalReportBtn.clicked.connect(lambda: clear_dates(self.ui))
-        self.ui.NotificationBtn.clicked.connect(lambda: show_all_notifications(self.user[2], self.ui) )
 
         
-        #self.ui.ConvertCurrencyBtn.clicked.connect(lambda:convert_currency(self.ui))
+        self.ui.ConvertCurrencyBtn.clicked.connect(lambda:convert_currency(self.ui))
+        
+        
         self.ui.GUploadBtn.clicked.connect(lambda:upload_group_excel(self.ui,self.user))
         
         #self.ui.FUploadBtn.clicked.connect(lambda:upload_friend_excel(self.ui,self.user))
