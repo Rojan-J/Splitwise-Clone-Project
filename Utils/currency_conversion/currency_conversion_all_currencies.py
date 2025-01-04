@@ -21,7 +21,7 @@ def get_historical_rate(date):
 
 def convert_to_IRR(amount,date=None, from_c=None):
     
-    target_date=date or datetime.now().strftime("%Y-%m-%d")
+    target_date=date or datetime.now().strftime("%Y-%d-%m")
     rates = get_historical_rate(target_date)
     
     from_to_USD = rates.get(from_c)

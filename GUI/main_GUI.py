@@ -273,7 +273,7 @@ class MainWindow(QMainWindow):
         
     
 
-        
+
     
     def change_Btn_name(btn):
         btn.setObjectName("GrpBtn")

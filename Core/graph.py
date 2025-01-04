@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 import sys
 import os
 import numpy as np
-sys.path.append(os.path.abspath("./Project/Splitwise-Clone-Project/Models"))
+# sys.path.append(os.path.abspath("./Project/Splitwise-Clone-Project/Models"))
 
-#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
 
 # Import the class
 
@@ -77,7 +77,7 @@ class Graph():
         png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_plot.png"
         plt.savefig(png_path)
 
-
+"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"
         
 
 

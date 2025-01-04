@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import sys
 import os
 import json
+
 # sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
 # sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
 # sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
@@ -13,6 +14,7 @@ import json
 sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
 sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils"))
 
 
 
@@ -21,6 +23,8 @@ from groups import *
 import sqlite3
 from graph import *
 from debt_simplification import *
+from currency_conversion_all_currencies import *
+
 
 def show_all_existing_groups(ui, user):
     groups = get_groups_by_username(user[2])
@@ -92,6 +96,7 @@ def show_all_existing_groups(ui, user):
 
 
 def specific_group_page(ui,grp : Groups):
+    
     ui.mainPages.setCurrentWidget(ui.GrpPage)
     ui.GrpName.setText(grp.group_name)
     ui.grp_owner.setText(f"Owner: {grp.group_owner}")
@@ -207,7 +212,27 @@ def add_group_to_dataset(group_name, user, members, split, default_shares_j, def
     connection.commit()
     connection.close()
 
+
+
+def split_amount(ui,amount_input):
+    parts=amount_input.split()
     
+    if len(parts)==1:
+        
+        amount=float(parts[0])
+        currency="IRR"
+    
+    elif len(parts)==2:
+        amount=float(parts[0])
+        currency=parts[1].upper()
+        
+    else:
+        ui.ErrorLabel2.setText("Invalid input format for expense!")
+        ui.ErrorLabel2.setStyleSheet("color : red;")
+        
+    return amount,currency
+
+        
 
 def add_expense_page(ui, group, recover = True):
     if recover:
@@ -238,10 +263,13 @@ def add_expense_page(ui, group, recover = True):
 
 
 def add_group_expense(ui, main_group):
+    
+    from currency_conversion_all_currencies import convert_to_IRR
+    
     category = ""
     label = ui.GrpExpenseLabelInput.text()
     print(label)
-    amount = ui.AmountInput.text()
+    amount_input = ui.AmountInput.text()
     selected_date = ui.calendarWidget.selectedDate().toString("yyyy-dd-MM")
     payer = ui.PayerInput.text()
     description = ui.DiscriptionInput.toPlainText()
@@ -265,6 +293,17 @@ def add_group_expense(ui, main_group):
         SplitTypeBtn = ui.verticalLayout_22.itemAt(SplitTypeNo).widget()
         if SplitTypeBtn.isChecked():
             split_type = SplitTypeBtn.text()
+
+    
+    try:
+        amount,currency=split_amount(ui,amount_input)
+        IRR_amount=convert_to_IRR(amount,date=selected_date,from_c=currency)
+        
+    except Exception as e:
+        ui.ErrorLabel2.setText(f"Error: {str(e)}")
+        ui.ErrorLabel2.setStyleSheet("color: red;")
+        return
+
 
     if split_type == "share" or split_type == "percentage":
             shares = get_shares(ui, "add_expense")
@@ -306,9 +345,9 @@ def add_group_expense(ui, main_group):
     widgets = [ui.GrpExpenseLabelLabel, ui.AmountLabel, ui.PayerLabel, ui.ContributersLabel]
 
     error = 0
-    print([label, amount, payer, contributers], amount == "")
+    print([label, IRR_amount, payer, contributers], IRR_amount == "")
     
-    for widget, data in enumerate([label, amount, payer, contributers]):
+    for widget, data in enumerate([label, amount_input , payer, contributers]):
         if data == "" or data == [] or not data:
             widgets[widget].setStyleSheet("color: red;")
             ui.ErrorLabel2.setText("Fill out all required inforamtion!")
@@ -361,22 +400,22 @@ def add_group_expense(ui, main_group):
 
             
 
-    if error_def_perc == False and label != "" and amount != "" and selected_date != "" and isfloat(amount) and contributers != [] and payer != ""  and payer in main_group.members and total_perc(split_type):
+    if error_def_perc == False and label != "" and amount_input != "" and selected_date != "" and isfloat(amount) and contributers != [] and payer != ""  and payer in main_group.members and total_perc(split_type):
         ui.SplitLabel.setStyleSheet("color: white;")
         ui.ErrorLabel2.setText("")
         ui.ErrorLabel2.setStyleSheet("color : white;")
         if split_type == "share":
             shares = shares
-            main_group.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
+            main_group.add_expenses(label, IRR_amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
         elif split_type == "percentage":
             proportions = shares
-            main_group.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
+            main_group.add_expenses(label, IRR_amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
         else:
-            main_group.add_expenses(label,amount, payer, contributers, selected_date, category,description, split_type)
+            main_group.add_expenses(label,IRR_amount, payer, contributers, selected_date, category,description, split_type)
         
         if default == True : split_title =f"default ({split_type})"
         else: split_title = split_type
-        var_to_add = [label, payer, str(amount),",".join(contributers), selected_date, category, split_title, description]
+        var_to_add = [label, payer, str(IRR_amount),",".join(contributers), selected_date, category, split_title, description]
         row_position = ui.ExpensesTable.rowCount()
         ui.ExpensesTable.insertRow(row_position)
         for col, value in enumerate(var_to_add):
