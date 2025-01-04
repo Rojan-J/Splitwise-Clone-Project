@@ -2,16 +2,16 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 import sys
 import os
-#
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
-#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
 
 
 from db_operations import *
 
 
-def set_user(ui, user):
+def set_user(ui, username):
+    user = get_user_by_email (username, username)
     ui.NameProfile.setText(user[1])
     ui.UsernameProfile.setText(user[2])
     ui.EmailProfile.setText(user[3])

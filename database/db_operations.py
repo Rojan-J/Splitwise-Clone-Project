@@ -1,8 +1,8 @@
 import sqlite3
 
 def get_connection():
-    #connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")
-    connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")
+    connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")
+    # connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")
 
     connection.execute("PRAGMA foreign_keys=ON")  #enable foreign key support
     
@@ -266,7 +266,7 @@ def update_debt_status(debt_id,status):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
-        UPDATE debts SET status = ? WHERE debt_id = ?
+        UPDATE simplified_debts SET status = ? WHERE debt_id = ?
     ''', (status, debt_id))
     connection.commit()
     connection.close()
@@ -311,6 +311,19 @@ def update_balance(user_name, balance):
     ''', (balance, user_name))
     connection.commit()
     connection.close()
+
+def get_balance(username):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT balance FROM users WHERE username = ?
+    ''', (username, ))
+    
+    #fetch the first matching row
+    balance=cursor.fetchall()
+    connection.close()
+    return balance[0]
+
 
 
 def get_recurrent_expense_by_username(username):
@@ -460,10 +473,9 @@ def total_user_owes(username):
     connection=get_connection()
     cursor=connection.cursor()
     cursor.execute('''
-        SELECT * FROM simplified_debts WHERE debtor_name = ? and status = ?
-    ''', (username, "pending", ))
-    
-    #fetch the first matching row
+        SELECT * FROM simplified_debts WHERE debtor_name = ? and (status = ? or status= ?)
+    ''', (username,  "pending", "Not Paid!", ))
+
     owes=cursor.fetchall()
     connection.close()
     return owes
@@ -472,10 +484,60 @@ def total_user_owed(username):
     connection=get_connection()
     cursor=connection.cursor()
     cursor.execute('''
-        SELECT * FROM simplified_debts WHERE creditor_name = ? and status = ?
-    ''', (username, "pending",  ))
+        SELECT * FROM simplified_debts WHERE creditor_name = ? and (status = ? or status= ?)
+    ''', (username, "pending", "Not Paid!",  ))
     
     #fetch the first matching row
     owes=cursor.fetchall()
     connection.close()
     return owes
+
+def get_debt_creditor(debt_id):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT creditor_name FROM simplified_debts WHERE debt_id = ?
+    ''', (debt_id, ))
+    
+    #fetch the first matching row
+    creditor=cursor.fetchone()
+    connection.close()
+    return creditor[0]
+
+def get_temp_creditor(username):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM users WHERE username = ?
+    ''', (username, ))
+    
+    #fetch the first matching row
+    temp=cursor.fetchone()
+    connection.close()
+    return temp[-1]
+
+
+def add_notification(username, sender, debt_id, amount):
+    connection=get_connection()
+    cursor=connection.cursor()
+    
+    cursor.execute('''
+        INSERT INTO user_notification (username, debt_id, sender, amount)
+        VALUES (?, ?, ?, ?)
+    ''', (username,debt_id, sender, amount))
+    
+    connection.commit()
+    connection.close()
+
+
+def get_user_notifications(username):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM user_notification WHERE username = ? and checked = ?
+    ''', (username, 0))
+    
+    #fetch the first matching row
+    messages =cursor.fetchall()
+    connection.close()
+    return messages

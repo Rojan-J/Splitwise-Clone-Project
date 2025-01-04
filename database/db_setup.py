@@ -1,8 +1,8 @@
 import sqlite3
 
 def initialize_database():
-    #connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")  #create database file
-    connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")
+    connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")  #create database file
+    # connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")
 
     
 
@@ -107,7 +107,7 @@ def initialize_database():
             debtor_name INTEGER,
             creditor_name INTEGER,
             amount REAL NOT NULL,
-            status TEXT DEFAULT 'pending',
+            status TEXT DEFAULT 'Not Paid!',
             FOREIGN KEY(debtor_name) REFERENCES users(username),
             FOREIGN KEY(creditor_name) REFERENCES users(username)
         )
@@ -122,7 +122,7 @@ def initialize_database():
             debtor_name TEXT NOT NULL, 
             creditor_name TEXT,
             amount REAL NOT NULL,
-            status TEXT DEFAULT 'pending',
+            status TEXT DEFAULT 'Not Paid!',
             FOREIGN KEY(debtor_name) REFERENCES users(username),
             FOREIGN KEY(creditor_name) REFERENCES users(username)
                    
@@ -137,7 +137,7 @@ def initialize_database():
             debtor_name TEXT NOT NULL,
             creditor_name TEXT NOT NULL,
             amount REAL NOT NULL,
-            status TEXT DEFAULT 'pending',
+            status TEXT DEFAULT 'Not Paid!',
             FOREIGN KEY(debtor_name) REFERENCES users(username),
             FOREIGN KEY(creditor_name) REFERENCES users(username)
         )
@@ -202,6 +202,19 @@ def initialize_database():
             shares TEXT,
             currency TEXT DEFAULT 'IRR',
             FOREIGN KEY(friendship_id) REFERENCES friends(friendship_id)
+
+        )
+    ''')
+
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS user_notification (
+            notification_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL, 
+            sender TEXT NOT NULL,
+            debt_id TEXT NOT NULL,
+            amount REAL NOT NULL,
+            checked BOOLEAN DEFAULT FALSE,
+            FOREIGN KEY(username) REFERENCES users(username)
 
         )
     ''')

@@ -31,7 +31,7 @@ def show_all_existing_friends(ui, user):
     for  friend in friends:        
         friendship_id, friend_name, friend_email = friend[0], friend[2], friend[3]
         friend_profile = get_friends_profile_by_friendship_id(friendship_id)[0]
-        friend_friend = Friends(user[2], friend_name, friend_email, friend_profile)
+        friend_friend = Friends(user[2], friend_name, friend_email, friend_profile, debts = dict())
         FriendsFriends[friend_name] = friend_friend
 
         ui.FriendsFrame = QtWidgets.QFrame(ui.frame_63)
