@@ -516,6 +516,32 @@ def take_group(ui):
 
 
 #R
+
+def get_group_expenses(group_id):
+    
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute("""
+            SELECT expense_id, label
+            FROM group_expenses
+            WHERE group_id = ?
+        """, (group_id,))
+        expenses = cursor.fetchall()
+        print(f"Debug: Group ID being passed: {group_id}")
+
+        print(f"Fetched expenses for group {group_id}: {expenses}")
+        
+        return expenses
+    except sqlite3.Error as e:
+        print(f"Database Error: {str(e)}")
+        return []
+    finally:
+        if 'connection' in locals() and connection:
+            connection.close()
+    
+
+
 def add_new_member_to_group(ui):
     
     group = take_group(ui)
@@ -543,12 +569,40 @@ def add_new_member_to_group(ui):
     
     try:
         
+        # Ensure layout exists
+        if not ui.scrollAreaWidgetContents_19.layout():
+            expense_layout = QtWidgets.QVBoxLayout(ui.scrollAreaWidgetContents_19)
+            ui.scrollAreaWidgetContents_19.setLayout(expense_layout)
+        else:
+            expense_layout = ui.scrollAreaWidgetContents_19.layout()
+
+        # Clear previous widgets
+        while expense_layout.count():
+            item = expense_layout.takeAt(0)
+            widget = item.widget()
+            if widget:
+                widget.deleteLater()
+
+        print(f"Debug: Group ID being used hereeeee: {group.group_id}")
+        
+        existing_expenses=get_group_expenses(group.group_id)
+        expense_layout=ui.scrollAreaWidgetContents_19.layout()
+        
+        for expense_id,label in existing_expenses:
+            checkbox = QtWidgets.QCheckBox(ui.scrollAreaWidgetContents_19)
+            checkbox.setObjectName(f"expense_{expense_id}")
+            checkbox.setText(label)
+            expense_layout.addWidget(checkbox)
+        
         if not hasattr(group, 'split_type'):
             group.split_type = "equally"  
         if not hasattr(group, 'default_shares'):
             group.default_shares = {}  
         if not hasattr(group, 'default_proportions'):
             group.default_proportions = {} 
+            
+        ui.FinalAddMemberBtn.clicked.connect(lambda: save_new_member_with_expenses(ui, group, new_member_name))
+
             
             
         connection=get_connection()
@@ -579,3 +633,50 @@ def add_new_member_to_group(ui):
     finally:
         connection.close()
  
+ 
+
+def save_new_member_with_expenses(ui,group,new_member_name):
+    selected_expenses=[]
+    layout = ui.scrollAreaWidgetContents_19.layout()
+    
+    for i in range(layout.count()):
+        checkbox = layout.itemAt(i).widget()
+        if checkbox.isChecked():
+            selected_expenses.append(int(checkbox.objectName().replace("expense_", "")))  # Extract expense ID
+
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+
+
+        cursor.execute("""
+            INSERT INTO user_group (group_id, group_name, username, default_split, default_shares, default_proportions)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (group.group_id, group.group_name, new_member_name, group.split_type, 
+              json.dumps(group.default_shares), json.dumps(group.default_proportions)))
+
+        cursor.execute("SELECT user_id FROM users WHERE username = ?", (new_member_name,))
+        user_id = cursor.fetchone()[0]
+
+        for expense_id in selected_expenses:
+            cursor.execute("""
+                INSERT INTO expense_user (expense_id, username, amount_contributed, split_proportion, for_what, name, share)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (expense_id, new_member_name, 0, 0, "group", group.group_name, "equal_split"))
+
+        connection.commit()
+
+    
+        group.add_members(new_member_name, group.split_type, json.dumps(group.default_shares), json.dumps(group.default_proportions))
+        ui.NewMemberLabel.setStyleSheet("color: green;")
+        ui.ErrorAddMember.setText(f"Member {new_member_name} added successfully!")
+        ui.ErrorAddMember.setStyleSheet("color: green;")
+
+    except sqlite3.Error as e:
+        ui.ErrorAddMember.setText(f"Database Error: {str(e)}")
+        ui.ErrorAddMember.setStyleSheet("color: red;")
+    finally:
+        connection.close()
+
+
+

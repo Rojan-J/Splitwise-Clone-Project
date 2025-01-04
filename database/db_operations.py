@@ -82,7 +82,6 @@ def get_friend_expenses_by_friendship_id(friendship_id):
     return expenses
 
 
-
 def get_all_groups():
     connection = get_connection()
     cursor = connection.cursor()
