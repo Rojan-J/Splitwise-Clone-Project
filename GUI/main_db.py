@@ -7,7 +7,7 @@ sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Spli
 
 
 from db_setup import initialize_database
-from db_operations import add_user, get_user_by_email, add_group, get_all_groups
+from db_operations import add_user, get_user_by_email, add_group, get_all_groups, add_expanse, get_group_expenses_by_group_id
 
 
 def main():

@@ -8,6 +8,7 @@ URL = "https://openexchangerates.org/api/"
 
 
 def get_historical_rate(date):
+    print(f"Fetching historical rates for {date}...")
     history_URL=f"{URL}historical/{date}.json"
     response=requests.get(history_URL,params={"app_id":API})
     data=response.json()
@@ -21,13 +22,21 @@ def get_historical_rate(date):
 
 def convert_to_IRR(amount,date=None, from_c=None):
     
-    target_date=date or datetime.now().strftime("%Y-%d-%m")
-    rates = get_historical_rate(target_date)
-    
-    from_to_USD = rates.get(from_c)
-    USD_to_IRR = rates.get("IRR")
-    
-    converted_amount = (amount / from_to_USD) * USD_to_IRR
-    return converted_amount
+    try:
+        target_date = date or datetime.now().strftime("%Y-%m-%d")
+        print(f"Converting {amount} {from_c} to IRR on {target_date}...")
+        rates = get_historical_rate(target_date)
+
+        from_to_USD = rates.get(from_c)
+        USD_to_IRR = rates.get("IRR")
+
+        if from_to_USD is None or USD_to_IRR is None:
+            raise ValueError(f"Currency rates not available for {from_c} or IRR on {target_date}.")
+
+        converted_amount = (amount / from_to_USD) * USD_to_IRR
+        print(f"Converted amount: {converted_amount} IRR.")
+        return converted_amount
+    except Exception as e:
+        raise ValueError(f"Error in currency conversion: {e}")
     
     

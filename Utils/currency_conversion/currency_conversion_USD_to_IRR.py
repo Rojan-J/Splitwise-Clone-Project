@@ -11,8 +11,9 @@ def get_historical_rate(date):
     response=requests.get(history_URL,params={"app_id":API})
     data=response.json()
     
-    if response.status_code!=200:
-        raise Exception(f"Failed to fetch rates for {date}: {data}")
+    if response.status_code != 200:
+        error_message = data.get("description", "Unknown error")
+        raise Exception(f"Failed to fetch rates for {date}: {error_message}")
     
     rates=data.get("rates",{})
     USD_to_IRR=rates.get("IRR")
