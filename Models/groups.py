@@ -7,14 +7,14 @@ from users import Users
 
 import sys
 import os
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils\currency_conversion"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils\currency_conversion"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"))
 
 
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Utils/currency_conversion"))
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Utils/currency_conversion"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
 
 from debt_simplification import *
 
@@ -48,26 +48,32 @@ class Groups:
         
         cursor.execute("SELECT group_id FROM groups WHERE group_name = ? and group_owner = ?", (self.group_name, self.group_owner, ))
         group = cursor.fetchone()
+        print("LoadName", self.group_name)
         
         #check if group exists and fetch members of the group
         if group:
-            self.group_id  =group[0]
+            self.group_id =group[0]
             cursor.execute("""
                 SELECT u.username
                 FROM users u
                 JOIN user_group ug ON u.username = ug.username
-                WHERE ug.group_name = ?
+                WHERE ug.group_name = ? 
             """, (self.group_name,))
             members = cursor.fetchall()
             
             for member in members:
                 self.members.append(member[0])  #name=key, email=value
             
+            print("LoadMembers", self.members)
+            print("LoadId", self.group_id)
+            
             all_expenses  =get_group_expenses_by_group_id(self.group_id)
             for expense in all_expenses:
                 self.expenses.append([expense[1],expense[5], expense[3], expense[4], expense[7], expense[6], expense[8], expense[9], expense[10], expense[11]])
+            print()
 
             all_debts = get_groups_debts_by_group_id(self.group_id)
+            print(all_debts, "all_debts")
             for debt in all_debts:
                 debtor = debt[2]
                 creditor = debt[3]
@@ -85,10 +91,12 @@ class Groups:
             print(f"Group '{self.group_name}' created with group_id: {self.group_id}")
         connection.commit()
         connection.close()
+        print(self.debts, "Still in load")  
+        return
 
         
         
-        
+     
 
     def add_members(self, username, split, default_shares_j, default_prop_j):
         if username not in self.members:
@@ -112,6 +120,7 @@ class Groups:
             cursor.execute("INSERT INTO user_group (user_id, username, group_id, group_name, default_split, default_shares, default_proportions) VALUES (?, ?, ?, ?, ?, ?, ?)", (user_id, username, self.group_id, self.group_name, split, default_shares_j, default_prop_j))
             connection.commit()
             connection.close()    
+        return
             
 
     def add_expenses(self,label, expense, payer, contributors, expense_date = date.today(), category="etc.",description=None, split_type="equally", proportions=None, shares=None, currency = "IRR"):
@@ -181,6 +190,7 @@ class Groups:
         connection.commit()
         connection.close()     
         self.cal_debts(contributions, payer)
+        print("Before Simplification: ", self.group_name, self.debts)
         debt_simplification = Debtsimplification(self)
         debt_simplification.creating_simplified_graph()
         update_group_debts(self.group_id, self.group_name)
@@ -190,6 +200,7 @@ class Groups:
             if debtor != creditor:
                 add_simplified_debt(self.group_id, self.group_name, debtor, creditor, debt)
         
+        return
 
         
     def get_expenses_by_category(self):
@@ -249,6 +260,7 @@ class Groups:
                 add_debt(self.group_id, contributor,payer,contribution)
                 
         print(self.debts)
+        return
                 
                 
     def settle_debt(self,debtor,creditor,amount):
@@ -263,6 +275,7 @@ class Groups:
         
         if current_debt["flow"]>=current_debt["capacity"]:
             self.debts.pop((debtor,creditor))
+        return
 
 def print_table_columns(table_name):
     connection = get_connection()
@@ -277,6 +290,7 @@ def print_table_columns(table_name):
         print(f"Column Name: {column[1]}, Data Type: {column[2]}")
     
     connection.close()
+    return
 
 
     

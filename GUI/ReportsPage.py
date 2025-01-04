@@ -5,7 +5,7 @@ import sys
 import os
 import json
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 
 import matplotlib.pyplot as plt
@@ -117,7 +117,7 @@ def get_expenses_by_category_report(username, start_date =None, end_date= None):
             FROM expense_user
             WHERE username = ?
             GROUP BY category
-        """, (username, "group",))
+        """, (username,))
         
         expense_by_category=cursor.fetchall()
         print("Expenses retrieved:", expense_by_category)
@@ -281,17 +281,19 @@ def show_report(username, ui):
         font.setWeight(50)
         
         ui.pushButton.setText("")
-        ui.GraphTitle.setText("Expenses Distribution in each category")
-        ui.GraphTitle.setFont(font)
+        ui.label_35.setText("Expenses Distribution in each category")
+        ui.label_35.setFont(font)
 
     
     elif group_expenses or friend_expenses:
         if group_expenses:
             groupby_expense = group_expenses
             x_title = "Groups"
+            png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_group_by_plot_group.png"
         elif friend_expenses:
             groupby_expense = friend_expenses
             x_title = "Friends"
+            png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_group_by_plot_friend.png"
 
         categories = list(groupby_expense.keys())
         amounts = list(groupby_expense.values())
@@ -307,7 +309,7 @@ def show_report(username, ui):
             plt.text(i, amount + 5, str(amount), ha='center', va='bottom')
 
         
-        png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_group_by_plot.png"
+        
         # Save as PNG
         plt.savefig(png_path)
 
@@ -332,8 +334,8 @@ def show_report(username, ui):
         font.setWeight(50)
         
         ui.pushButton.setText("")
-        ui.GraphTitle.setText(f"Expenses Distribution in each {x_title}")
-        ui.GraphTitle.setFont(font)
+        ui.label_35.setText(f"Expenses Distribution in each {x_title}")
+        ui.label_35.setFont(font)
 
         
 

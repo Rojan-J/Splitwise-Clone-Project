@@ -14,10 +14,11 @@ class Debtsimplification:
         
     def calculate_balances(self):
         net_balance={user:0 for user in self.group.members}
+        print(self.group.members, self.group.debts, "CHeck")
         
         for(u,v), debt in self.group.debts.items():  #u and v are debtor and creditor
             net_balance[u]-= debt["capacity"]
-            net_balance[v]+=debt["capacity"]
+            net_balance[v]+= debt["capacity"]
             
         return net_balance
     

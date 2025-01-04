@@ -1,8 +1,8 @@
 import sqlite3
 
 def initialize_database():
-    # connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")  #create database file
-    connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")
+    connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")  #create database file
+    # connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")
 
     
 
@@ -153,6 +153,7 @@ def initialize_database():
             friend_name TEXT NOT NULL,
             friend_email TEXT NOT NULL,
             username TEXT NOT NULL,
+            friend_profile INTEGER,
 
             FOREIGN KEY(username) REFERENCES users(username)    
         )

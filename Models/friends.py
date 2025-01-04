@@ -9,12 +9,12 @@ from users import Users
 import sys
 import os
 
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils\currency_conversion"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils\currency_conversion"))
 
 
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Utils/currency_conversion"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Utils/currency_conversion"))
 
 
 from db_operations import *
@@ -152,7 +152,7 @@ class Friends:
                 
             cursor.execute("""
                 INSERT INTO expense_user (expense_id, total_expense,  username, amount_contributed, split_proportion, for_what, name, share, date, category)
-                VALUES (?, ?, ?,?,?, "friend", ?, ?)
+                VALUES (?, ?, ?,?,?, "friend", ?, ?, ?, ?)
             """, (expense_id, expense, contributor, contribution, proportion, friend_name, share, expense_date, category))
 
         connection.commit()

@@ -37,10 +37,10 @@ class Graph():
         pos = nx.spring_layout(graph)
         plt.figure(figsize=(8, 6))
         in_degree_centrality = nx.in_degree_centrality(graph)
-        weighted_in_degree = dict(graph.in_degree(weight='weight'))
+        weighted_in_degree = dict(graph.in_degree(weight='capacity'))
         print(in_degree_centrality, weighted_in_degree)
-        central_node = max(weighted_in_degree, key=in_degree_centrality.get)
-
+        central_node = max(weighted_in_degree, key=weighted_in_degree.get)
+        print(central_node)
         label_colors = {node: 'black' for node in graph.nodes()}
         label_colors[central_node] = "red"
 
