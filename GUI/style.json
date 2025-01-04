@@ -177,7 +177,8 @@
 							"AddFriendExpenseBtn": "AddFriendExpensePage", 
 							"EditFriendBtn" : "EditFriendPage", 
 							"EditGrpBtn" : "AddGrpPage",
-							"AddRExpenseBtn": "AddRecurrentExpense"
+							"AddRExpenseBtn": "AddRecurrentExpense",
+							"SearchBtn" : "SearchPage"
 						}
 					]
 				}
