@@ -18,12 +18,13 @@ from interface import Ui_MainWindow as InterfacePageUI
 
 
 import ctypes
-#os.chdir(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\GUI")   #to change the current working directory
 
-os.chdir("Project/Splitwise-Clone-Project/GUI")   #to change the current working directory
+os.chdir(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\GUI")   #to change the current working directory
 
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+# os.chdir("Project/Splitwise-Clone-Project/GUI")   #to change the current working directory
+
+# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 
 from db_operations import add_user, get_user_by_email, add_group, get_all_groups, get_all_usernames
@@ -43,7 +44,7 @@ from GroupPage import *
 from FriendsPage import *
 from ReportsPage import *
 from DebtsPage import *
-#from SearchPage import*
+from SearchPage import *
 
 ########################################################################
 ## MAIN WINDOW CLASS

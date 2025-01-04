@@ -1,1 +1,22 @@
-Core/debt_simplification2.py
+# Ignore virtual environment folder
+venv/
+
+# Ignore files in the Lib/site-packages folder (virtual environment packages)
+venv/Lib/site-packages/
+
+# Ignore compiled Python files and caches (but leave the Python source code files tracked)
+__pycache__/ 
+
+# Ignore the database file (but not *.py files)
+database/database.db
+
+# Ignore IDE specific files (like VS Code settings) but keep the Python code files
+.vscode/
+
+# Ignore other unnecessary Python files (but keep the .py files you want to track)
+*.pyc
+
+# Optional: Ignore temporary files you don't need in Git
+*.swp
+*.bak
+*.log
