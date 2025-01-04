@@ -1,6 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import date
 import matplotlib.pyplot as plt
+from PyQt5.QtWidgets import QFileDialog , QTableWidgetItem
+
 
 import sys
 import os
@@ -24,6 +26,8 @@ import sqlite3
 from graph import *
 from debt_simplification import *
 from currency_conversion_all_currencies import *
+from group_transaction_import import import_from_excel
+
 
 
 def show_all_existing_groups(ui, user):
@@ -31,11 +35,13 @@ def show_all_existing_groups(ui, user):
     grpbtns = dict()
     GroupsBox = dict()
     GroupGroups = dict()
+    
     while ui.verticalLayout_20.count():
         item = ui.verticalLayout_20.takeAt(0)  # Get the first item
         widget = item.widget()  # Get the widget
         if widget:
             widget.deleteLater()
+            
     for  group in groups:
         
         group_id, group_name = group[2:4]
@@ -46,6 +52,7 @@ def show_all_existing_groups(ui, user):
         group_owner = group_owners[0]
         group_grp = Groups(group_name, group_owner, debts = dict(), members = [], expenses = [])
         GroupGroups[group_name] = group_grp
+
 
         ui.GrpFrame = QtWidgets.QFrame(ui.GroupsGrid)
         ui.GrpFrame.setEnabled(True)
@@ -131,6 +138,36 @@ def specific_group_page(ui,grp : Groups):
     ui.ExpenseGraphBtn.clicked.connect(lambda: show_expenses_graph(grp, ui))
 
 
+def upload_excel(ui,user):
+    file_path, _ = QFileDialog.getOpenFileName(
+        None, "Select Excel File", "", "Excel Files (*.xlsx *.xls)"
+    )
+    
+    if not file_path:
+        ui.GExcelLabel.setText("No file selected.")
+        ui.GExcelLabel.setStyleSheet("color: red;")
+        return
+
+    ui.uploaded_file_path = file_path
+    ui.GExcelLabel.setText("Excel uploaded successfully!")
+    ui.GExcelLabel.setStyleSheet("color: green;")
+
+
+
+    if ui.uploaded_file_path:
+        try:
+            import_from_excel(ui.uploaded_file_path)  
+            ui.GExcelLabel.setText("Transactions imported successfully!")
+            ui.GExcelLabel.setStyleSheet("color: green;")
+            
+            show_all_existing_groups(ui, user)
+            
+        except ValueError as ve:
+            ui.GExcelLabel.setText(f"Import failed: {str(ve)}")
+            ui.GExcelLabel.setStyleSheet("color: red;")
+        except Exception as e:
+            ui.GExcelLabel.setText(f"Unexpected error: {str(e)}")
+            ui.GExcelLabel.setStyleSheet("color: red;")
 
 
 

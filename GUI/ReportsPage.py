@@ -4,8 +4,8 @@ import re
 import sys
 import os
 import json
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 
 import matplotlib.pyplot as plt
@@ -294,11 +294,13 @@ def show_report(username, ui):
         if group_expenses:
             groupby_expense = group_expenses
             x_title = "Groups"
-            png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_group_by_plot_group.png"
+            #png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_group_by_plot_group.png"
+            png_path = r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core\graph_group_by_plot_group.png"
         elif friend_expenses:
             groupby_expense = friend_expenses
             x_title = "Friends"
-            png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_group_by_plot_friend.png"
+            #png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_group_by_plot_friend.png"
+            png_path = r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core\graph_group_by_plot_friend.png"
 
         categories = list(groupby_expense.keys())
         amounts = list(groupby_expense.values())
