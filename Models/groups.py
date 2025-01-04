@@ -4,19 +4,15 @@ from datetime import date
 
 from users import Users
 
-#r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"
-#rr"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils\currency_conversion"
 
-#"C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"
-#"C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Utils/currency_conversion
 import sys
 import os
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils\currency_conversion"))
+#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils\currency_conversion"))
 
 
-#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Utils/currency_conversion"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Utils/currency_conversion"))
 
 from db_operations import *
 
@@ -231,12 +227,13 @@ class Groups:
     def cal_debts(self,contributions,payer):
 
         for contributor ,contribution in contributions:
-            if (contributor, payer) not in self.debts:
-                self.debts[(contributor, payer)]= {"capacity": contribution}
-            else:
-                self.debts[(contributor, payer)]["capacity"] += contribution
+            if contributor != payer:
+                if (contributor, payer) not in self.debts:
+                    self.debts[(contributor, payer)]= {"capacity": contribution}
+                else:
+                    self.debts[(contributor, payer)]["capacity"] += contribution
 
-            add_debt(self.group_id, contributor,payer,contribution)
+                add_debt(self.group_id, contributor,payer,contribution)
                 
         print(self.debts)
                 

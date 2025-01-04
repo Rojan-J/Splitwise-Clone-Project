@@ -1,8 +1,8 @@
 import sqlite3
 
 def get_connection():
-    #connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")
-    connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database\database.db")
+    connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")
+    #connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database\database.db")
 
     connection.execute("PRAGMA foreign_keys=ON")  #enable foreign key support
     
@@ -240,6 +240,17 @@ def update_debt_status(debt_id,status):
     ''', (status, debt_id))
     connection.commit()
     connection.close()
+
+def update_group_debts(group_id):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute ('''
+        DELETE FROM debts
+        WHERE group_id = ?;
+    ''', (group_id, ))
+    connection.commit()
+    connection.close()
+
 
 def update_name(user_name, new_name):
     connection = get_connection()

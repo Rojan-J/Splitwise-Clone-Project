@@ -14,7 +14,7 @@ class Debtsimplification:
         
         
     def calculate_balances(self):
-        net_balance={user:0 for user in self.group.members.keys()}
+        net_balance={user:0 for user in self.group.members}
         
         for(u,v), debt in self.group.debts.items():  #u and v are debtor and creditor
             net_balance[u]-= debt["capacity"]
@@ -73,25 +73,9 @@ class Debtsimplification:
         self.upgrade_group_debts(simplified_debts)
 
     def creating_simplified_graph(self):
-        debts_graph = Graph(self.group)
-        debts_graph.plot_graph()
         self.final_simplifying()
         simplified_graph = Graph(self.group)
         simplified_graph.plot_graph() 
                
             
-from graph import group_1
 
-
-
-print("Initial debts in the group:")
-for (debtor, creditor), details in group_1.debts.items():
-    print(f"  {debtor} owes {creditor}: {details['capacity']}")
-
-
-debt_simplification = Debtsimplification(group_1)
-debt_simplification.creating_simplified_graph()
-
-print("\nSimplified debts in the group:")
-for (debtor, creditor), details in group_1.debts.items():
-    print(f"  {debtor} owes {creditor}: {details['capacity']}")

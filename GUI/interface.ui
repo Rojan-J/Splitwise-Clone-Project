@@ -2721,9 +2721,9 @@ QCalendarWidget QToolButton:hover {
                     <property name="geometry">
                      <rect>
                       <x>0</x>
-                      <y>-377</y>
+                      <y>0</y>
                       <width>466</width>
-                      <height>1218</height>
+                      <height>1518</height>
                      </rect>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayout_45">
@@ -2732,7 +2732,7 @@ QCalendarWidget QToolButton:hover {
                        <property name="minimumSize">
                         <size>
                          <width>0</width>
-                         <height>1200</height>
+                         <height>1500</height>
                         </size>
                        </property>
                        <layout class="QVBoxLayout" name="verticalLayout_32">
@@ -2753,6 +2753,24 @@ QCalendarWidget QToolButton:hover {
                           <layout class="QVBoxLayout" name="verticalLayout_33">
                            <item>
                             <widget class="QFrame" name="GrpHeaderSubContainer">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="minimumSize">
+                              <size>
+                               <width>0</width>
+                               <height>126</height>
+                              </size>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>16777215</width>
+                               <height>200</height>
+                              </size>
+                             </property>
                              <property name="frameShape">
                               <enum>QFrame::StyledPanel</enum>
                              </property>
@@ -2917,41 +2935,6 @@ QCalendarWidget QToolButton:hover {
                          <widget class="QWidget" name="Tables" native="true">
                           <layout class="QVBoxLayout" name="verticalLayout_36">
                            <item>
-                            <widget class="QLabel" name="label_22">
-                             <property name="font">
-                              <font>
-                               <family>Swis721 Blk BT</family>
-                               <pointsize>13</pointsize>
-                              </font>
-                             </property>
-                             <property name="text">
-                              <string>Members Debt Table:</string>
-                             </property>
-                            </widget>
-                           </item>
-                           <item>
-                            <widget class="QScrollArea" name="scrollArea_4">
-                             <property name="widgetResizable">
-                              <bool>true</bool>
-                             </property>
-                             <widget class="QWidget" name="scrollAreaWidgetContents_6">
-                              <property name="geometry">
-                               <rect>
-                                <x>0</x>
-                                <y>0</y>
-                                <width>412</width>
-                                <height>219</height>
-                               </rect>
-                              </property>
-                              <layout class="QVBoxLayout" name="verticalLayout_37">
-                               <item>
-                                <widget class="QTableWidget" name="tableWidget"/>
-                               </item>
-                              </layout>
-                             </widget>
-                            </widget>
-                           </item>
-                           <item>
                             <widget class="QLabel" name="label_23">
                              <property name="font">
                               <font>
@@ -2964,7 +2947,7 @@ QCalendarWidget QToolButton:hover {
                              </property>
                             </widget>
                            </item>
-                           <item>
+                           <item alignment="Qt::AlignTop">
                             <widget class="QScrollArea" name="scrollArea_3">
                              <property name="widgetResizable">
                               <bool>true</bool>
@@ -2975,14 +2958,14 @@ QCalendarWidget QToolButton:hover {
                                 <x>0</x>
                                 <y>0</y>
                                 <width>412</width>
-                                <height>218</height>
+                                <height>210</height>
                                </rect>
                               </property>
                               <layout class="QVBoxLayout" name="verticalLayout_35">
-                               <item>
+                               <item alignment="Qt::AlignTop">
                                 <widget class="QTableWidget" name="ExpensesTable">
                                  <property name="sizePolicy">
-                                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                                    <horstretch>0</horstretch>
                                    <verstretch>0</verstretch>
                                   </sizepolicy>
@@ -3224,17 +3207,86 @@ QCalendarWidget QToolButton:hover {
                                     </font>
                                    </property>
                                    <property name="text">
-                                    <string>Original Graph</string>
+                                    <string/>
                                    </property>
                                   </widget>
                                  </item>
                                  <item>
-                                  <widget class="QFrame" name="frame_17">
-                                   <property name="frameShape">
-                                    <enum>QFrame::StyledPanel</enum>
+                                  <widget class="QScrollArea" name="scrollArea_18">
+                                   <property name="sizePolicy">
+                                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                     <horstretch>0</horstretch>
+                                     <verstretch>0</verstretch>
+                                    </sizepolicy>
                                    </property>
-                                   <property name="frameShadow">
-                                    <enum>QFrame::Raised</enum>
+                                   <property name="minimumSize">
+                                    <size>
+                                     <width>0</width>
+                                     <height>600</height>
+                                    </size>
+                                   </property>
+                                   <property name="maximumSize">
+                                    <size>
+                                     <width>16777215</width>
+                                     <height>900</height>
+                                    </size>
+                                   </property>
+                                   <property name="widgetResizable">
+                                    <bool>true</bool>
+                                   </property>
+                                   <widget class="QWidget" name="scrollAreaWidgetContents_23">
+                                    <property name="geometry">
+                                     <rect>
+                                      <x>0</x>
+                                      <y>0</y>
+                                      <width>376</width>
+                                      <height>600</height>
+                                     </rect>
+                                    </property>
+                                    <layout class="QVBoxLayout" name="verticalLayout_96"/>
+                                   </widget>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QScrollArea" name="scrollArea_4">
+                                   <property name="sizePolicy">
+                                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                     <horstretch>0</horstretch>
+                                     <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                   </property>
+                                   <property name="minimumSize">
+                                    <size>
+                                     <width>0</width>
+                                     <height>200</height>
+                                    </size>
+                                   </property>
+                                   <property name="widgetResizable">
+                                    <bool>true</bool>
+                                   </property>
+                                   <widget class="QWidget" name="scrollAreaWidgetContents_6">
+                                    <property name="geometry">
+                                     <rect>
+                                      <x>0</x>
+                                      <y>0</y>
+                                      <width>376</width>
+                                      <height>200</height>
+                                     </rect>
+                                    </property>
+                                    <layout class="QVBoxLayout" name="verticalLayout_37"/>
+                                   </widget>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QPushButton" name="pushButton">
+                                   <property name="font">
+                                    <font>
+                                     <family>Swis721 Blk BT</family>
+                                     <pointsize>10</pointsize>
+                                    </font>
+                                   </property>
+                                   <property name="text">
+                                    <string/>
                                    </property>
                                   </widget>
                                  </item>
@@ -3922,7 +3974,7 @@ p, li { white-space: pre-wrap; }
                        <property name="geometry">
                         <rect>
                          <x>0</x>
-                         <y>0</y>
+                         <y>-52</y>
                          <width>379</width>
                          <height>694</height>
                         </rect>
