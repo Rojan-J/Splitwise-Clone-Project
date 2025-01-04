@@ -31,8 +31,10 @@ class Friends:
         self.debts = debts
         self.friend_email = friends_email
         self.friend_profile = friend_profile
+        self.simplified_debts = self.debts.copy()
         self.load_from_database(username)
         print(self.friend_name, self.friend_profile)
+
 
 
         
@@ -52,13 +54,27 @@ class Friends:
             for expense in all_expenses:
                 self.expenses.append([expense[1],expense[5], expense[3], expense[4], expense[7], expense[6], expense[8], expense[9], expense[10], expense[11]])
 
+            all_debts = get_friend_debts_by_group_id(self.friendship_id)
+            print(all_debts, "all_debts")
+            for debt in all_debts:
+                debtor = debt[2]
+                creditor = debt[3]
+                amount = debt[4]
+                if (debtor, creditor) not in self.debts:
+                    self.debts[(debtor, creditor)]= amount
+                else:
+                    self.debts[(debtor, creditor)] += amount
+
         else:
             cursor.execute("INSERT INTO friends (username, friend_name, friend_email, friend_profile) VALUES (?, ?, ?, ?)", (username, self.friend_name, self.friend_email, self.friend_profile, ))
             
             self.friendship_id = cursor.lastrowid
             print(f"friend '{self.friend_name}' created with friendship_id: {self.friendship_id}")
+        
+
         connection.commit()
         connection.close()
+        print(self.debts, "Friend_debts", self.expenses, "Ex")
 
         
         
@@ -156,7 +172,16 @@ class Friends:
             """, (expense_id, expense, contributor, contribution, proportion, friend_name, share, expense_date, category))
 
         connection.commit()
-        connection.close()     
+        connection.close()
+        self.cal_debts(contributions, payer)
+        self.simplify_debts()
+        
+        update_friend_debts(self.friendship_id)
+
+        for (debtor, creditor), debt in self.simplified_debts.items():
+            print(self.simplified_debts)
+            if debtor != creditor:
+                add_simplified_debt(self.friendship_id, self.friend_name, debtor, creditor, debt)
         
 
         
@@ -209,12 +234,31 @@ class Friends:
 
         for contributor ,contribution in contributions:
             if (contributor, payer) not in self.debts:
-                self.debts[(contributor, payer)]= {"capacity": contribution, "flow": 0}
+                self.debts[(contributor, payer)]= contribution
             else:
-                self.debts[(contributor, payer)]["capacity"] += contribution
-                
-                
-                
+                self.debts[(contributor, payer)] += contribution
+
+            add_friend_debt(self.friendship_id, contributor,payer,contribution)
+
+    def simplify_debts(self):
+        self.simplified_debts.clear()
+        print(self.debts)
+        max_debts = max(self.debts, key=self.debts.get)
+        max_debt_value = self.debts[max_debts]
+        if len(self.debts) == 2:
+            self.simplified_debts= self.debts.copy()
+        elif len(self.debts) > 2:
+            for (i, j) in self.debts.keys():
+                if (i, j) != max_debts and i!=j:
+                    net_debt = max_debt_value - self.debts[(i, j)]
+            self.simplified_debts[max_debts] = net_debt
+
+
+
+            
+
+
+    
     def settle_debt(self,debtor,creditor,amount):
         if(debtor,creditor) not in self.debts:     #check if debtor owes to creditor
             return

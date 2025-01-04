@@ -615,3 +615,23 @@ def clear_graph_friend(ui):
         widget.deleteLater()
     ui.GraphLabel.setText("")
     return
+
+
+
+def simplify_friend_debts(self):
+    connection=get_connection()
+    cursor=connection.cursor()
+    
+
+    cursor.execute("""
+        SELECT SUM(amoun)
+        FROM expense_user
+        WHERE for_what = ? and name
+    """, ("friend", self.friendship_id, ))
+    
+    all_expenses=cursor.fetchall()
+    
+    
+    connection.close()
+    return total_expenses
+            

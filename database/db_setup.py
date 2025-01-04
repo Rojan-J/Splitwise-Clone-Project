@@ -130,6 +130,19 @@ def initialize_database():
         )
     ''')
 
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS friend_debts (
+            debt_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            friendship_id INTEGER,
+            debtor_name TEXT NOT NULL,
+            creditor_name TEXT NOT NULL,
+            amount REAL NOT NULL,
+            status TEXT DEFAULT 'pending',
+            FOREIGN KEY(debtor_name) REFERENCES users(username),
+            FOREIGN KEY(creditor_name) REFERENCES users(username)
+        )
+    ''')
+
     #Create Recurrnt Expenses for user
 
     cursor.execute('''

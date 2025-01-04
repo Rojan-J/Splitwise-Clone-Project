@@ -221,12 +221,32 @@ def add_debt(group_id, debtor_id,creditor_id,amount):
     connection.commit()
     connection.close()
 
+def add_friend_debt(friendship_id, debtor_id,creditor_id,amount):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        INSERT INTO friend_debts (friendship_id, debtor_name, creditor_name, amount)
+        VALUES (?, ?, ?, ?)
+    ''', (friendship_id, debtor_id, creditor_id, amount))
+    connection.commit()
+    connection.close()
+
 def add_simplified_debt(group_id, group_name, debtor_name,creditor_name,amount):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
         INSERT INTO simplified_debts (id, name, debtor_name, creditor_name, amount, for_what)
         VALUES (?, ?, ?, ?, ?, "group")
+    ''', (group_id, group_name, debtor_name, creditor_name, amount))
+    connection.commit()
+    connection.close()
+
+def add_simplified_debt_friend(group_id, group_name, debtor_name,creditor_name,amount):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        INSERT INTO simplified_debts (id, name, debtor_name, creditor_name, amount, for_what)
+        VALUES (?, ?, ?, ?, ?, "friend")
     ''', (group_id, group_name, debtor_name, creditor_name, amount))
     connection.commit()
     connection.close()
@@ -258,6 +278,16 @@ def update_group_debts(group_id, group_name):
         DELETE FROM simplified_debts
         WHERE id = ? and name = ?;
     ''', (group_id, group_name, ))
+    connection.commit()
+    connection.close()
+
+def update_friend_debts(friendship_id):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute ('''
+        DELETE FROM simplified_debts
+        WHERE id = ?;
+    ''', (friendship_id, ))
     connection.commit()
     connection.close()
 
@@ -395,6 +425,19 @@ def get_groups_debts_by_group_id(group_id):
     cursor.execute('''
         SELECT * FROM debts WHERE group_id = ?
     ''', (group_id, ))
+    
+    #fetch the first matching row
+    debts=cursor.fetchall()
+    connection.close()
+    return debts
+
+
+def get_friend_debts_by_group_id(friendship_id):
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM friend_debts WHERE friendship_id = ?
+    ''', (friendship_id, ))
     
     #fetch the first matching row
     debts=cursor.fetchall()
