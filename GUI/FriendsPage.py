@@ -14,12 +14,9 @@ import matplotlib.pyplot as plt
 #sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
 
 
-
 from db_operations import *
 from friends import *
 import sqlite3
-from currency_conversion_all_currencies import *
-
 
 def show_all_existing_friends(ui, user):
     friends = get_friends_by_username(user[2])
@@ -108,6 +105,7 @@ def show_all_existing_friends(ui, user):
 
     for friend, btn in friendsbtn.items():
         btn.clicked.connect(lambda _, f= friend: specific_friend_page(ui, f, user[2]))
+    return
 
 
 
@@ -141,6 +139,8 @@ def specific_friend_page(ui, friend: Friends, username):
     ui.closeFrGraphBtn.clicked.connect(lambda: clear_graph_friend(ui))
     ui.FriendsExpenseGraphBtn.clicked.connect(lambda: show_expenses_graph_friend(friend, ui))
 
+    return
+
 def add_expense_page_friend(ui, friend: Friends, username, recover= True):
     if recover:
         ui.MeCh.setText(f"{username}")
@@ -151,9 +151,14 @@ def add_expense_page_friend(ui, friend: Friends, username, recover= True):
             item = layout.takeAt(0)  # Remove the first item in the layout
             widget = item.widget()
             widget.deleteLater()
-
+    try:
+        ui.FinalAddFriendExpenseBtn.clicked.disconnect()
+    except TypeError:
+        pass  # No connection to disconnect
 
     ui.FinalAddFriendExpenseBtn.clicked.connect(lambda: add_friend_expense(ui, friend, username))
+
+    return
 
 def create_friend(ui, user):
     default_shares = None
@@ -235,10 +240,14 @@ def create_friend(ui, user):
                 ui.ErrorLabel3.setStyleSheet("color : white;")
                 ui.label.setStyleSheet("color: white;")
 
+    return
+
 def add_friend_to_dataset(friend_name, friend_email, user, split, default_shares_j, default_prop_j, friend_profile):
     print(friend_profile)
     friend = Friends(user[2], friend_name, friend_email, friend_profile)
     friend.add_friend(user[2], user[3], split , default_shares_j, default_prop_j)
+
+    return
 
 
 def get_shares_friend(ui, page):
@@ -301,6 +310,8 @@ def add_shares_friend(ui, split_type, friendname, username, page):
             ui.spinBox.setValue(0)
             layout.addWidget(ui.spinBox)
 
+    return
+
 
 def isfloat(value):
     try:
@@ -309,34 +320,11 @@ def isfloat(value):
     except:  
         return False
     
-    
-def split_amount(ui,amount_input):
-    parts=amount_input.split()
-    
-    if len(parts)==1:
-        
-        amount=float(parts[0])
-        currency="IRR"
-    
-    elif len(parts)==2:
-        amount=float(parts[0])
-        currency=parts[1].upper()
-        
-    else:
-        ui.ErrorLabel2.setText("Invalid input format for expense!")
-        ui.ErrorLabel2.setStyleSheet("color : red;")
-        
-    return amount,currency
-
-
-    
 def add_friend_expense(ui, friend, username):
-    
-    from currency_conversion_all_currencies import convert_to_IRR
 
     category = "etc."
     label = ui.FriendExpenseLabelInput.text()
-    amount_input = ui.AmountInputFr.text()
+    amount = ui.AmountInputFr.text()
     selected_date = ui.DateInputFr.selectedDate().toString("yyyy-dd-MM")
     payer = ui.PayerInputFr.text()
     description = ui.DiscriptionInputFr.toPlainText()
@@ -366,16 +354,6 @@ def add_friend_expense(ui, friend, username):
         SplitTypeBtn = ui.verticalLayout_56.itemAt(SplitTypeNo).widget()
         if SplitTypeBtn.isChecked():
             split_type = SplitTypeBtn.text()
-            
-    try:
-        amount,currency=split_amount(ui,amount_input)
-        IRR_amount=convert_to_IRR(amount,date=selected_date,from_c=currency)
-        
-    except Exception as e:
-        ui.ErrorLabel2.setText(f"Error: {str(e)}")
-        ui.ErrorLabel2.setStyleSheet("color: red;")
-        return
-    
 
     if split_type == "share" or split_type == "percentage":
             shares = get_shares_friend(ui, "add_expense")
@@ -417,7 +395,7 @@ def add_friend_expense(ui, friend, username):
 
     error = 0
     
-    for widget, data in enumerate([label, amount_input , payer, contributers]):
+    for widget, data in enumerate([label, amount, payer, contributers]):
         if data == "" or data == [] or not data:
             widgets[widget].setStyleSheet("color: red;")
             ui.ErrorLabelFrEx.setText("Fill out all required inforamtion!")
@@ -470,7 +448,7 @@ def add_friend_expense(ui, friend, username):
 
             
 
-    if error_def_perc == False and label != "" and amount_input != "" and selected_date != "" and isfloat(amount) and contributers != [] and payer != ""  and payer in [friend.friend_name, username] and total_perc(split_type):
+    if error_def_perc == False and label != "" and amount != "" and selected_date != "" and isfloat(amount) and contributers != [] and payer != ""  and payer in [friend.friend_name, username] and total_perc(split_type):
 
         ui.FrienndExpenseLabel.setStyleSheet("color: white;")
         ui.AmountLabelFr.setStyleSheet("color: white;")
@@ -481,16 +459,16 @@ def add_friend_expense(ui, friend, username):
         ui.ErrorLabelFrEx.setStyleSheet("color : white;")
         if split_type == "share":
             shares = shares
-            friend.add_expenses(label, IRR_amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
+            friend.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
         elif split_type == "percentage":
             proportions = shares
-            friend.add_expenses(label, IRR_amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
+            friend.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
         else:
-            friend.add_expenses(label,IRR_amount, payer, contributers, selected_date, category,description, split_type)
+            friend.add_expenses(label,amount, payer, contributers, selected_date, category,description, split_type)
         
         if default == True : split_title =f"default ({split_type})"
         else: split_title = split_type
-        var_to_add = [label, payer, str(IRR_amount),",".join(contributers), selected_date, category, split_title, description]
+        var_to_add = [label, payer, str(amount),",".join(contributers), selected_date, category, split_title, description]
         row_position = ui.TableOfExpenses.rowCount()
         ui.TableOfExpenses.insertRow(row_position)
         for col, value in enumerate(var_to_add):
@@ -513,11 +491,14 @@ def add_friend_expense(ui, friend, username):
         
         ui.rightMenuContainer.collapseMenu()
 
+    return
+
 
 
 def edit_friend(ui, friend, username):
     default_shares_j = None
     default_prop_j = None
+    split = ""
     print(friend.friendship_id)
     percent_total = True
     if ui.MaleProfileBtn_2.isChecked():
@@ -572,6 +553,8 @@ def edit_friend(ui, friend, username):
             ui.ErrorLabel3_2.setStyleSheet("color : white;")
             ui.label.setStyleSheet("color: white;")
 
+    return
+
 def show_expenses_graph_friend(friend, ui):
     all_expenses = friend.get_expenses_by_category()
     categories = list(all_expenses.keys())
@@ -622,6 +605,7 @@ def show_expenses_graph_friend(friend, ui):
     ui.pushButton.setText("")
     ui.GraphLabel.setText("Expenses in each category")
     ui.GraphLabel.setFont(font)
+    return
 
 def clear_graph_friend(ui):
     layout = ui.scrollAreaWidgetContents_24.layout()
@@ -630,3 +614,4 @@ def clear_graph_friend(ui):
         widget = item.widget()  # Get the widget
         widget.deleteLater()
     ui.GraphLabel.setText("")
+    return
