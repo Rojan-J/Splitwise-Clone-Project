@@ -1,18 +1,22 @@
+# Ignore virtual environment folder
+venv/
 
-Core/__pycache__/graph.cpython-39.pyc
-Core/debt_simplification2.py
-venv/Lib/site-packages/__pycache__/easy_install.cpython-39.pyc
-*.pyc
-/venv/Lib/site-packages
-/venv
-Models/groups.py
-Models/groups.py
-Models/groups.py
-Models/groups.py
-GUI/ProfilePage.py
-*.py
+# Ignore files in the Lib/site-packages folder (virtual environment packages)
+venv/Lib/site-packages/
+
+# Ignore compiled Python files and caches (but leave the Python source code files tracked)
+__pycache__/ 
+
+# Ignore the database file (but not *.py files)
 database/database.db
-GUI/__pycache__/login_page.cpython-39.pyc
-*.db
+
+# Ignore IDE specific files (like VS Code settings) but keep the Python code files
+.vscode/
+
+# Ignore other unnecessary Python files (but keep the .py files you want to track)
 *.pyc
-*.py
+
+# Optional: Ignore temporary files you don't need in Git
+*.swp
+*.bak
+*.log
