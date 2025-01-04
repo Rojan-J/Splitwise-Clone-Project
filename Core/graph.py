@@ -74,7 +74,11 @@ class Graph():
 
         
         plt.tight_layout()
-        png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_plot.png"
+        # png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_plot.png"
+        
+        png_path = r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core\graph_plot.png"
+
+        
         plt.savefig(png_path)
 
 "C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"

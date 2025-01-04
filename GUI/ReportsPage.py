@@ -4,7 +4,7 @@ import re
 import sys
 import os
 import json
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
 sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 
@@ -255,8 +255,13 @@ def show_report(username, ui):
             startangle=90,      
             colors=plt.cm.Paired.colors,  
         )
+        
 
-        png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_pie_plot.png"
+        # png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_pie_plot.png"
+        png_path = r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core\graph_pie_plot.png"
+
+
+        
         # Save as PNG
         plt.savefig(png_path)
 
@@ -307,7 +312,10 @@ def show_report(username, ui):
             plt.text(i, amount + 5, str(amount), ha='center', va='bottom')
 
         
-        png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_group_by_plot.png"
+        # png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_group_by_plot.png"
+        png_path = r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core\graph_group_by_plot.png"
+
+        
         # Save as PNG
         plt.savefig(png_path)
 
