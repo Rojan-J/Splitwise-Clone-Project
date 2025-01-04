@@ -89,6 +89,7 @@ def verified_payment(ui, btn, debt, username):
     new_balance = current_balance + amount
 
     update_balance(username, new_balance)
+    update_notification_status(username)
 
     
 
@@ -110,6 +111,7 @@ def unverified_payment(ui, btn, debt, user):
     new_balance = current_balance + amount
 
     update_balance(debtor, new_balance)
+    update_notification_status(username)
 
 
         

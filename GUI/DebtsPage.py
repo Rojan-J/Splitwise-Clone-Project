@@ -154,6 +154,7 @@ def pay_online(ui, btn, debt, username):
         current_balance = get_balance(username)[0]
         new_balance = current_balance - debt_amount
         if new_balance >= 0:
+            update_balance(username, new_balance)
             add_notification(creditor, username, debt_id, debt_amount)
             update_debt_status(debt_id,"pending")
         else:

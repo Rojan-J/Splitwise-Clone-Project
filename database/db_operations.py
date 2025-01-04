@@ -541,3 +541,12 @@ def get_user_notifications(username):
     messages =cursor.fetchall()
     connection.close()
     return messages
+
+def update_notification_status(username):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        UPDATE user_notification SET check = ? WHERE username = ?
+    ''', (1, username, ))
+    connection.commit()
+    connection.close()
