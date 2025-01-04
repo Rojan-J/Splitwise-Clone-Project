@@ -8,9 +8,10 @@ import json
 sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
-# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
+#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
+#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"))
 
 
 from db_operations import *
@@ -645,7 +646,9 @@ def save_new_member_with_expenses(ui,group,new_member_name):
     for i in range(layout.count()):
         checkbox = layout.itemAt(i).widget()
         if checkbox.isChecked():
-            selected_expenses.append(int(checkbox.objectName().replace("expense_", "")))  # Extract expense ID
+            expense_id = int(checkbox.objectName().replace("expense_", ""))
+            expense_label = checkbox.text()
+            selected_expenses.append(expense_id)  # Extract expense ID
 
     try:
         connection = get_connection()
@@ -680,7 +683,6 @@ def save_new_member_with_expenses(ui,group,new_member_name):
         ui.ErrorLabel3.setStyleSheet("color: red;")
         
         
-        #the ErrorLabel3 is not generated correctly yet
 def show_graph(group, ui):
     graph = Graph(group)
     graph.plot_graph()

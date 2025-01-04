@@ -1,8 +1,8 @@
 import sqlite3
 
 def initialize_database():
-    connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")  #create database file
-    #connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")
+    #connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")  #create database file
+    connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")
 
     
 
@@ -101,16 +101,16 @@ def initialize_database():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS debts (
             debt_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            group_id INTEGER,
-            debtor_name TEXT NOT NULL, 
-            creditor_name TEXT NOT NULL,
+            group_id,
+            debtor_id INTEGER,
+            creditor_id INTEGER,
+            temp_debtor_id INTEGER,
+            temp_creditor_id INTEGER,
             amount REAL NOT NULL,
             status TEXT DEFAULT 'pending',
-            FOREIGN KEY(debtor_name) REFERENCES users(username),
-            FOREIGN KEY(creditor_name) REFERENCES users(username),
-            FOREIGN KEY(group_id) REFERENCES groups(group_id)
-                   
-
+            FOREIGN KEY(debtor_id) REFERENCES users(user_id),
+            FOREIGN KEY(creditor_id) REFERENCES users(user_id),
+            UNIQUE(temp_debtor_id, temp_creditor_id)
         )
     ''')
 
@@ -137,7 +137,7 @@ def initialize_database():
             friend_name TEXT NOT NULL,
             friend_email TEXT NOT NULL,
             username TEXT NOT NULL,
-            friend_profile INTEGER DEFAULT 0, 
+
             FOREIGN KEY(username) REFERENCES users(username)    
         )
     ''')
