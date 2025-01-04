@@ -268,6 +268,9 @@ class MainWindow(QMainWindow):
 
         self.ui.DebtsBtn.clicked.connect(lambda: show_all_debts(self.user[2], self.ui))
 
+        self.ui.MonthlyReportBtn.clicked.connect(lambda: add_custom_time_duration(self.ui))
+        self.ui.TotalReportBtn.clicked.connect(lambda: clear_dates(self.ui))
+
         
     
 
