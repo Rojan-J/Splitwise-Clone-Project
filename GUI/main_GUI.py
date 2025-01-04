@@ -45,6 +45,7 @@ from FriendsPage import *
 from ReportsPage import *
 from DebtsPage import *
 from SearchPage import *
+from CurrencyPage import *
 
 ########################################################################
 ## MAIN WINDOW CLASS
@@ -273,9 +274,9 @@ class MainWindow(QMainWindow):
         self.ui.TotalReportBtn.clicked.connect(lambda: clear_dates(self.ui))
 
         
-    
+        #self.ui.ConvertCurrencyBtn.clicked.connect(lambda:convert_currency(self.ui))
 
-        
+
     
     def change_Btn_name(btn):
         btn.setObjectName("GrpBtn")

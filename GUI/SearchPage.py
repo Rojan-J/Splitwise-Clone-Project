@@ -20,6 +20,8 @@ import sqlite3
 from graph import *
 
 
+
+
 def perform_search(ui):
     
     date_input = ui.SearchDateInput.selectedDate().toString("yyyy-MM-dd") if ui.SearchDateInput.selectedDate() else None

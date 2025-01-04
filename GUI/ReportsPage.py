@@ -255,8 +255,13 @@ def show_report(username, ui):
             startangle=90,      
             colors=plt.cm.Paired.colors,  
         )
+        
 
-        png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_pie_plot.png"
+        # png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_pie_plot.png"
+        png_path = r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core\graph_pie_plot.png"
+
+
+        
         # Save as PNG
         plt.savefig(png_path)
 

@@ -21,6 +21,8 @@ from groups import *
 import sqlite3
 from graph import *
 from debt_simplification import *
+from currency_conversion_all_currencies import *
+
 
 def show_all_existing_groups(ui, user):
     groups = get_groups_by_username(user[2])
@@ -215,7 +217,7 @@ def add_group_to_dataset(group_name, user, members, split, default_shares_j, def
     connection.close()
     return
 
-    
+        
 
 def add_expense_page(ui, group_name, group_owner, count):
     group = Groups(group_name, group_owner, debts = {}, members = [] , expenses = [])
@@ -282,6 +284,17 @@ def add_group_expense(ui, group_name, group_owner, count):
         if SplitTypeBtn.isChecked():
             split_type = SplitTypeBtn.text()
 
+    
+    try:
+        amount,currency=split_amount(ui,amount_input)
+        IRR_amount=convert_to_IRR(amount,date=selected_date,from_c=currency)
+        
+    except Exception as e:
+        ui.ErrorLabel2.setText(f"Error: {str(e)}")
+        ui.ErrorLabel2.setStyleSheet("color: red;")
+        return
+
+
     if split_type == "share" or split_type == "percentage":
             shares = get_shares(ui, "add_expense")
             print("COUNT", ui.verticalLayout_25.count())
@@ -323,9 +336,9 @@ def add_group_expense(ui, group_name, group_owner, count):
     widgets = [ui.GrpExpenseLabelLabel, ui.AmountLabel, ui.PayerLabel, ui.ContributersLabel]
 
     error = 0
-    print([label, amount, payer, contributers], amount == "")
+    print([label, IRR_amount, payer, contributers], IRR_amount == "")
     
-    for widget, data in enumerate([label, amount, payer, contributers]):
+    for widget, data in enumerate([label, amount_input , payer, contributers]):
         if data == "" or data == [] or not data:
             widgets[widget].setStyleSheet("color: red;")
             ui.ErrorLabel2.setText("Fill out all required inforamtion!")
@@ -378,22 +391,22 @@ def add_group_expense(ui, group_name, group_owner, count):
 
             
 
-    if error_def_perc == False and label != "" and amount != "" and selected_date != "" and isfloat(amount) and contributers != [] and payer != ""  and payer in main_group.members and total_perc(split_type):
+    if error_def_perc == False and label != "" and amount_input != "" and selected_date != "" and isfloat(amount) and contributers != [] and payer != ""  and payer in main_group.members and total_perc(split_type):
         ui.SplitLabel.setStyleSheet("color: white;")
         ui.ErrorLabel2.setText("")
         ui.ErrorLabel2.setStyleSheet("color : white;")
         if split_type == "share":
             shares = shares
-            main_group.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
+            main_group.add_expenses(label, IRR_amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
         elif split_type == "percentage":
             proportions = shares
-            main_group.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
+            main_group.add_expenses(label, IRR_amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
         else:
-            main_group.add_expenses(label,amount, payer, contributers, selected_date, category,description, split_type)
+            main_group.add_expenses(label,IRR_amount, payer, contributers, selected_date, category,description, split_type)
         
         if default == True : split_title =f"default ({split_type})"
         else: split_title = split_type
-        var_to_add = [label, payer, str(amount),",".join(contributers), selected_date, category, split_title, description]
+        var_to_add = [label, payer, str(IRR_amount),",".join(contributers), selected_date, category, split_title, description]
         row_position = ui.ExpensesTable.rowCount()
         ui.ExpensesTable.insertRow(row_position)
         for col, value in enumerate(var_to_add):
@@ -845,7 +858,11 @@ def show_expenses_graph(ui, group_name, group_owner):
     # Add a 
     plt.title("Expense Distribution")
 
-    png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_pie_plot.png"
+    # png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_pie_plot.png"
+    
+    png_path = r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core\graph_pie_plot.png"
+
+    
     # Save as PNG
     plt.savefig(png_path)
 
