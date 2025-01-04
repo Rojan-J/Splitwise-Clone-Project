@@ -6,15 +6,15 @@ import sys
 import os
 import json
 
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
 
 
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils"))
 
 
 
@@ -44,7 +44,7 @@ def show_all_existing_groups(ui, user):
         cursor.execute("SELECT group_owner FROM groups WHERE group_name = ? and group_id = ?", (group_name, group_id, ))
         group_owners = cursor.fetchone()
         group_owner = group_owners[0]
-        group_grp = Groups(group_name, group_owner)
+        group_grp = Groups(group_name, group_owner, debts = dict(), members = [], expenses = [])
         GroupGroups[group_name] = group_grp
 
         ui.GrpFrame = QtWidgets.QFrame(ui.GroupsGrid)
@@ -111,11 +111,28 @@ def specific_group_page(ui,grp : Groups):
         var_to_add = [expense[1], expense[4],str(expense[6]), expense[5], expense[8], expense[7], expense[10], expense[9]]
         for col, value in enumerate(var_to_add):
             ui.ExpensesTable.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
+
+
+
+    safe_disconnect(ui.AddExpensesBtn, lambda: add_expense_page(ui, grp))
+    safe_disconnect(ui.DebtGraphBtn, lambda: show_graph(grp, ui))
+    safe_disconnect(ui.closeGraphBtn, lambda: clear_graph(ui))
+    safe_disconnect(ui.ExpenseGraphBtn, lambda: show_expenses_graph(grp, ui))
+
+    # Reconnect buttons for the new group
+    ui.AddExpensesBtn.clicked.connect(lambda: add_expense_page(ui, grp))
+    ui.DebtGraphBtn.clicked.connect(lambda: show_graph(grp, ui))
+    ui.closeGraphBtn.clicked.connect(lambda: clear_graph(ui))
+    ui.ExpenseGraphBtn.clicked.connect(lambda: show_expenses_graph(grp, ui))
     
     ui.AddExpensesBtn.clicked.connect(lambda: add_expense_page(ui, grp))
     ui.DebtGraphBtn.clicked.connect(lambda: show_graph(grp, ui))
     ui.closeGraphBtn.clicked.connect(lambda: clear_graph(ui))
     ui.ExpenseGraphBtn.clicked.connect(lambda: show_expenses_graph(grp, ui))
+
+
+
+
 
 def create_group(ui, user):
     default_shares = None
@@ -257,15 +274,22 @@ def add_expense_page(ui, group, recover = True):
             widget.deleteLater()
 
 
-    ui.FinalAddExpenseBtn.clicked.connect(lambda: add_group_expense(ui, group))
+    try:
+        ui.FinalAddExpenseBtn.clicked.disconnect()
+    except TypeError:
+        pass  # No connection to disconnect
+
+
+    ui.FinalAddExpenseBtn.clicked.connect(lambda _, g=group: add_group_expense(ui, g))
+    return
     
 
 
 
-def add_group_expense(ui, main_group):
+def add_group_expense(ui, main_group: Groups):
     
     from currency_conversion_all_currencies import convert_to_IRR
-    
+    print(" Add called, mambers are: " , main_group.members, main_group.debts)
     category = ""
     label = ui.GrpExpenseLabelInput.text()
     print(label)
@@ -306,7 +330,7 @@ def add_group_expense(ui, main_group):
         ui.ErrorLabel2.setText(f"Error: {str(e)}")
         ui.ErrorLabel2.setStyleSheet("color: red;")
         
-    return
+
 
 
     if split_type == "share" or split_type == "percentage":
@@ -348,9 +372,7 @@ def add_group_expense(ui, main_group):
 
     widgets = [ui.GrpExpenseLabelLabel, ui.AmountLabel, ui.PayerLabel, ui.ContributersLabel]
 
-    error = 0
-    print([label, IRR_amount, payer, contributers], IRR_amount == "")
-    
+    error = 0    
     for widget, data in enumerate([label, amount_input , payer, contributers]):
         if data == "" or data == [] or not data:
             widgets[widget].setStyleSheet("color: red;")
@@ -441,6 +463,7 @@ def add_group_expense(ui, main_group):
         ui.GrpTotalExpense.setText(f"Total Expense: {main_group.get_total_expenses_of_group()[0]}")
         
         ui.rightMenuContainer.collapseMenu()
+    return
 
 
 
@@ -898,4 +921,8 @@ def show_expenses_graph(group, ui):
 
 
 
-    
+def safe_disconnect(button, handler):
+    try:
+        button.clicked.disconnect(handler)
+    except TypeError:
+        pass  # No previous connection, safe to ignore

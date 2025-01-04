@@ -124,7 +124,7 @@ class Groups:
             
 
     def add_expenses(self,label, expense, payer, contributors, expense_date = date.today(), category="etc.",description=None, split_type="equally", proportions=None, shares=None, currency = "IRR"):
-        
+        print(self.debts, "before_add")
         #contributors is a list of users represented by their ids who are sharing the expense
         #contributions is a list that hold each contributor's share
         #contributor represents the user's id who contributed
@@ -188,7 +188,8 @@ class Groups:
             """, (expense_id, expense, contributor, contribution, proportion, self.group_name, share, expense_date, category))
 
         connection.commit()
-        connection.close()     
+        connection.close()
+        print(self.debts, "before_cal_debts")     
         self.cal_debts(contributions, payer)
         print("Before Simplification: ", self.group_name, self.debts)
         debt_simplification = Debtsimplification(self)
@@ -259,7 +260,7 @@ class Groups:
 
                 add_debt(self.group_id, contributor,payer,contribution)
                 
-        print(self.debts)
+        print(self.debts, "In cal_debts")
         return
                 
                 
