@@ -4,8 +4,6 @@ venv/
 # Ignore files in the Lib/site-packages folder (virtual environment packages)
 venv/Lib/site-packages/
 
-# Ignore compiled Python files and caches (but leave the Python source code files tracked)
-__pycache__/ 
 
 # Ignore the database file (but not *.py files)
 database/database.db
