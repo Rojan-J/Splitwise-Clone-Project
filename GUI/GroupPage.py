@@ -5,15 +5,17 @@ import matplotlib.pyplot as plt
 import sys
 import os
 import json
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
+
+# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
+# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
 
 
-# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
-# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
-# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"))
-from functools import partial
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils"))
+
 
 
 from db_operations import *
@@ -42,7 +44,7 @@ def show_all_existing_groups(ui, user):
         cursor.execute("SELECT group_owner FROM groups WHERE group_name = ? and group_id = ?", (group_name, group_id, ))
         group_owners = cursor.fetchone()
         group_owner = group_owners[0]
-        group_grp = Groups(group_name, group_owner, debts = {}, members = [], expenses = [])
+        group_grp = Groups(group_name, group_owner)
         GroupGroups[group_name] = group_grp
 
         ui.GrpFrame = QtWidgets.QFrame(ui.GroupsGrid)
@@ -83,20 +85,18 @@ def show_all_existing_groups(ui, user):
         ui.GrpBtn.setIconSize(QtCore.QSize(32, 32))
         ui.GrpBtn.setObjectName(f"{group_name}")
         ui.verticalLayout_100.addWidget(ui.GrpBtn, 0, QtCore.Qt.AlignRight)
-        grpbtns[(group_grp.group_name, group_grp.group_owner)] = ui.GrpBtn
+        grpbtns[group_grp] = ui.GrpBtn
+
         ui.verticalLayout_20.addWidget(ui.GrpFrame)
 
-    for (group_name, group_owner), btn in grpbtns.items():
-        btn.clicked.connect(partial(specific_group_page, ui, group_name, group_owner))
-
-    return
+    for group, btn in grpbtns.items():
+        btn.clicked.connect(lambda _, g=group: specific_group_page(ui, g))
 
 
 
 
-
-def specific_group_page(ui,grp_name, grp_owner, count):
-    grp=Groups(grp_name, grp_owner, debts = {}, members = [], expenses = [])
+def specific_group_page(ui,grp : Groups):
+    
     ui.mainPages.setCurrentWidget(ui.GrpPage)
     ui.GrpName.setText(grp.group_name)
     ui.grp_owner.setText(f"Owner: {grp.group_owner}")
@@ -111,13 +111,11 @@ def specific_group_page(ui,grp_name, grp_owner, count):
         var_to_add = [expense[1], expense[4],str(expense[6]), expense[5], expense[8], expense[7], expense[10], expense[9]]
         for col, value in enumerate(var_to_add):
             ui.ExpensesTable.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
-
-    print("specific_group",grp.group_name, grp.group_id, grp.debts)
-    ui.AddExpensesBtn.clicked.connect(lambda: add_expense_page(ui, grp_name, grp_owner, count))
-    ui.DebtGraphBtn.clicked.connect(lambda: show_graph(ui, grp_name, grp_owner))
-    ui.closeGraphBtn.clicked.connect(lambda: clear_graph(ui , grp_name, grp_owner))
-    ui.ExpenseGraphBtn.clicked.connect(lambda: show_expenses_graph(ui, grp_name, grp_owner))
-    return
+    
+    ui.AddExpensesBtn.clicked.connect(lambda: add_expense_page(ui, grp))
+    ui.DebtGraphBtn.clicked.connect(lambda: show_graph(grp, ui))
+    ui.closeGraphBtn.clicked.connect(lambda: clear_graph(ui))
+    ui.ExpenseGraphBtn.clicked.connect(lambda: show_expenses_graph(grp, ui))
 
 def create_group(ui, user):
     default_shares = None
@@ -196,14 +194,12 @@ def create_group(ui, user):
                 ui.ErrorLabel.setText("")
                 ui.ErrorLabel.setStyleSheet("color : white;")
                 ui.label.setStyleSheet("color: white;")
-    
-    return
 
 
 def add_group_to_dataset(group_name, user, members, split, default_shares_j, default_prop_j):
     connection=get_connection()
     cursor=connection.cursor()
-    group = Groups(group_name, user[2], split = split, debts = {}, expenses = [], members = [])
+    group = Groups(group_name, user[2], split)
     cursor.execute("SELECT group_id FROM groups WHERE group_name = ? and group_owner = ?", (group_name, user[2], ))
     connection.commit()
     new_group = cursor.fetchone()
@@ -215,51 +211,65 @@ def add_group_to_dataset(group_name, user, members, split, default_shares_j, def
         group.add_members(member, split, default_shares_j, default_prop_j)
     connection.commit()
     connection.close()
-    return
+
+
+
+def split_amount(ui,amount_input):
+    parts=amount_input.split()
+    
+    if len(parts)==1:
+        
+        amount=float(parts[0])
+        currency="IRR"
+    
+    elif len(parts)==2:
+        amount=float(parts[0])
+        currency=parts[1].upper()
+        
+    else:
+        ui.ErrorLabel2.setText("Invalid input format for expense!")
+        ui.ErrorLabel2.setStyleSheet("color : red;")
+        
+    return amount,currency
 
         
 
-def add_expense_page(ui, group_name, group_owner, count):
-    group = Groups(group_name, group_owner, debts = {}, members = [] , expenses = [])
-    print(group.group_name, group.members)
-    group.load_from_database()
+def add_expense_page(ui, group, recover = True):
+    if recover:
+        layout = ui.scrollAreaWidgetContents_7.layout()
+        # Iterate through the layout's items
+        while layout.count():
+            item = layout.takeAt(0)  # Remove the first item in the layout
+            widget = item.widget()
+            widget.deleteLater()
+
+        for member in group.members:
+            ui.checkBox_2 = QtWidgets.QCheckBox(ui.scrollAreaWidgetContents_7)
+            ui.checkBox_2.setObjectName(member)
+            ui.checkBox_2.setText(member)
+            ui.verticalLayout_23.addWidget(ui.checkBox_2)
+
+        layout = ui.scrollAreaWidgetContents_9.layout()
+        # Iterate through the layout's items
+        while layout.count():
+            item = layout.takeAt(0)  # Remove the first item in the layout
+            widget = item.widget()
+            widget.deleteLater()
 
 
-    layout = ui.scrollAreaWidgetContents_7.layout()
-    # Iterate through the layout's items
-    while layout.count():
-        item = layout.takeAt(0)  # Remove the first item in the layout
-        widget = item.widget()
-        widget.deleteLater()
-
-    for member in group.members:
-        ui.checkBox_2 = QtWidgets.QCheckBox(ui.scrollAreaWidgetContents_7)
-        ui.checkBox_2.setObjectName(member)
-        ui.checkBox_2.setText(member)
-        ui.verticalLayout_23.addWidget(ui.checkBox_2)
-
-    layout = ui.scrollAreaWidgetContents_9.layout()
-    # Iterate through the layout's items
-    while layout.count():
-        item = layout.takeAt(0)  # Remove the first item in the layout
-        widget = item.widget()
-        widget.deleteLater()
-
-    print(group.debts)
-
-    ui.FinalAddExpenseBtn.clicked.connect(lambda: add_group_expense(ui, group_name, group_owner, count))
-    return
+    ui.FinalAddExpenseBtn.clicked.connect(lambda: add_group_expense(ui, group))
     
 
 
 
-def add_group_expense(ui, group_name, group_owner, count):
-    main_group = Groups(group_name, group_owner, debts = dict(), members = [], expenses = [])
-    main_group.load_from_database()
+def add_group_expense(ui, main_group):
+    
+    from currency_conversion_all_currencies import convert_to_IRR
+    
     category = ""
     label = ui.GrpExpenseLabelInput.text()
-    print(label, main_group.members, main_group.debts)
-    amount = ui.AmountInput.text()
+    print(label)
+    amount_input = ui.AmountInput.text()
     selected_date = ui.calendarWidget.selectedDate().toString("yyyy-dd-MM")
     payer = ui.PayerInput.text()
     description = ui.DiscriptionInput.toPlainText()
@@ -292,7 +302,8 @@ def add_group_expense(ui, group_name, group_owner, count):
     except Exception as e:
         ui.ErrorLabel2.setText(f"Error: {str(e)}")
         ui.ErrorLabel2.setStyleSheet("color: red;")
-        return
+        
+    return
 
 
     if split_type == "share" or split_type == "percentage":
@@ -316,7 +327,6 @@ def add_group_expense(ui, group_name, group_owner, count):
                 shares[contributer] = default_shares[contributer]
         elif split_type == "percentage":
             shares = default_proportions
-
     
         
     def total_perc(split_type):
@@ -426,11 +436,8 @@ def add_group_expense(ui, group_name, group_owner, count):
         for categoryBtnNo in range(6):
             ui.gridLayout_2.itemAt(categoryBtnNo).widget().setChecked(False)
         ui.GrpTotalExpense.setText(f"Total Expense: {main_group.get_total_expenses_of_group()[0]}")
-        count = 2
         
         ui.rightMenuContainer.collapseMenu()
-
-    return
 
 
 
@@ -504,7 +511,6 @@ def add_shares(ui, split_type, page):
                 ui.verticalLayout_27.addWidget(ui.spinBox)
 
         print(layout.count())
-    return
 
 
 def isfloat(value):
@@ -582,8 +588,9 @@ def get_group_expenses(group_id):
     finally:
         if 'connection' in locals() and connection:
             connection.close()
-    return
     
+    
+    return
 
 
 def add_new_member_to_group(ui):
@@ -676,8 +683,6 @@ def add_new_member_to_group(ui):
         ui.ErrorAddMember.setStyleSheet("color: red;")
     finally:
         connection.close()
-
-    return
  
  
 
@@ -723,11 +728,9 @@ def save_new_member_with_expenses(ui,group,new_member_name):
     except sqlite3.Error as e:
         ui.ErrorLabel3.setText(f"Database error: {e}")
         ui.ErrorLabel3.setStyleSheet("color: red;")
-    return
         
         
-def show_graph(ui, group_name, group_owner):
-    group = Groups(group_name, group_owner, debts = dict(), members = [], expenses = [])
+def show_graph(group, ui):
     layout = ui.scrollAreaWidgetContents_23.layout()
     while layout.count():
         item = layout.takeAt(0)  # Get the first item
@@ -765,10 +768,7 @@ def show_graph(ui, group_name, group_owner):
         layout_2.addWidget(ui.weight)
     ui.pushButton.clicked.connect(lambda: show_simplified_graph(group, ui))
 
-    return
-
-def show_simplified_graph(ui, group_name, group_owner):
-    group = Groups(group_name, group_owner, debts = dict(), members = [], expenses = [])
+def show_simplified_graph(group: Groups, ui):
     debt_simplification = Debtsimplification(group)
     debt_simplification.creating_simplified_graph()
     layout = ui.scrollAreaWidgetContents_23.layout()
@@ -815,7 +815,6 @@ def show_simplified_graph(ui, group_name, group_owner):
             add_simplified_debt(group.group_id, group.group_name, debtor, creditor, debt)
 
     specific_group_page(ui,group)
-    return
     
 
 def clear_graph(ui):
@@ -831,11 +830,9 @@ def clear_graph(ui):
         widget = item.widget()  # Get the widget
         widget.deleteLater()
     ui.GraphTitle.setText("")
-    return
 
 
-def show_expenses_graph(ui, group_name, group_owner):
-    group = Groups(group_name, group_owner, expenses = [], debts = dict(), members = [])
+def show_expenses_graph(group, ui):
     all_expenses = group.get_expenses_by_category()
     categories = list(all_expenses.keys())
     amounts = list(all_expenses.values())
@@ -858,7 +855,7 @@ def show_expenses_graph(ui, group_name, group_owner):
     # Add a 
     plt.title("Expense Distribution")
 
-    # png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_pie_plot.png"
+    #png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_pie_plot.png"
     
     png_path = r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core\graph_pie_plot.png"
 
@@ -895,8 +892,7 @@ def show_expenses_graph(ui, group_name, group_owner):
         item = layout_2.takeAt(0)  # Get the first item
         widget = item.widget()  # Get the widget
         widget.deleteLater()
-    
-    return
+
 
 
     
