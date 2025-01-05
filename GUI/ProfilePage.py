@@ -2,9 +2,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 import sys
 import os
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
 
 
 from db_operations import *
@@ -236,25 +236,34 @@ def process_recurring_expenses(username):
     for expense in recurring_expenses:
         label, expense_id, amount, category, days_of_month = expense
         days_list = [int(day) for day in days_of_month.split(",")]
-        
-        # Check if today is a recurring day
-        if today_day in days_list:
-            # Insert expense into the debts or expenses table
-            cursor.execute("""
-                INSERT INTO simplified_debts (for_what, id, name, debtor_name, amount)
-                VALUES ("recurrent", ?, ?, ?, ?)
-            """, (expense_id, label, username, amount))
 
-            cursor.execute("""
-                INSERT INTO expense_user (total_expense, username, amount_contributed, split_proportions, for_what, name, date, category)
-                VALUE(?, ?, ?, ?, "recurrent", ?, ?, ?) 
-            """, (expense_id, label, username, amount))
+        cursor.execute("SELECT * FROM simplified_debts WHERE id=  ? AND status = ?", (expense_id, "Not Paid!" ))
+        existed_recurrents = cursor.fetchall()
+
+        if not existed_recurrents:
+            
+            # Check if today is a recurring day
+            if today_day in days_list:
+                # Insert expense into the debts or expenses table
+                cursor.execute("""
+                    INSERT INTO simplified_debts (for_what, id, name, debtor_name, amount)
+                    VALUES ("recurrent", ?, ?, ?, ?)
+                """, (expense_id, label, username, amount))
+                current_year = datetime.now().year
+                current_month = datetime.now().month
+
+                # Combine year, month, and day to create a complete date
+                complete_date = datetime(current_year, current_month, today_day)
+
+                cursor.execute("""
+                    INSERT INTO expense_user (total_expense, username, amount_contributed, split_proportions, for_what, name, date, category)
+                    VALUE(?, ?, ?, ?, "recurrent", ?, ?, ?) 
+                """, (amount, username, amount, 1, label, complete_date, category, ))
     
     connection.commit()
     connection.close()
 
-# Call this function to process expenses on startup or a schedule
-process_recurring_expenses()
+
 
 
 

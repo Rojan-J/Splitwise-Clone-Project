@@ -11,10 +11,12 @@ sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone
 
 import matplotlib.pyplot as plt
 from db_operations import *
+from ProfilePage import process_recurring_expenses
 
 
 def show_all_debts(username, ui):
     all_debts = total_user_owes(username)
+    process_recurring_expenses(username)
     print(all_debts, "ALL DEBTS ARE")
     debts_radio_buttons = dict()
     layout =  ui.widget_23.layout()
@@ -64,7 +66,7 @@ def show_all_debts(username, ui):
             ui.verticalLayout_175.addWidget(ui.widget_23)
             ui.radioButton_49.setText("Pay from this account")
             ui.radioButton_50.setText("Paid by cash")
-            debts_radio_buttons[(debt[0], debt[-2], debt[-3])] = [ui.radioButton_49, ui.radioButton_50, ui.widget_23]
+            debts_radio_buttons[debt] = [ui.radioButton_49, ui.radioButton_50, ui.widget_23]
         
         elif debt[-1] =="pending":
             layout = ui.widget_23.layout()
@@ -82,8 +84,8 @@ def show_all_debts(username, ui):
         btn[0].clicked.connect(lambda _, b=btn, d =debt: pay_online(ui, b, d, username))
 
 
-
-def pay_cash(ui, btn, debt_id):
+def pay_cash(ui, btn, debt):
+    debt_id = debt[0]
     debt_id = debt_id[0]
     layout = btn[2].layout()
     if btn[1]:
@@ -108,7 +110,7 @@ def pay_cash(ui, btn, debt_id):
 
 
 def pay_online(ui, btn, debt, username):
-    debt_id, debt_amount, creditor = debt
+    debt_id, debt_amount, creditor, for_what = debt[0], debt[-2], debt[-3], debt[1]
     layout = btn[2].layout()
     if btn[1]:
         layout.removeWidget(btn[1])
@@ -119,10 +121,12 @@ def pay_online(ui, btn, debt, username):
         layout.removeWidget(btn[0])
         btn[0].deleteLater()
         btn[0] = None
+    
+    temporary = None
+    if creditor:
+        temporary = get_temp_creditor(creditor)
 
-    temporary = get_temp_creditor(creditor)
-
-    if temporary == 1:
+    if temporary == 1 or for_what == "recurrent":
 
         ui.CashPaidLabel = QtWidgets.QLabel(btn[2])
         font = QtGui.QFont()
