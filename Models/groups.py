@@ -196,7 +196,7 @@ class Groups:
         debt_simplification.creating_simplified_graph()
         update_group_debts(self.group_id, self.group_name)
 
-        for (debtor, creditor), debt in self.debts.items():
+        for (debtor, creditor), debt in self.simplified_debts.items():
             debt = debt["capacity"]
             if debtor != creditor:
                 add_simplified_debt(self.group_id, self.group_name, debtor, creditor, debt)
