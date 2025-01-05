@@ -6,8 +6,8 @@ from datetime import datetime
 from sqlite3 import IntegrityError
 
 
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils"))
+sys.path.append(os.path.abspath("C:/Users/LENOVO/OneDrive/Documents/Github/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath("C:/Users/LENOVO/OneDrive/Documents/Github/Splitwise-Clone-Project/Utils"))
 
 
 from currency_conveyrsion_all_currencies import convert_to_IRR
@@ -24,7 +24,7 @@ def update_friends_transactions(username,file_path):
     if not all(column in data.columns for column in required_columns):
         raise ValueError("The Excel file is missing required columns.")
 
-    connection = sqlite3.connect(r"C:/Users/LENOVO/OneDrive/Documents/GitHub/Splitwise-Clone-Project/database/database.db")
+    connection = sqlite3.connect("C:/Users/LENOVO/OneDrive/Documents/Github/Splitwise-Clone-Project/database/database.db")
     cursor = connection.cursor()
     for _, row in data.iterrows():
         friend_name = row["friend_name"]

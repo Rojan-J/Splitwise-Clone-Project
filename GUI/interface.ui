@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1290</width>
-    <height>1009</height>
+    <height>1084</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -53,7 +53,7 @@ QTextBrowser {
 #centerMenuSubContainer, #rightMenuSubContainer{
 	background-color: #2c313c;
 }
-#frame_6, #frame_8, #popupNotificationSubContainer, #GrpHeaderSubContainer, #FriendsHeader, #FriendFrame, #ReportsHeader, #ReportSubContainer, #ProfileContainer{
+#frame_6, #frame_8, #popupNotificationSubContainer, #GrpHeaderSubContainer, #FriendsHeader, #FriendFrame, #ReportsHeader, #ReportSubContainer, #ProfileContainer, #CurrencyTitle{
 	background-color: #16191d;
 	border-radius: 10px;
 }
@@ -88,7 +88,7 @@ QCalendarWidget QToolButton::pressed {
 QCalendarWidget QToolButton:hover {
                 background-color: darkgray;  /* Navigation buttons hover color */
             }
-#DebtGraphBtn, #ExpenseGraphBtn, #FriendsExpenseGraphBtn, #CategoryReportBtn, #GrpReportBtn, #FriendReportBtn, #MonthlyReportBtn, #TotalReportBtn, #ReportBtn{
+#DebtGraphBtn, #ExpenseGraphBtn, #FriendsExpenseGraphBtn, #CategoryReportBtn, #GrpReportBtn, #FriendReportBtn, #MonthlyReportBtn, #TotalReportBtn, #ReportBtn, #ConvertCurrencyBtn{
 	background-color: #16191d;
 	border-radius: 10px;
 }</string>
@@ -518,6 +518,18 @@ QCalendarWidget QToolButton:hover {
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <item>
                <widget class="QScrollArea" name="scrollArea_23">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>800</height>
+                 </size>
+                </property>
                 <property name="widgetResizable">
                  <bool>true</bool>
                 </property>
@@ -527,7 +539,7 @@ QCalendarWidget QToolButton:hover {
                    <x>0</x>
                    <y>0</y>
                    <width>222</width>
-                   <height>916</height>
+                   <height>800</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_175">
@@ -1046,6 +1058,360 @@ QCalendarWidget QToolButton:hover {
                      </widget>
                     </item>
                    </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="page">
+                <layout class="QVBoxLayout" name="verticalLayout_101">
+                 <item alignment="Qt::AlignTop">
+                  <widget class="QFrame" name="CurrencyTitle">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>100</height>
+                    </size>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_102">
+                    <item alignment="Qt::AlignVCenter">
+                     <widget class="QLabel" name="label_4">
+                      <property name="font">
+                       <font>
+                        <family>Swis721 Blk BT</family>
+                        <pointsize>20</pointsize>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Currency Conversion</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_42">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_11">
+                    <item>
+                     <widget class="QFrame" name="frame_43">
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_103">
+                       <item alignment="Qt::AlignHCenter">
+                        <widget class="QLabel" name="label_10">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>12</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Amount</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="AmountCurrencyInput">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>12</pointsize>
+                          </font>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QFrame" name="frame_55">
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_104">
+                       <item alignment="Qt::AlignHCenter">
+                        <widget class="QLabel" name="label_11">
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>12</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Currency</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="CurrencyInput">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="font">
+                          <font>
+                           <family>Swis721 Blk BT</family>
+                           <pointsize>12</pointsize>
+                          </font>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_12">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_105">
+                    <item alignment="Qt::AlignHCenter">
+                     <widget class="QPushButton" name="ConvertCurrencyBtn">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>120</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Swis721 Blk BT</family>
+                        <pointsize>12</pointsize>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Convert</string>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="resource2.qrc">
+                        <normaloff>:/icons2/icons2/arrow-right.svg</normaloff>:/icons2/icons2/arrow-right.svg</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>32</width>
+                        <height>32</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_17">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_106">
+                    <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+                     <widget class="QLabel" name="ConversionResult">
+                      <property name="font">
+                       <font>
+                        <family>Swis721 Blk BT</family>
+                        <pointsize>12</pointsize>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="SearchPage2">
+                <layout class="QVBoxLayout" name="verticalLayout_100">
+                 <item>
+                  <widget class="QLabel" name="ExpenseSearchLabel_2">
+                   <property name="font">
+                    <font>
+                     <family>Swis721 Blk BT</family>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Expense Label</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="ExpenseLabelInput_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>37</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>37</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Swis721 Blk BT</family>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="UserSearchLabel_2">
+                   <property name="font">
+                    <font>
+                     <family>Swis721 Blk BT</family>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>User</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="UserExpenseInput_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>37</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>37</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Swis721 Blk BT</family>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="DateSearchLabel_2">
+                   <property name="font">
+                    <font>
+                     <family>Swis721 Blk BT</family>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Date</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCalendarWidget" name="SearchDateInput_2">
+                   <property name="font">
+                    <font>
+                     <family>Swis721 Blk BT</family>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="SearchBtn_3">
+                   <property name="font">
+                    <font>
+                     <family>Swis721 Blk BT</family>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Search</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="resource2.qrc">
+                     <normaloff>:/icons2/icons2/search.svg</normaloff>:/icons2/icons2/search.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QTableWidget" name="SearchResultTable_2">
+                   <property name="font">
+                    <font>
+                     <family>Swis721 Blk BT</family>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="ShowResultBtn_2">
+                   <property name="font">
+                    <font>
+                     <family>Swis721 Blk BT</family>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Go to page</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="resource2.qrc">
+                     <normaloff>:/icons2/icons2/arrow-right-circle.svg</normaloff>:/icons2/icons2/arrow-right-circle.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -2382,19 +2748,6 @@ QCalendarWidget QToolButton:hover {
                                 </property>
                                </widget>
                               </item>
-                              <item>
-                               <widget class="QLabel" name="FriendsNetBalance">
-                                <property name="font">
-                                 <font>
-                                  <family>Swis721 Blk BT</family>
-                                  <pointsize>12</pointsize>
-                                 </font>
-                                </property>
-                                <property name="text">
-                                 <string>Net Balance:</string>
-                                </property>
-                               </widget>
-                              </item>
                              </layout>
                             </widget>
                            </item>
@@ -2444,7 +2797,7 @@ QCalendarWidget QToolButton:hover {
                              <x>0</x>
                              <y>0</y>
                              <width>447</width>
-                             <height>617</height>
+                             <height>642</height>
                             </rect>
                            </property>
                            <layout class="QVBoxLayout" name="verticalLayout_54">
@@ -3442,7 +3795,7 @@ QCalendarWidget QToolButton:hover {
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>7</number>
+                   <number>2</number>
                   </property>
                   <widget class="QWidget" name="AddNewMemberPage">
                    <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -6240,30 +6593,26 @@ p, li { white-space: pre-wrap; }
                <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_11">
-                <item alignment="Qt::AlignTop">
-                 <widget class="QLabel" name="label_13">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
+               <layout class="QVBoxLayout" name="verticalLayout_98">
+                <item>
+                 <widget class="QScrollArea" name="scrollArea_22">
+                  <property name="widgetResizable">
+                   <bool>true</bool>
                   </property>
-                  <property name="font">
-                   <font>
-                    <family>Swis721 Blk BT</family>
-                    <pointsize>10</pointsize>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Notification Messages</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
+                  <widget class="QWidget" name="scrollAreaWidgetContents_26">
+                   <property name="geometry">
+                    <rect>
+                     <x>0</x>
+                     <y>0</y>
+                     <width>948</width>
+                     <height>69</height>
+                    </rect>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_99"/>
+                  </widget>
                  </widget>
                 </item>
-                <item alignment="Qt::AlignRight">
+                <item>
                  <widget class="QPushButton" name="ClosePopUpBtn">
                   <property name="toolTip">
                    <string>Close Notifications</string>

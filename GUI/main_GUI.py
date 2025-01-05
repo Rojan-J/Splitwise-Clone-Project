@@ -19,12 +19,12 @@ from interface import Ui_MainWindow as InterfacePageUI
 
 import ctypes
 
-os.chdir(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\GUI")   #to change the current working directory
+#os.chdir(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\GUI")   #to change the current working directory
 
-#os.chdir("Project/Splitwise-Clone-Project/GUI")   #to change the current working directory
+os.chdir("Project/Splitwise-Clone-Project/GUI")   #to change the current working directory
 
-#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 
 from db_operations import add_user, get_user_by_email, add_group, get_all_groups, get_all_usernames
@@ -46,6 +46,7 @@ from ReportsPage import *
 from DebtsPage import *
 from SearchPage import *
 from CurrencyPage import *
+from NotificationPage import *
 
 ########################################################################
 ## MAIN WINDOW CLASS
@@ -240,7 +241,7 @@ class MainWindow(QMainWindow):
         ########################################################################
 
         self.show()
-        set_user(self.ui, self.user)
+        self.ui.ProfileBtn.clicked.connect(lambda: set_user(self.ui, self.user[2]))
 
         #CenterMenu Expanding
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
@@ -323,6 +324,7 @@ class MainWindow(QMainWindow):
 
         self.ui.MonthlyReportBtn.clicked.connect(lambda: add_custom_time_duration(self.ui))
         self.ui.TotalReportBtn.clicked.connect(lambda: clear_dates(self.ui))
+        self.ui.NotificationBtn.clicked.connect(lambda: show_all_notifications(self.user[2], self.ui) )
 
         
         #self.ui.ConvertCurrencyBtn.clicked.connect(lambda:convert_currency(self.ui))

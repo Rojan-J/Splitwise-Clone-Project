@@ -142,7 +142,8 @@
 							"GroupIcon": "GroupsPage",
 							"FriendsIcon" : "FriendsPage", 
 							"FriendsBtn" : "FriendsPage", 
-							"ProfileBtn": "ProfilePage"
+							"ProfileBtn": "ProfilePage", 
+							"SearchBtn" : "SearchPage2"
 
 						}
 					]
