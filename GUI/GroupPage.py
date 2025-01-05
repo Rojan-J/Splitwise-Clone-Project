@@ -297,7 +297,10 @@ def add_group_expense(ui, main_group):
     
     try:
         amount,currency=split_amount(ui,amount_input)
-        IRR_amount=convert_to_IRR(amount,date=selected_date,from_c=currency)
+        if currency=="IRR":
+            IRR_amount=amount
+        else:
+            IRR_amount=convert_to_IRR(amount,date=selected_date,from_c=currency)
         
     except Exception as e:
         ui.ErrorLabel2.setText(f"Error: {str(e)}")
