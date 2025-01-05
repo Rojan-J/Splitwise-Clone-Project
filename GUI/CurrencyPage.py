@@ -20,7 +20,7 @@ def convert_currency(ui):
         currency_input=ui.CurrencyInput.text()
         
 
-        if not amount_input or not currency:
+        if not amount_input or not currency_input:
             ui.ConversionResult.setText("Amount and currency cannot be empty")
             ui.ConversionResult.setStyleSheet("color : red;")
             return
