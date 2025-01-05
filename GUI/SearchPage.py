@@ -24,17 +24,17 @@ from graph import *
 
 def perform_search(ui):
     
-    date_input = ui.SearchDateInput.selectedDate().toString("yyyy-MM-dd") if ui.SearchDateInput.selectedDate() else None
-    label_input = ui.ExpenseLabelInput.text().strip()
-    user_input = ui.UserExpenseInput.text().strip()
+    date_input = ui.SearchDateInput_2.selectedDate().toString("yyyy-MM-dd") if ui.SearchDateInput_2.selectedDate() else None
+    label_input = ui.ExpenseLabelInput_2.text().strip()
+    user_input = ui.UserExpenseInput_2.text().strip()
     
     if not date_input and not label_input and not user_input:
-        ui.DateSearchLabel.setText("Please provide at least one search criterion.")
-        ui.DateSearchLabel.setStyleSheet("color: red;")
+        ui.DateSearchLabel_2.setText("Please provide at least one search criterion.")
+        ui.DateSearchLabel_2.setStyleSheet("color: red;")
         return
     
     
-    ui.DateSearchLabel.setText("")
+    ui.DateSearchLabel_2.setText("")
     
     query = "SELECT expense_id, date, label, amount, username FROM expenses WHERE 1=1"
     params = []
@@ -59,41 +59,41 @@ def perform_search(ui):
         cursor.execute(query, params)
         results = cursor.fetchall()
         
-        ui.SearchResultTable.setRowCount(0)
+        ui.SearchResultTable_2.setRowCount(0)
 
 
         #display data
         for row_idx, row_data in enumerate(results):
-            ui.SearchResultTable.insertRow(row_idx)
+            ui.SearchResultTable_2.insertRow(row_idx)
             for col_idx, col_data in enumerate(row_data):
-                ui.SearchResultTable.setItem(row_idx, col_idx, QTableWidgetItem(str(col_data)))
+                ui.SearchResultTable_2.setItem(row_idx, col_idx, QTableWidgetItem(str(col_data)))
 
         if not results:
-            ui.DateSearchLabel.setText("No results found.")
-            ui.DateSearchLabel.setStyleSheet("color: orange;")
+            ui.DateSearchLabel_2.setText("No results found.")
+            ui.DateSearchLabel_2.setStyleSheet("color: orange;")
         else:
-            ui.DateSearchLabel.setText("Results updated.")
-            ui.DateSearchLabel.setStyleSheet("color: green;")
+            ui.DateSearchLabel_2.setText("Results updated.")
+            ui.DateSearchLabel_2.setStyleSheet("color: green;")
 
     except sqlite3.Error as e:
-        ui.DateSearchLabel.setText(f"Database error: {e}")
-        ui.DateSearchLabel.setStyleSheet("color: red;")  
+        ui.DateSearchLabel_2.setText(f"Database error: {e}")
+        ui.DateSearchLabel_2.setStyleSheet("color: red;")  
 
 
 # def navigate_to_expense_details(ui):
 #     #get the selected row
-#     selected_row = ui.SearchResultTable.currentRow()
+#     selected_row = ui.SearchResultTable_2.currentRow()
     
 #     if selected_row == -1:
-#         ui.DateSearchLabel.setText("Please select a result to view details.")
-#         ui.DateSearchLabel.setStyleSheet("color: red;")
+#         ui.DateSearchLabel_2.setText("Please select a result to view details.")
+#         ui.DateSearchLabel_2.setStyleSheet("color: red;")
 #         return
     
-#     expense_id_item = ui.SearchResultTable.item(selected_row, 0)
+#     expense_id_item = ui.SearchResultTable_2.item(selected_row, 0)
     
 #     if not expense_id_item:
-#         ui.DateSearchLabel.setText("Invalid selection.")
-#         ui.DateSearchLabel.setStyleSheet("color: red;")
+#         ui.DateSearchLabel_2.setText("Invalid selection.")
+#         ui.DateSearchLabel_2.setStyleSheet("color: red;")
 #         return
 
 #     expense_id = int(expense_id_item.text())
