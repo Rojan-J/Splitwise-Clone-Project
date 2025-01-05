@@ -262,4 +262,42 @@ def add_recurrent(ui, user):
         widgets[1].setStyleSheet("color: white;")
 
 
+from datetime import datetime
+
+def process_recurring_expenses(username):
+    connection = get_connection()
+    cursor = connection.cursor()
+    
+    # Get today's day
+    today_day = datetime.now().day
+    
+    # Fetch all recurring expenses
+    cursor.execute("SELECT label, expense_id, amount, category, days_of_month FROM recurrent_expenses WHERE username=  ?", (username, ))
+    recurring_expenses = cursor.fetchall()
+
+    for expense in recurring_expenses:
+        label, expense_id, amount, category, days_of_month = expense
+        days_list = [int(day) for day in days_of_month.split(",")]
+        
+        # Check if today is a recurring day
+        if today_day in days_list:
+            # Insert expense into the debts or expenses table
+            cursor.execute("""
+                INSERT INTO simplified_debts (for_what, id, name, debtor_name, amount)
+                VALUES ("recurrent", ?, ?, ?, ?)
+            """, (expense_id, label, username, amount))
+
+            cursor.execute("""
+                INSERT INTO expense_user (total_expense, username, amount_contributed, split_proportions, for_what, name, date, category)
+                VALUE(?, ?, ?, ?, "recurrent", ?, ?, ?) 
+            """, (expense_id, label, username, amount))
+    
+    connection.commit()
+    connection.close()
+
+# Call this function to process expenses on startup or a schedule
+process_recurring_expenses()
+
+
+
 #def draw_recurrent_table(ui, user)
