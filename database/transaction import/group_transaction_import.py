@@ -72,7 +72,10 @@ def import_from_excel(file_path):
         
         #friends
         #NOTE: work more on the non-user friends inf. in database
-        
+        if currency != "IRR":
+                print(f"Preparing to convert {amount} {currency} to IRR for date {date}...")
+                amount = convert_to_IRR(amount, date=date, from_c=currency)
+                print(f"Converted amount {row['amount']} {currency} to {amount} IRR.")
         cursor.execute('''
                 SELECT 1 FROM group_expenses 
                 WHERE group_id = ? AND payername = ? AND amount = ? AND category = ? AND date = ? AND split_type = ?
@@ -114,10 +117,7 @@ def import_from_excel(file_path):
                     print(f"Added user {member} to group {group_name}.")
                     
                     
-        if currency != "IRR":
-                print(f"Preparing to convert {amount} {currency} to IRR for date {date}...")
-                amount = convert_to_IRR(amount, date=date, from_c=currency)
-                print(f"Converted amount {row['amount']} {currency} to {amount} IRR.")
+
         #insert the expenses:
         
         if split_type not in ["equally", "percentage", "share"]:
@@ -170,6 +170,7 @@ def import_from_excel(file_path):
             print("the split type is percentage")
             print(len(members))
             print(len(percentage))
+            print(amount)
             if not isinstance(percentage, list) or len(percentage) != len(members):
                 raise ValueError("Percentage values must be provided as a list with the same length as the number of members.")
             for i, member in enumerate(members):
