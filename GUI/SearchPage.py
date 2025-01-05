@@ -1,73 +1,95 @@
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import date
+import matplotlib.pyplot as plt
+from PyQt5.QtWidgets import QFileDialog , QTableWidgetItem
+
 
 import sys
 import os
 import json
-#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
-
-#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
-#sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"))
-
-
-from db_operations import *
-from groups import *
 import sqlite3
-from graph import *
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+from db_operations import *
 
 
 
 
 def perform_search(ui):
-    
-    date_input = ui.SearchDateInput_2.selectedDate().toString("yyyy-MM-dd") if ui.SearchDateInput_2.selectedDate() else None
     label_input = ui.ExpenseLabelInput_2.text().strip()
     user_input = ui.UserExpenseInput_2.text().strip()
-    
-    if not date_input and not label_input and not user_input:
+    date_input = ui.SearchDateInput_2.selectedDate().toString("yyyy-dd-MM") if ui.SearchDateInput_2.selectedDate() else None
+
+    if not label_input and not user_input and not date_input:
         ui.DateSearchLabel_2.setText("Please provide at least one search criterion.")
         ui.DateSearchLabel_2.setStyleSheet("color: red;")
         return
-    
-    
-    ui.DateSearchLabel_2.setText("")
-    
-    query = "SELECT expense_id, date, label, amount, username FROM expenses WHERE 1=1"
-    params = []
-    
-    
-    #adding search conditions
-    if date_input:
-        query += " AND date = ?"
-        params.append(date_input)
+
+    ui.DateSearchLabel_2.setText("")  
+
+    query = '''
+        SELECT expense_id, label, payername, contributers, amount, category, date, description, split_type, proportions, shares, currency 
+        FROM friend_expenses WHERE 1=1
+    '''
+    query_params = []
 
     if label_input:
         query += " AND label LIKE ?"
-        params.append(f"%{label_input}%")
+        query_params.append(f"%{label_input}%")
 
     if user_input:
-        query += " AND username LIKE ?"
-        params.append(f"%{user_input}%")
+        query += " AND payername LIKE ?"
+        query_params.append(f"%{user_input}%")
 
+    if date_input:
+        query += " AND date = ?"
+        query_params.append(date_input)
+
+    query += " UNION ALL "  
+
+    query += '''
+        SELECT expense_id, label, payername, contributers, amount, category, date, description, split_type, proportions, shares, currency 
+        FROM group_expenses WHERE 1=1
+    '''
+   
+    if label_input:
+        query += " AND label LIKE ?"
+        query_params.append(f"%{label_input}%")
+
+    if user_input:
+        query += " AND payername LIKE ?"
+        query_params.append(f"%{user_input}%")
+
+    if date_input:
+        query += " AND date = ?"
+        query_params.append(date_input)
+
+    print(f"Query: {query}")
+    print(f"Parameters: {query_params}")
     try:
-        connection=get_connection()
-        cursor=connection.cursor()
-        cursor.execute(query, params)
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute(query, query_params)
+
         results = cursor.fetchall()
+        ui.SearchResultTable_2.setRowCount(0)  
+
+        ui.SearchResultTable_2.setColumnCount(12)
         
-        ui.SearchResultTable_2.setRowCount(0)
-
-
-        #display data
+        ui.SearchResultTable_2.setHorizontalHeaderLabels([
+            "Expense ID", "Label", "Payer Name", "Contributors", "Amount", "Category", "Date", "Description", 
+            "Split Type", "Proportions", "Shares", "Currency"
+        ])
+        
+    
         for row_idx, row_data in enumerate(results):
             ui.SearchResultTable_2.insertRow(row_idx)
             for col_idx, col_data in enumerate(row_data):
-                ui.SearchResultTable_2.setItem(row_idx, col_idx, QTableWidgetItem(str(col_data)))
-
+                item = QtWidgets.QTableWidgetItem(str(col_data))
+                item.setBackground(QtGui.QColor("white"))  
+                ui.SearchResultTable_2.setItem(row_idx, col_idx, item)
+                
         if not results:
             ui.DateSearchLabel_2.setText("No results found.")
             ui.DateSearchLabel_2.setStyleSheet("color: orange;")
@@ -77,33 +99,4 @@ def perform_search(ui):
 
     except sqlite3.Error as e:
         ui.DateSearchLabel_2.setText(f"Database error: {e}")
-        ui.DateSearchLabel_2.setStyleSheet("color: red;")  
-
-
-# def navigate_to_expense_details(ui):
-#     #get the selected row
-#     selected_row = ui.SearchResultTable_2.currentRow()
-    
-#     if selected_row == -1:
-#         ui.DateSearchLabel_2.setText("Please select a result to view details.")
-#         ui.DateSearchLabel_2.setStyleSheet("color: red;")
-#         return
-    
-#     expense_id_item = ui.SearchResultTable_2.item(selected_row, 0)
-    
-#     if not expense_id_item:
-#         ui.DateSearchLabel_2.setText("Invalid selection.")
-#         ui.DateSearchLabel_2.setStyleSheet("color: red;")
-#         return
-
-#     expense_id = int(expense_id_item.text())
-    
-    # try:
-        
-    #     connection = get_connection()
-    #     cursor = connection.cursor()
-
-    #     cursor.execute("SELECT * FROM expenses WHERE expense_id = ?", (expense_id,))
-    #     expense_details = cursor.fetchone()
-
-        
+        ui.DateSearchLabel_2.setStyleSheet("color: red;")
