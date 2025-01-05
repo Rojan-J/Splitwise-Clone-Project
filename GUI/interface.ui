@@ -11,16 +11,10 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>0</width>
-    <height>1000</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -3129,7 +3123,7 @@ QCalendarWidget QToolButton:hover {
                     <property name="geometry">
                      <rect>
                       <x>0</x>
-                      <y>0</y>
+                      <y>-88</y>
                       <width>466</width>
                       <height>1518</height>
                      </rect>
@@ -3590,7 +3584,7 @@ QCalendarWidget QToolButton:hover {
                                    <property name="minimumSize">
                                     <size>
                                      <width>0</width>
-                                     <height>600</height>
+                                     <height>450</height>
                                     </size>
                                    </property>
                                    <property name="maximumSize">
@@ -3608,7 +3602,7 @@ QCalendarWidget QToolButton:hover {
                                       <x>0</x>
                                       <y>0</y>
                                       <width>376</width>
-                                      <height>600</height>
+                                      <height>450</height>
                                      </rect>
                                     </property>
                                     <layout class="QVBoxLayout" name="verticalLayout_96"/>
@@ -3636,12 +3630,39 @@ QCalendarWidget QToolButton:hover {
                                     <property name="geometry">
                                      <rect>
                                       <x>0</x>
-                                      <y>0</y>
-                                      <width>376</width>
-                                      <height>200</height>
+                                      <y>-87</y>
+                                      <width>359</width>
+                                      <height>318</height>
                                      </rect>
                                     </property>
-                                    <layout class="QVBoxLayout" name="verticalLayout_37"/>
+                                    <layout class="QVBoxLayout" name="verticalLayout_37">
+                                     <item>
+                                      <widget class="QTableWidget" name="tableWidget">
+                                       <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                         <horstretch>0</horstretch>
+                                         <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                       </property>
+                                       <property name="minimumSize">
+                                        <size>
+                                         <width>0</width>
+                                         <height>300</height>
+                                        </size>
+                                       </property>
+                                       <column>
+                                        <property name="text">
+                                         <string>Member</string>
+                                        </property>
+                                       </column>
+                                       <column>
+                                        <property name="text">
+                                         <string>Net Balance</string>
+                                        </property>
+                                       </column>
+                                      </widget>
+                                     </item>
+                                    </layout>
                                    </widget>
                                   </widget>
                                  </item>

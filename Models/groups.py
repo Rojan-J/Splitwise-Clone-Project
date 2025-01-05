@@ -36,6 +36,7 @@ class Groups:
         self.split_type = split
         self.default_shares = default_shares if default_shares is not None else {}
         self.default_proportions = default_proportions if default_proportions is not None else {}
+        self.Net_balance = dict()
         
         self.load_from_database()
     
@@ -48,7 +49,6 @@ class Groups:
         
         cursor.execute("SELECT group_id FROM groups WHERE group_name = ? and group_owner = ?", (self.group_name, self.group_owner, ))
         group = cursor.fetchone()
-        print("LoadName", self.group_name)
         
         #check if group exists and fetch members of the group
         if group:

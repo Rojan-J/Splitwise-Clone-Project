@@ -356,7 +356,7 @@ def add_friend_expense(ui, friend, username):
             split_type = SplitTypeBtn.text()
 
     if split_type == "share" or split_type == "percentage":
-            shares = get_shares_friend(ui, "add_expense")
+        shares = get_shares_friend(ui, "add_expense")
 
 
     if split_type == "default split":

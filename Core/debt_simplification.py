@@ -15,6 +15,7 @@ class Debtsimplification:
     def __init__(self, group):
         self.group=group
         self.simplified_debts=[]
+        self.Net_balance = dict()
         
         
     def calculate_balances(self):
@@ -82,6 +83,7 @@ class Debtsimplification:
         simplified_graph = Graph(self.group)
         simplified_graph.graph_type = "simplified"
         simplified_graph.plot_graph() 
+        self.Net_balance = simplified_graph.Net_balance
                
             
 

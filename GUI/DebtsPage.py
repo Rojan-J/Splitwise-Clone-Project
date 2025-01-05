@@ -4,10 +4,10 @@ import re
 import sys
 import os
 import json
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
 
 
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 import matplotlib.pyplot as plt
 from db_operations import *
@@ -98,7 +98,6 @@ def show_all_debts(username, ui):
 
 def pay_cash(ui, btn, debt, username):
     debt_id = debt[0]
-    debt_id = debt_id[0]
     layout = btn[2].layout()
     if btn[1]:
         layout.removeWidget(btn[1])

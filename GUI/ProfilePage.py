@@ -269,11 +269,12 @@ def process_recurring_expenses(username):
 
         cursor.execute("SELECT * FROM simplified_debts WHERE id=  ?", (expense_id, ))
         duplicated_expense = cursor.fetchall()
+        print("PAID", paid)
         
 
 
 
-        if paid == "Not Paid!" and not duplicated_expense:
+        if paid == "Not Paid!" :
             
             # Check if today is a recurring day
             if today_day in days_list:

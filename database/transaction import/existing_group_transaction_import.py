@@ -4,11 +4,13 @@ from datetime import datetime
 from sqlite3 import IntegrityError #to catch specififc errors in data
 import sys
 import os
-sys.path.append(os.path.abspath("C:/Users/LENOVO/OneDrive/Documents/Github/Splitwise-Clone-Project/database"))
+#sys.path.append(os.path.abspath("C:/Users/LENOVO/OneDrive/Documents/Github/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
 
 from db_operations import *
 
-sys.path.append(os.path.abspath("C:/Users/LENOVO/OneDrive/Documents/GitHub/Splitwise-Clone-Project/Utils/currency_conversion"))
+# sys.path.append(os.path.abspath("C:/Users/LENOVO/OneDrive/Documents/GitHub/Splitwise-Clone-Project/Utils/currency_conversion"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project//Utils/currency_conversion"))
 from currency_conversion_all_currencies import convert_to_IRR
 
 def update_existing_group(group_name,file_path):
@@ -18,7 +20,9 @@ def update_existing_group(group_name,file_path):
     if not all(column in data.columns for column in required_col):
         raise ValueError("The Excel file is missing required columns.")
     
-    connection = sqlite3.connect("C:/Users/LENOVO/OneDrive/Documents/Github/Splitwise-Clone-Project/database/database.db")
+    # connection = sqlite3.connect("C:/Users/LENOVO/OneDrive/Documents/Github/Splitwise-Clone-Project/database/database.db")
+    connection = sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database/database.db")
+
     cursor=connection.cursor()
     
     #check if the group exists:
@@ -139,7 +143,7 @@ def update_existing_group(group_name,file_path):
     connection.close()
     
     
-update_existing_group("Test_group1", "C:/Users/LENOVO/OneDrive/Documents/Github/Splitwise-Clone-Project/database/transaction import/TestExcel_GroupUpdate.xlsx")
+#update_existing_group("Test_group1", "C:/Users/LENOVO/OneDrive/Documents/Github/Splitwise-Clone-Project/database/transaction import/TestExcel_GroupUpdate.xlsx")
     
             
     

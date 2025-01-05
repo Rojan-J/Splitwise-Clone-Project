@@ -10,7 +10,8 @@ import os
 import json
 
 import sqlite3
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 from db_operations import *
 
 
@@ -73,7 +74,9 @@ def perform_search(ui):
         cursor.execute(query, query_params)
 
         results = cursor.fetchall()
-        ui.SearchResultTable_2.setRowCount(0)  
+        ui.SearchResultTable_2.setRowCount(0)
+        header = ui.SearchResultTable_2.horizontalHeader()
+        header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
 
         ui.SearchResultTable_2.setColumnCount(12)
         

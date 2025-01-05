@@ -19,16 +19,15 @@ class Graph():
         self.graph_name = f"{self.graph_type}{self.group.group_name}"
         self.simplified_graph = nx.MultiDiGraph()
         self.CreateGraph()
+        self.Net_balance = dict()
 
 
     def CreateGraph(self):
         self.graph.add_nodes_from(self.group.members)
         for (u, v), attributes in self.group.debts.items():
-            if u != v:
-                self.graph.add_edge(u, v, capacity=attributes["capacity"])
+            self.graph.add_edge(u, v, capacity=attributes["capacity"])
         for (u, v), attributes in self.group.simplified_debts.items():
-            if u != v:
-                self.simplified_graph.add_edge(u, v, capacity=attributes["capacity"])
+            self.simplified_graph.add_edge(u, v, capacity=attributes["capacity"])
 
     def plot_graph(self):
         count = 0
@@ -45,9 +44,19 @@ class Graph():
         label_colors[central_node] = "red"
 
 
+        for node in graph.nodes():
+            out_weight = sum(float(f"{d['capacity']:.2f}" )for _, _, d in graph.out_edges(node, data=True))
+            in_weight = sum(float(f"{d['capacity']:.2f}") for _, _, d in graph.in_edges(node, data=True))
+            self.Net_balance[node] = in_weight - out_weight
+
+        print("balances", self.Net_balance)
+
+
+
+
         for node, (x, y) in pos.items():
             plt.text(
-                x, y + 0.05,  # Adjust position slightly above the node
+                x, y,  # Adjust position slightly above the node
                 str(node),
                 fontsize=15,
                 color=label_colors.get(node, 'black'),  # Default to black if no color is defined
