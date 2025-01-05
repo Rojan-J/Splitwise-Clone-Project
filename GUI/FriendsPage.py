@@ -461,6 +461,8 @@ def add_friend_expense(ui, friend, username):
             shares = shares
             friend.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
         elif split_type == "percentage":
+            for share, percent in shares.items():
+                shares[share] = percent /100
             proportions = shares
             friend.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
         else:

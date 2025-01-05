@@ -46,6 +46,7 @@ from ReportsPage import *
 from DebtsPage import *
 from SearchPage import *
 from CurrencyPage import *
+from NotificationPage import *
 
 ########################################################################
 ## MAIN WINDOW CLASS
@@ -241,6 +242,7 @@ class MainWindow(QMainWindow):
 
         self.show()
         self.ui.ProfileBtn.clicked.connect(lambda: set_user(self.ui, self.user[2]))
+        self.ui.NotificationBtn.clicked.connect(lambda: show_all_notifications(self.user[2], self.ui))
 
         #CenterMenu Expanding
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())

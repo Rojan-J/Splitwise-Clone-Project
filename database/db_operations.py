@@ -574,7 +574,7 @@ def update_notification_status(username):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
-        UPDATE user_notification SET check = ? WHERE username = ?
+        UPDATE user_notification SET checked = ? WHERE username = ?
     ''', (1, username, ))
     connection.commit()
     connection.close()

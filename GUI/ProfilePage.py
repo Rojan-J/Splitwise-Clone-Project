@@ -56,47 +56,6 @@ def set_user(ui, username):
 
 
 
-
-# def set_user(ui, username):
-#     # Retrieve the user using the original username
-#     user = get_user_by_email(username, username)
-
-#     if not user:
-#         print("Error: No user found with the provided username.")
-#         return
-
-#     # Debugging output
-#     print(f"Retrieved user: {user}")
-
-#     # Update UI with user details
-#     ui.NameProfile.setText(user[1])
-#     ui.UsernameProfile.setText(user[2])
-#     ui.EmailProfile.setText(user[3])
-#     ui.BalanceProfile.setText(str(user[-2]))
-
-#     # Set profile picture based on user data
-#     if user[-3] == 0:
-#         profile = QtGui.QIcon(":/images/3135823.png")
-#     else:
-#         profile = QtGui.QIcon(":/images/Layer 1.png")
-#     ui.PicProfile.setIcon(profile)
-#     ui.PicProfile.setIconSize(QtCore.QSize(90, 90))
-    
-#     # Configure the table widget
-#     header = ui.tableWidget_2.horizontalHeader()
-#     header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-
-#     # Populate the table with recurrent expenses
-#     recurrents = get_recurrent_expense_by_username(user[2])
-#     for expense in recurrents:
-#         row_position = ui.tableWidget_2.rowCount()
-#         ui.tableWidget_2.insertRow(row_position)
-#         var_to_add = [expense[2], str(expense[5]), expense[4], expense[6]]
-#         for col, value in enumerate(var_to_add):
-#             ui.tableWidget_2.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
-
-
-
 def toggle_edit_mode_NameProfile(ui, edited, name):
         
         if edited:
@@ -293,11 +252,14 @@ def process_recurring_expenses(username):
     # Fetch all recurring expenses
     cursor.execute("SELECT label, expense_id, amount, category, days_of_month, month, paid FROM recurrent_expenses WHERE username=  ?", (username, ))
     recurring_expenses = cursor.fetchall()
-    month = recurring_expenses[0][-2]
     current_year = datetime.now().year
     current_month = datetime.now().month
-    if month != current_month:
+    if recurring_expenses:
+        month = recurring_expenses[0][-2]
+        if month != current_month:
             update_month_of_recurrent()
+    
+    
     cursor.execute("SELECT label, expense_id, amount, category, days_of_month, month, paid FROM recurrent_expenses WHERE username=  ?", (username, ))
     recurring_expenses = cursor.fetchall()
 

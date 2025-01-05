@@ -327,10 +327,8 @@ def add_expense_page(ui, group, recover = True):
 def add_group_expense(ui, main_group: Groups):
     
     from currency_conversion_all_currencies import convert_to_IRR
-    print(" Add called, mambers are: " , main_group.members, main_group.debts)
     category = ""
     label = ui.GrpExpenseLabelInput.text()
-    print(label)
     amount_input = ui.AmountInput.text()
     selected_date = ui.calendarWidget.selectedDate().toString("yyyy-dd-MM")
     payer = ui.PayerInput.text()
@@ -472,6 +470,8 @@ def add_group_expense(ui, main_group: Groups):
             shares = shares
             main_group.add_expenses(label, IRR_amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
         elif split_type == "percentage":
+            for share, percent in shares.items():
+                shares[share] = percent /100
             proportions = shares
             main_group.add_expenses(label, IRR_amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
         else:
