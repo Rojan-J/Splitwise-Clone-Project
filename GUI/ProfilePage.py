@@ -2,6 +2,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 import sys
 import os
+
+from datetime import datetime
 # sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
@@ -11,24 +13,80 @@ from db_operations import *
 from db_operations import get_user_by_email
 
 
+def set_user(ui, username):
+    user = get_user_by_email(username, username)
+    ui.NameProfile.setText(user[1])
+    ui.UsernameProfile.setText(user[2])
+    ui.EmailProfile.setText(user[3])
+    ui.BalanceProfile.setText(str(user[-2]))
+    if user[-3] == 0:
+        profile = QtGui.QIcon(":/images/3135823.png")
+        ui.PicProfile.setIcon(profile)
+
+    else:
+        profile = QtGui.QIcon(":/images/Layer 1.png")
+        ui.PicProfile.setIcon(profile)
+        ui.PicProfile.setIconSize(QtCore.QSize(90, 90))
+    
+    header = ui.tableWidget_2.horizontalHeader()
+    header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+
+    recurrents = get_recurrent_expense_by_username(user[2])
+    ui.tableWidget_2.setRowCount(0)
+    for expense in recurrents:
+        row_position = ui.tableWidget_2.rowCount()
+        ui.tableWidget_2.insertRow(row_position)
+        var_to_add = [expense[2], str(expense[5]), expense[4], expense[-4], expense[-2]]
+        for col, value in enumerate(var_to_add):
+            ui.tableWidget_2.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
+
+    notifications =  get_user_notifications(username)
+    if not notifications:
+        
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(":/icons2/icons2/bell.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        ui.NotificationBtn.setIcon(icon7)
+        ui.NotificationBtn.setIconSize(QtCore.QSize(24, 24))
+    else:
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(":/icons2/icons2/inbox.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        ui.NotificationBtn.setIcon(icon7)
+        ui.NotificationBtn.setIconSize(QtCore.QSize(24, 24))
+
+
+
+
+
 # def set_user(ui, username):
+#     # Retrieve the user using the original username
 #     user = get_user_by_email(username, username)
+
+#     if not user:
+#         print("Error: No user found with the provided username.")
+#         return
+
+#     # Debugging output
+#     print(f"Retrieved user: {user}")
+
+#     # Update UI with user details
 #     ui.NameProfile.setText(user[1])
 #     ui.UsernameProfile.setText(user[2])
 #     ui.EmailProfile.setText(user[3])
 #     ui.BalanceProfile.setText(str(user[-2]))
+
+#     # Set profile picture based on user data
 #     if user[-3] == 0:
 #         profile = QtGui.QIcon(":/images/3135823.png")
-#         ui.PicProfile.setIcon(profile)
-
 #     else:
 #         profile = QtGui.QIcon(":/images/Layer 1.png")
-#         ui.PicProfile.setIcon(profile)
-#         ui.PicProfile.setIconSize(QtCore.QSize(90, 90))
+#     ui.PicProfile.setIcon(profile)
+#     ui.PicProfile.setIconSize(QtCore.QSize(90, 90))
     
+#     # Configure the table widget
 #     header = ui.tableWidget_2.horizontalHeader()
 #     header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
 
+#     # Populate the table with recurrent expenses
 #     recurrents = get_recurrent_expense_by_username(user[2])
 #     for expense in recurrents:
 #         row_position = ui.tableWidget_2.rowCount()
@@ -36,45 +94,6 @@ from db_operations import get_user_by_email
 #         var_to_add = [expense[2], str(expense[5]), expense[4], expense[6]]
 #         for col, value in enumerate(var_to_add):
 #             ui.tableWidget_2.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
-
-
-def set_user(ui, username):
-    # Retrieve the user using the original username
-    user = get_user_by_email(username, username)
-
-    if not user:
-        print("Error: No user found with the provided username.")
-        return
-
-    # Debugging output
-    print(f"Retrieved user: {user}")
-
-    # Update UI with user details
-    ui.NameProfile.setText(user[1])
-    ui.UsernameProfile.setText(user[2])
-    ui.EmailProfile.setText(user[3])
-    ui.BalanceProfile.setText(str(user[-2]))
-
-    # Set profile picture based on user data
-    if user[-3] == 0:
-        profile = QtGui.QIcon(":/images/3135823.png")
-    else:
-        profile = QtGui.QIcon(":/images/Layer 1.png")
-    ui.PicProfile.setIcon(profile)
-    ui.PicProfile.setIconSize(QtCore.QSize(90, 90))
-    
-    # Configure the table widget
-    header = ui.tableWidget_2.horizontalHeader()
-    header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-
-    # Populate the table with recurrent expenses
-    recurrents = get_recurrent_expense_by_username(user[2])
-    for expense in recurrents:
-        row_position = ui.tableWidget_2.rowCount()
-        ui.tableWidget_2.insertRow(row_position)
-        var_to_add = [expense[2], str(expense[5]), expense[4], expense[6]]
-        for col, value in enumerate(var_to_add):
-            ui.tableWidget_2.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
 
 
 
@@ -235,10 +254,11 @@ def add_recurrent(ui, user):
          category = "etc."
     if label != "" and amount != "" and days != "" and isfloat(amount) :
         add_recurrent_expense(username, user_id, label, amount, days, category)
-        var_to_add = [label, str(amount), days, category]
+        var_to_add = [label, str(amount), days, str(datetime.now().month), category]
         row_position = ui.tableWidget_2.rowCount()
         ui.tableWidget_2.insertRow(row_position)
         for col, value in enumerate(var_to_add):
+            print(col, value)
             ui.tableWidget_2.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
 
         ui.LabelInput.setText("")
@@ -262,7 +282,6 @@ def add_recurrent(ui, user):
         widgets[1].setStyleSheet("color: white;")
 
 
-from datetime import datetime
 
 def process_recurring_expenses(username):
     connection = get_connection()
@@ -272,17 +291,27 @@ def process_recurring_expenses(username):
     today_day = datetime.now().day
     
     # Fetch all recurring expenses
-    cursor.execute("SELECT label, expense_id, amount, category, days_of_month FROM recurrent_expenses WHERE username=  ?", (username, ))
+    cursor.execute("SELECT label, expense_id, amount, category, days_of_month, month, paid FROM recurrent_expenses WHERE username=  ?", (username, ))
+    recurring_expenses = cursor.fetchall()
+    month = recurring_expenses[0][-2]
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+    if month != current_month:
+            update_month_of_recurrent()
+    cursor.execute("SELECT label, expense_id, amount, category, days_of_month, month, paid FROM recurrent_expenses WHERE username=  ?", (username, ))
     recurring_expenses = cursor.fetchall()
 
     for expense in recurring_expenses:
-        label, expense_id, amount, category, days_of_month = expense
+        label, expense_id, amount, category, days_of_month, month, paid = expense
         days_list = [int(day) for day in days_of_month.split(",")]
 
-        cursor.execute("SELECT * FROM simplified_debts WHERE id=  ? AND status = ?", (expense_id, "Not Paid!" ))
-        existed_recurrents = cursor.fetchall()
+        cursor.execute("SELECT * FROM simplified_debts WHERE id=  ?", (expense_id, ))
+        duplicated_expense = cursor.fetchall()
+        
 
-        if not existed_recurrents:
+
+
+        if paid == "Not Paid!" and not duplicated_expense:
             
             # Check if today is a recurring day
             if today_day in days_list:
@@ -291,15 +320,14 @@ def process_recurring_expenses(username):
                     INSERT INTO simplified_debts (for_what, id, name, debtor_name, amount)
                     VALUES ("recurrent", ?, ?, ?, ?)
                 """, (expense_id, label, username, amount))
-                current_year = datetime.now().year
-                current_month = datetime.now().month
+                
 
                 # Combine year, month, and day to create a complete date
                 complete_date = datetime(current_year, current_month, today_day)
 
                 cursor.execute("""
-                    INSERT INTO expense_user (total_expense, username, amount_contributed, split_proportions, for_what, name, date, category)
-                    VALUE(?, ?, ?, ?, "recurrent", ?, ?, ?) 
+                    INSERT INTO expense_user (total_expense, username, amount_contributed, split_proportion, for_what, name, date, category)
+                    VALUES (?, ?, ?, ?, "recurrent", ?, ?, ?) 
                 """, (amount, username, amount, 1, label, complete_date, category, ))
     
     connection.commit()

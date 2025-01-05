@@ -152,6 +152,7 @@ def initialize_database():
             label TEXT NOT NULL,
             expense_id INTEGER PRIMARY KEY AUTOINCREMENT,
             days_of_month TEXT NOT NULL,
+            month TEXT NOT NULL,
             amount REAL NOT NULL,
             category TEXT NOT NULL,
             paid TEXT NOT NULL DEFAULT 'Paid',

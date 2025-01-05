@@ -240,7 +240,7 @@ class MainWindow(QMainWindow):
         ########################################################################
 
         self.show()
-        set_user(self.ui, self.user)
+        self.ui.ProfileBtn.clicked.connect(lambda: set_user(self.ui, self.user[2]))
 
         #CenterMenu Expanding
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())
@@ -250,14 +250,10 @@ class MainWindow(QMainWindow):
 
         #RightMenuExpanding
         #Group Issues
-        self.ui.AddMembersBtn_7.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
-        self.ui.AddMembersBtn_7.clicked.connect(lambda: self.ui.label_7.setText("Add New Member"))
         self.ui.addGrpBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
         self.ui.addGrpBtn.clicked.connect(lambda: self.ui.label_7.setText("New Group"))
         self.ui.addGrpBtn.clicked.connect(lambda: self.ui.FinalAddGrpBtn.setText("Add Group"))
-        self.ui.EditGrpBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
-        self.ui.EditGrpBtn.clicked.connect(lambda: self.ui.label_7.setText("Edit Group"))
-        self.ui.EditGrpBtn.clicked.connect(lambda: self.ui.FinalAddGrpBtn.setText("Edit Group"))
+
         self.ui.AddExpensesBtn.clicked.connect(lambda: self.ui.rightMenuContainer.expandMenu())
         self.ui.AddExpensesBtn.clicked.connect(lambda: self.ui.label_7.setText("Add Expense"))
 

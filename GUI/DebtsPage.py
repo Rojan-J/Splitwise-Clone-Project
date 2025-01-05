@@ -15,8 +15,9 @@ from ProfilePage import process_recurring_expenses
 
 
 def show_all_debts(username, ui):
-    all_debts = total_user_owes(username)
     process_recurring_expenses(username)
+    all_debts = total_user_owes(username)
+    
     print(all_debts, "ALL DEBTS ARE")
     debts_radio_buttons = dict()
     layout =  ui.widget_23.layout()
@@ -25,6 +26,14 @@ def show_all_debts(username, ui):
         widget = item.widget()  # Get the widget
         if widget:
             widget.deleteLater()
+
+    layout =  ui.scrollAreaWidgetContents_35.layout()
+    while layout.count():
+        item = layout.takeAt(0)  # Get the first item
+        widget = item.widget()  # Get the widget
+        if widget:
+            widget.deleteLater()
+
     for debt in all_debts:
         ui.widget_23 = QtWidgets.QWidget(ui.scrollAreaWidgetContents_35)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
@@ -48,7 +57,10 @@ def show_all_debts(username, ui):
         ui.frame_109.setObjectName("frame_109")
         ui.verticalLayout_177 = QtWidgets.QVBoxLayout(ui.frame_109)
         ui.verticalLayout_177.setObjectName("verticalLayout_177")
-        ui.label_85.setText(f"you owe {debt[-3]} {debt[-2]} R")
+        if debt[1] == "recurrent":
+            ui.label_85.setText(f"you should pay {debt[-2]} R for {debt[3]}")
+        else:
+            ui.label_85.setText(f"you owe {debt[-3]} {debt[-2]} R")
         if debt[-1] == "Not Paid!":
             ui.radioButton_49 = QtWidgets.QRadioButton(ui.frame_109)
             font = QtGui.QFont()
@@ -80,11 +92,11 @@ def show_all_debts(username, ui):
             ui.CashPaidLabel.setText("Pending")
 
     for debt, btn in debts_radio_buttons.items():
-        btn[1].clicked.connect(lambda _, b=btn, d= debt: pay_cash(ui,b, d))
+        btn[1].clicked.connect(lambda _, b=btn, d= debt: pay_cash(ui,b, d, username))
         btn[0].clicked.connect(lambda _, b=btn, d =debt: pay_online(ui, b, d, username))
 
 
-def pay_cash(ui, btn, debt):
+def pay_cash(ui, btn, debt, username):
     debt_id = debt[0]
     debt_id = debt_id[0]
     layout = btn[2].layout()
@@ -107,6 +119,7 @@ def pay_cash(ui, btn, debt):
     layout.addWidget(ui.CashPaidLabel)
     ui.CashPaidLabel.setText("Paid by cash!")
     update_debt_status(debt_id,"Paid")
+    
 
 
 def pay_online(ui, btn, debt, username):
@@ -163,6 +176,9 @@ def pay_online(ui, btn, debt, username):
             update_debt_status(debt_id,"pending")
         else:
             ui.CashPaidLabel.setText("You don't have enough Money!")
+
+    if for_what == "recurrent":
+        update_recurrent_status(username, debt[3])
 
 
 

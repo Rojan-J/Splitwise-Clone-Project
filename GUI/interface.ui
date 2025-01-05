@@ -7,14 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>1290</width>
-    <height>1215</height>
+    <height>1084</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>1000</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -519,7 +525,7 @@ QCalendarWidget QToolButton:hover {
               <item>
                <widget class="QScrollArea" name="scrollArea_23">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -527,7 +533,7 @@ QCalendarWidget QToolButton:hover {
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>800</height>
+                  <height>0</height>
                  </size>
                 </property>
                 <property name="widgetResizable">
@@ -538,20 +544,33 @@ QCalendarWidget QToolButton:hover {
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>218</width>
-                   <height>800</height>
+                   <width>222</width>
+                   <height>991</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_175">
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
                   <item>
                    <widget class="QWidget" name="widget_23" native="true">
                     <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                       <horstretch>0</horstretch>
                       <verstretch>0</verstretch>
                      </sizepolicy>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayout_176"/>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QFrame" name="frame_56">
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
                    </widget>
                   </item>
                  </layout>
@@ -843,7 +862,7 @@ QCalendarWidget QToolButton:hover {
              <item>
               <widget class="QCustomQStackedWidget" name="mainPages">
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="homePage">
                 <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1391,29 +1410,6 @@ QCalendarWidget QToolButton:hover {
                    </property>
                   </widget>
                  </item>
-                 <item>
-                  <widget class="QPushButton" name="ShowResultBtn_2">
-                   <property name="font">
-                    <font>
-                     <family>Swis721 Blk BT</family>
-                     <pointsize>10</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>Go to page</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="resource2.qrc">
-                     <normaloff>:/icons2/icons2/arrow-right-circle.svg</normaloff>:/icons2/icons2/arrow-right-circle.svg</iconset>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>24</width>
-                     <height>24</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
                 </layout>
                </widget>
                <widget class="QWidget" name="ProfilePage">
@@ -1428,8 +1424,8 @@ QCalendarWidget QToolButton:hover {
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>485</width>
-                      <height>372</height>
+                      <width>483</width>
+                      <height>755</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_50">
@@ -1798,6 +1794,11 @@ QCalendarWidget QToolButton:hover {
                              </column>
                              <column>
                               <property name="text">
+                               <string>Current Month</string>
+                              </property>
+                             </column>
+                             <column>
+                              <property name="text">
                                <string>Category</string>
                               </property>
                              </column>
@@ -1900,8 +1901,8 @@ QCalendarWidget QToolButton:hover {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>462</width>
-                         <height>717</height>
+                         <width>465</width>
+                         <height>662</height>
                         </rect>
                        </property>
                        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -1995,9 +1996,9 @@ QCalendarWidget QToolButton:hover {
                     <property name="geometry">
                      <rect>
                       <x>0</x>
-                      <y>0</y>
-                      <width>463</width>
-                      <height>1491</height>
+                      <y>-23</y>
+                      <width>466</width>
+                      <height>1336</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_45">
@@ -2662,7 +2663,7 @@ QCalendarWidget QToolButton:hover {
                                   <rect>
                                    <x>0</x>
                                    <y>0</y>
-                                   <width>375</width>
+                                   <width>394</width>
                                    <height>450</height>
                                   </rect>
                                  </property>
@@ -2697,8 +2698,8 @@ QCalendarWidget QToolButton:hover {
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>266</width>
-                      <height>622</height>
+                      <width>483</width>
+                      <height>755</height>
                      </rect>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayout_85">
@@ -2796,8 +2797,8 @@ QCalendarWidget QToolButton:hover {
                             <rect>
                              <x>0</x>
                              <y>0</y>
-                             <width>79</width>
-                             <height>44</height>
+                             <width>447</width>
+                             <height>642</height>
                             </rect>
                            </property>
                            <layout class="QVBoxLayout" name="verticalLayout_54">
@@ -3101,8 +3102,8 @@ QCalendarWidget QToolButton:hover {
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>100</width>
-                            <height>30</height>
+                            <width>447</width>
+                            <height>273</height>
                            </rect>
                           </property>
                           <layout class="QVBoxLayout" name="verticalLayout_97"/>
@@ -3129,8 +3130,8 @@ QCalendarWidget QToolButton:hover {
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>438</width>
-                      <height>1522</height>
+                      <width>466</width>
+                      <height>1518</height>
                      </rect>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayout_45">
@@ -3267,26 +3268,6 @@ QCalendarWidget QToolButton:hover {
                                    </property>
                                    <layout class="QHBoxLayout" name="horizontalLayout_26">
                                     <item>
-                                     <widget class="QPushButton" name="AddMembersBtn_7">
-                                      <property name="toolTip">
-                                       <string>Add Members</string>
-                                      </property>
-                                      <property name="text">
-                                       <string/>
-                                      </property>
-                                      <property name="icon">
-                                       <iconset resource="resource2.qrc">
-                                        <normaloff>:/icons2/icons2/user-plus.svg</normaloff>:/icons2/icons2/user-plus.svg</iconset>
-                                      </property>
-                                      <property name="iconSize">
-                                       <size>
-                                        <width>32</width>
-                                        <height>32</height>
-                                       </size>
-                                      </property>
-                                     </widget>
-                                    </item>
-                                    <item>
                                      <widget class="QPushButton" name="AddExpensesBtn">
                                       <property name="toolTip">
                                        <string>Add Expenses</string>
@@ -3297,26 +3278,6 @@ QCalendarWidget QToolButton:hover {
                                       <property name="icon">
                                        <iconset resource="resource2.qrc">
                                         <normaloff>:/icons2/icons2/plus-circle.svg</normaloff>:/icons2/icons2/plus-circle.svg</iconset>
-                                      </property>
-                                      <property name="iconSize">
-                                       <size>
-                                        <width>32</width>
-                                        <height>32</height>
-                                       </size>
-                                      </property>
-                                     </widget>
-                                    </item>
-                                    <item>
-                                     <widget class="QPushButton" name="EditGrpBtn">
-                                      <property name="toolTip">
-                                       <string>Edit Group Information</string>
-                                      </property>
-                                      <property name="text">
-                                       <string/>
-                                      </property>
-                                      <property name="icon">
-                                       <iconset resource="resource2.qrc">
-                                        <normaloff>:/icons2/icons2/edit-2.svg</normaloff>:/icons2/icons2/edit-2.svg</iconset>
                                       </property>
                                       <property name="iconSize">
                                        <size>
@@ -3364,8 +3325,8 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>107</width>
-                                <height>214</height>
+                                <width>412</width>
+                                <height>210</height>
                                </rect>
                               </property>
                               <layout class="QVBoxLayout" name="verticalLayout_35">
@@ -3646,7 +3607,7 @@ QCalendarWidget QToolButton:hover {
                                      <rect>
                                       <x>0</x>
                                       <y>0</y>
-                                      <width>100</width>
+                                      <width>376</width>
                                       <height>600</height>
                                      </rect>
                                     </property>
@@ -3676,7 +3637,7 @@ QCalendarWidget QToolButton:hover {
                                      <rect>
                                       <x>0</x>
                                       <y>0</y>
-                                      <width>100</width>
+                                      <width>376</width>
                                       <height>200</height>
                                      </rect>
                                     </property>
@@ -3809,8 +3770,8 @@ QCalendarWidget QToolButton:hover {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>280</width>
-                         <height>349</height>
+                         <width>396</width>
+                         <height>681</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_56">
@@ -3890,8 +3851,8 @@ QCalendarWidget QToolButton:hover {
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>183</width>
-                                <height>61</height>
+                                <width>360</width>
+                                <height>263</height>
                                </rect>
                               </property>
                               <layout class="QGridLayout" name="gridLayout_5">
@@ -4152,8 +4113,8 @@ p, li { white-space: pre-wrap; }
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>100</width>
-                            <height>30</height>
+                            <width>378</width>
+                            <height>135</height>
                            </rect>
                           </property>
                           <layout class="QVBoxLayout" name="verticalLayout_86"/>
@@ -4210,8 +4171,8 @@ p, li { white-space: pre-wrap; }
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>414</width>
-                         <height>719</height>
+                         <width>396</width>
+                         <height>681</height>
                         </rect>
                        </property>
                        <layout class="QVBoxLayout" name="verticalLayout_95">
@@ -4382,8 +4343,8 @@ p, li { white-space: pre-wrap; }
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>267</width>
-                         <height>764</height>
+                         <width>379</width>
+                         <height>694</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_33">
@@ -4629,8 +4590,8 @@ p, li { white-space: pre-wrap; }
                                   <rect>
                                    <x>0</x>
                                    <y>0</y>
-                                   <width>100</width>
-                                   <height>30</height>
+                                   <width>325</width>
+                                   <height>69</height>
                                   </rect>
                                  </property>
                                  <layout class="QVBoxLayout" name="verticalLayout_29"/>
@@ -4846,8 +4807,8 @@ p, li { white-space: pre-wrap; }
                               <rect>
                                <x>0</x>
                                <y>0</y>
-                               <width>100</width>
-                               <height>30</height>
+                               <width>360</width>
+                               <height>69</height>
                               </rect>
                              </property>
                              <layout class="QVBoxLayout" name="verticalLayout_27"/>
@@ -5018,8 +4979,8 @@ p, li { white-space: pre-wrap; }
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>364</width>
-                            <height>227</height>
+                            <width>378</width>
+                            <height>217</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_16">
@@ -5547,8 +5508,8 @@ p, li { white-space: pre-wrap; }
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>480</width>
-                         <height>1277</height>
+                         <width>387</width>
+                         <height>1057</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_23">
@@ -5722,8 +5683,8 @@ p, li { white-space: pre-wrap; }
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>100</width>
-                                <height>30</height>
+                                <width>351</width>
+                                <height>69</height>
                                </rect>
                               </property>
                               <layout class="QVBoxLayout" name="verticalLayout_23"/>
@@ -5959,8 +5920,8 @@ p, li { white-space: pre-wrap; }
                                   <rect>
                                    <x>0</x>
                                    <y>0</y>
-                                   <width>100</width>
-                                   <height>30</height>
+                                   <width>333</width>
+                                   <height>69</height>
                                   </rect>
                                  </property>
                                  <layout class="QVBoxLayout" name="verticalLayout_25"/>
@@ -6046,9 +6007,9 @@ p, li { white-space: pre-wrap; }
                        <property name="geometry">
                         <rect>
                          <x>0</x>
-                         <y>0</y>
-                         <width>480</width>
-                         <height>1255</height>
+                         <y>-375</y>
+                         <width>387</width>
+                         <height>1039</height>
                         </rect>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_41">
@@ -6216,8 +6177,8 @@ p, li { white-space: pre-wrap; }
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>146</width>
-                                <height>38</height>
+                                <width>351</width>
+                                <height>69</height>
                                </rect>
                               </property>
                               <layout class="QGridLayout" name="gridLayout_12">
@@ -6459,8 +6420,8 @@ p, li { white-space: pre-wrap; }
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>100</width>
-                                <height>30</height>
+                                <width>351</width>
+                                <height>69</height>
                                </rect>
                               </property>
                               <layout class="QVBoxLayout" name="verticalLayout_92"/>
@@ -6604,8 +6565,8 @@ p, li { white-space: pre-wrap; }
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>956</width>
-                     <height>85</height>
+                     <width>948</width>
+                     <height>69</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_99"/>
