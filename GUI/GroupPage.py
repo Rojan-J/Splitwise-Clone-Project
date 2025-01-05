@@ -138,7 +138,7 @@ def specific_group_page(ui,grp : Groups):
     ui.ExpenseGraphBtn.clicked.connect(lambda: show_expenses_graph(grp, ui))
 
 
-def upload_excel(ui,user):
+def upload_group_excel(ui,user):
     file_path, _ = QFileDialog.getOpenFileName(
         None, "Select Excel File", "", "Excel Files (*.xlsx *.xls)"
     )

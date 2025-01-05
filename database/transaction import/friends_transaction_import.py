@@ -4,10 +4,13 @@ import sys
 import os
 from datetime import datetime
 from sqlite3 import IntegrityError
-from currency_conveyrsion_all_currencies import convert_to_IRR
 
 
 sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils"))
+
+
+from currency_conveyrsion_all_currencies import convert_to_IRR
 from db_operations import *
 
 def update_friends_transactions(username,file_path):

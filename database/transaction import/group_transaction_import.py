@@ -4,11 +4,11 @@ from datetime import datetime
 from sqlite3 import IntegrityError #to catch specififc errors in data
 import sys
 import os
-sys.path.append(os.path.abspath("C:/Users/LENOVO/OneDrive/Documents/Github/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath(r"C:/Users/LENOVO/OneDrive/Documents/Github/Splitwise-Clone-Project/database"))
 
 from db_operations import *
 
-sys.path.append(os.path.abspath("C:/Users/LENOVO/OneDrive/Documents/GitHub/Splitwise-Clone-Project/Utils/currency_conversion"))
+sys.path.append(os.path.abspath(r"C:/Users/LENOVO/OneDrive/Documents/GitHub/Splitwise-Clone-Project/Utils/currency_conversion"))
 from currency_conversion_all_currencies import convert_to_IRR
 
 
