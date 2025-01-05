@@ -8,16 +8,16 @@ import sys
 import os
 import json
 
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
-sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
+# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
+# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
 
 
-# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
-# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
-# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"))
-# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils"))
-
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils"))
+sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database\transaction import"))
 
 
 from db_operations import *
@@ -159,7 +159,7 @@ def upload_group_excel(ui,user):
             import_from_excel(ui.uploaded_file_path)  
             ui.GExcelLabel.setText("Transactions imported successfully!")
             ui.GExcelLabel.setStyleSheet("color: green;")
-            
+            print("finish importing fro excel")
             show_all_existing_groups(ui, user)
             
         except ValueError as ve:
@@ -963,3 +963,86 @@ def safe_disconnect(button, handler):
         button.clicked.disconnect(handler)
     except TypeError:
         pass  # No previous connection, safe to ignore
+    
+    
+    
+    
+
+def view_all_groups():
+    # Connect to the database
+    connection = sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")  # Use your actual database path
+    cursor = connection.cursor()
+    
+    # Query to fetch all groups
+    cursor.execute("SELECT * FROM groups")
+    
+    # Fetch all results
+    groups = cursor.fetchall()
+    
+    # Print all groups
+    if groups:
+        print("Groups in the database:")
+        for group in groups:
+            print(group)  # Print each group record
+    else:
+        print("No groups found in the database.")
+    
+    # Close the connection
+    connection.close()
+
+# Call the function to view all groups
+view_all_groups()
+
+import sqlite3
+
+def view_user_groups():
+    # Connect to the database
+    connection = sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")  # Use your actual database path
+    cursor = connection.cursor()
+    
+    # Query to fetch all user-group associations
+    cursor.execute("SELECT * FROM user_group")
+    
+    # Fetch all results
+    user_groups = cursor.fetchall()
+    
+    # Print all user-group associations
+    if user_groups:
+        print("User-Group Associations:")
+        for user_group in user_groups:
+            print(user_group)  # Print each user-group record
+    else:
+        print("No user-group associations found in the database.")
+    
+    # Close the connection
+    connection.close()
+
+# Call the function to view user-group associations
+view_user_groups()
+
+
+
+def group_expenses():
+    # Connect to the database
+    connection = sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")  # Use your actual database path
+    cursor = connection.cursor()
+    
+    # Query to fetch all user-group associations
+    cursor.execute("SELECT * FROM group_expenses")
+    
+    # Fetch all results
+    group_expense = cursor.fetchall()
+    
+    # Print all user-group associations
+    if group_expense:
+        print("group_expenses Associations:")
+        for user_group in group_expense:
+            print(user_group)  # Print each user-group record
+    else:
+        print("No group_expenses associations found in the database.")
+    
+    # Close the connection
+    connection.close()
+
+# Call the function to view user-group associations
+group_expenses()
