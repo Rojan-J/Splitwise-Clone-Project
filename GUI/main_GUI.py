@@ -240,7 +240,7 @@ class MainWindow(QMainWindow):
         ########################################################################
 
         self.show()
-        set_user(self.ui, self.user)
+        self.ui.ProfileBtn.clicked.connect(lambda: set_user(self.ui, self.user[2]))
 
         #CenterMenu Expanding
         self.ui.InfoBtn.clicked.connect(lambda: self.ui.centerMenuContainer.expandMenu())

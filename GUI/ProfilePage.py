@@ -9,65 +9,27 @@ sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Spli
 
 from db_operations import *
 from db_operations import get_user_by_email
-
-
-# def set_user(ui, username):
-#     user = get_user_by_email(username, username)
-#     ui.NameProfile.setText(user[1])
-#     ui.UsernameProfile.setText(user[2])
-#     ui.EmailProfile.setText(user[3])
-#     ui.BalanceProfile.setText(str(user[-2]))
-#     if user[-3] == 0:
-#         profile = QtGui.QIcon(":/images/3135823.png")
-#         ui.PicProfile.setIcon(profile)
-
-#     else:
-#         profile = QtGui.QIcon(":/images/Layer 1.png")
-#         ui.PicProfile.setIcon(profile)
-#         ui.PicProfile.setIconSize(QtCore.QSize(90, 90))
-    
-#     header = ui.tableWidget_2.horizontalHeader()
-#     header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-
-#     recurrents = get_recurrent_expense_by_username(user[2])
-#     for expense in recurrents:
-#         row_position = ui.tableWidget_2.rowCount()
-#         ui.tableWidget_2.insertRow(row_position)
-#         var_to_add = [expense[2], str(expense[5]), expense[4], expense[6]]
-#         for col, value in enumerate(var_to_add):
-#             ui.tableWidget_2.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
+from db_operations import get_recurrent_expense_by_username
 
 
 def set_user(ui, username):
-    # Retrieve the user using the original username
     user = get_user_by_email(username, username)
-
-    if not user:
-        print("Error: No user found with the provided username.")
-        return
-
-    # Debugging output
-    print(f"Retrieved user: {user}")
-
-    # Update UI with user details
     ui.NameProfile.setText(user[1])
     ui.UsernameProfile.setText(user[2])
     ui.EmailProfile.setText(user[3])
     ui.BalanceProfile.setText(str(user[-2]))
-
-    # Set profile picture based on user data
     if user[-3] == 0:
         profile = QtGui.QIcon(":/images/3135823.png")
+        ui.PicProfile.setIcon(profile)
+
     else:
         profile = QtGui.QIcon(":/images/Layer 1.png")
-    ui.PicProfile.setIcon(profile)
-    ui.PicProfile.setIconSize(QtCore.QSize(90, 90))
+        ui.PicProfile.setIcon(profile)
+        ui.PicProfile.setIconSize(QtCore.QSize(90, 90))
     
-    # Configure the table widget
     header = ui.tableWidget_2.horizontalHeader()
     header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
 
-    # Populate the table with recurrent expenses
     recurrents = get_recurrent_expense_by_username(user[2])
     for expense in recurrents:
         row_position = ui.tableWidget_2.rowCount()
@@ -75,6 +37,45 @@ def set_user(ui, username):
         var_to_add = [expense[2], str(expense[5]), expense[4], expense[6]]
         for col, value in enumerate(var_to_add):
             ui.tableWidget_2.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
+
+
+# def set_user(ui, username):
+#     # Retrieve the user using the original username
+#     user = get_user_by_email(username, username)
+
+#     if not user:
+#         print("Error: No user found with the provided username.")
+#         return
+
+#     # Debugging output
+#     print(f"Retrieved user: {user}")
+
+#     # Update UI with user details
+#     ui.NameProfile.setText(user[1])
+#     ui.UsernameProfile.setText(user[2])
+#     ui.EmailProfile.setText(user[3])
+#     ui.BalanceProfile.setText(str(user[-2]))
+
+#     # Set profile picture based on user data
+#     if user[-3] == 0:
+#         profile = QtGui.QIcon(":/images/3135823.png")
+#     else:
+#         profile = QtGui.QIcon(":/images/Layer 1.png")
+#     ui.PicProfile.setIcon(profile)
+#     ui.PicProfile.setIconSize(QtCore.QSize(90, 90))
+    
+#     # Configure the table widget
+#     header = ui.tableWidget_2.horizontalHeader()
+#     header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+
+#     # Populate the table with recurrent expenses
+#     recurrents = get_recurrent_expense_by_username(user[2])
+#     for expense in recurrents:
+#         row_position = ui.tableWidget_2.rowCount()
+#         ui.tableWidget_2.insertRow(row_position)
+#         var_to_add = [expense[2], str(expense[5]), expense[4], expense[6]]
+#         for col, value in enumerate(var_to_add):
+#             ui.tableWidget_2.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
 
 
 
@@ -260,44 +261,6 @@ def add_recurrent(ui, user):
         widgets[1].setStyleSheet("color: red;")
     else:
         widgets[1].setStyleSheet("color: white;")
-
-
-from datetime import datetime
-
-def process_recurring_expenses(username):
-    connection = get_connection()
-    cursor = connection.cursor()
-    
-    # Get today's day
-    today_day = datetime.now().day
-    
-    # Fetch all recurring expenses
-    cursor.execute("SELECT label, expense_id, amount, category, days_of_month FROM recurrent_expenses WHERE username=  ?", (username, ))
-    recurring_expenses = cursor.fetchall()
-
-    for expense in recurring_expenses:
-        label, expense_id, amount, category, days_of_month = expense
-        days_list = [int(day) for day in days_of_month.split(",")]
-        
-        # Check if today is a recurring day
-        if today_day in days_list:
-            # Insert expense into the debts or expenses table
-            cursor.execute("""
-                INSERT INTO simplified_debts (for_what, id, name, debtor_name, amount)
-                VALUES ("recurrent", ?, ?, ?, ?)
-            """, (expense_id, label, username, amount))
-
-            cursor.execute("""
-                INSERT INTO expense_user (total_expense, username, amount_contributed, split_proportions, for_what, name, date, category)
-                VALUE(?, ?, ?, ?, "recurrent", ?, ?, ?) 
-            """, (expense_id, label, username, amount))
-    
-    connection.commit()
-    connection.close()
-
-# Call this function to process expenses on startup or a schedule
-process_recurring_expenses()
-
 
 
 #def draw_recurrent_table(ui, user)
