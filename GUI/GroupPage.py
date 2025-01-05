@@ -306,8 +306,6 @@ def add_group_expense(ui, main_group):
         ui.ErrorLabel2.setText(f"Error: {str(e)}")
         ui.ErrorLabel2.setStyleSheet("color: red;")
         
-    return
-
 
     if split_type == "share" or split_type == "percentage":
             shares = get_shares(ui, "add_expense")

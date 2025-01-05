@@ -81,7 +81,7 @@ class Graph():
         
         plt.savefig(png_path)
 
-"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"
+#"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"
         
 
 
