@@ -275,6 +275,8 @@ class MainWindow(QMainWindow):
 
         
         #self.ui.ConvertCurrencyBtn.clicked.connect(lambda:convert_currency(self.ui))
+        #self.ui.GTransactionBtn.clicked.connect(lambda:upload_excel(self.ui,self.user))
+        
 
 
     
