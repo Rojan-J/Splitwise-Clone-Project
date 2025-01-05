@@ -20,12 +20,41 @@ def add_user(name, username,email,password_hash,profile=0, is_registered=True, b
     connection.commit()
     connection.close()
     
-def get_user_by_email (email, username):
-    connection=get_connection()
-    cursor=connection.cursor()
-    cursor.execute('''
-        SELECT * FROM users WHERE email = ? or username = ?
-    ''', (email,username, ))
+# def get_user_by_email (email, username):
+#     connection=get_connection()
+#     cursor=connection.cursor()
+#     cursor.execute('''
+#         SELECT * FROM users WHERE email = ? or username = ?
+#     ''', (email,username, ))
+
+def get_user_by_email(email, username):
+    try:
+        # Debugging output
+        print(f"Debugging `get_user_by_email`: email={email}, type={type(email)}, username={username}, type={type(username)}")
+        
+        # Ensure parameters are strings
+        email = str(email) if email is not None else ""
+        username = str(username) if username is not None else ""
+
+        # Establish connection and execute query
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute('''
+            SELECT * FROM users WHERE email = ? OR username = ?
+        ''', (email, username))
+        
+        # Fetch the first matching row
+        user = cursor.fetchone()
+        print(f"Query result: {user}")
+        return user
+
+    except sqlite3.InterfaceError as e:
+        print(f"SQLite InterfaceError: {e}")
+    except Exception as e:
+        print(f"Error in `get_user_by_email`: {e}")
+    finally:
+        if 'connection' in locals() and connection:
+            connection.close()
     
     #fetch the first matching row
     user=cursor.fetchone()
@@ -34,7 +63,6 @@ def get_user_by_email (email, username):
 
 def get_all_usernames():
     all_usernames = []
-
     connection=get_connection()
     cursor=connection.cursor()
 
