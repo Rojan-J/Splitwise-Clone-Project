@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from datetime import date
+from datetime import datetime
 import re
 import sys
 import os
@@ -29,6 +29,9 @@ def show_total_expenses(username, ui):
 
     ui.label_28.setText(f"How much you owe: {owes} R ")
     ui.label_29.setText(f"How much you are owed: {owed} R")
+
+    monthly_report = cal_month_expenses(username)
+    ui.label_27.setText(f"Total expenses in this month: {monthly_report}")
 
     ui.ReportBtn.clicked.connect(lambda: show_report(username, ui))
 
@@ -207,6 +210,29 @@ def get_dates(ui):
 
     return error_date, start_date, end_date
 
+
+def cal_month_expenses(username):
+    # Connect to your database
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    # Get current year and month
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+
+    # SQL query to sum the amount column for the current month and year
+    cursor.execute( """
+        SELECT SUM(amount_contributed)
+        FROM expense_user
+        WHERE substr(date, 1, 4) = ? AND substr(date, 9, 2) = ? AND username= ?
+    """, (str(current_year), f"{current_month:02d}", username, ))
+
+    total_amount = cursor.fetchone()[0]
+    if total_amount is None:
+        total_amount = 0
+    
+    connection.close()
+    return total_amount
 
 def show_report(username, ui):
     category_expenses = dict()
