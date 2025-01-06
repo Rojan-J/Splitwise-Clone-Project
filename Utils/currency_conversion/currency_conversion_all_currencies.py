@@ -5,6 +5,7 @@ from datetime import datetime
 API="037306f9ecd64a4fa2d900d558c17b4f"
 URL = "https://openexchangerates.org/api/"
 
+#2526dd8667b954d9305f593f2e7508e836445d7b
 
 
 def get_historical_rate(date):
