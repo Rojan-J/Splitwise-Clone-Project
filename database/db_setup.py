@@ -1,8 +1,8 @@
 import sqlite3
 
 def initialize_database():
-    # connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")  #create database file
-    connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")
+    connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")  #create database file
+    # connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")
 
     
 
@@ -152,6 +152,7 @@ def initialize_database():
             label TEXT NOT NULL,
             expense_id INTEGER PRIMARY KEY AUTOINCREMENT,
             days_of_month TEXT NOT NULL,
+            month TEXT NOT NULL,
             amount REAL NOT NULL,
             category TEXT NOT NULL,
             paid TEXT NOT NULL DEFAULT 'Paid',

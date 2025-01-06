@@ -4,8 +4,8 @@ import re
 import sys
 import os
 import json
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+#sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
 
 
 import matplotlib.pyplot as plt
@@ -267,6 +267,9 @@ def show_report(username, ui):
         categories = list(category_expenses.keys())
         amounts = list(category_expenses.values())
 
+        legend  = [f"{label} ({size :.1f} R)" for label, size in zip(categories, amounts)]
+
+
 
         def autopct_amount(pct, values):
             total = sum(values)
@@ -276,11 +279,10 @@ def show_report(username, ui):
         plt.figure(figsize=(8, 6))  # Set figure size
         plt.pie(
             amounts, 
-            labels=categories, 
-            autopct=lambda pct: autopct_amount(pct, amounts),  
             startangle=90,      
             colors=plt.cm.Paired.colors,  
         )
+        plt.legend(legend, title="Categories", loc="lower center", bbox_to_anchor=(1, 0.5))
         
 
         png_path = "C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_pie_plot.png"

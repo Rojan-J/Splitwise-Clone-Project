@@ -8,17 +8,17 @@ import sys
 import os
 import json
 
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database/transaction import"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database/transaction import"))
 
 
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database\transaction import"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Core"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database\transaction import"))
 
 
 from db_operations import *
@@ -327,10 +327,8 @@ def add_expense_page(ui, group, recover = True):
 def add_group_expense(ui, main_group: Groups):
     
     from currency_conversion_all_currencies import convert_to_IRR
-    print(" Add called, mambers are: " , main_group.members, main_group.debts)
     category = ""
     label = ui.GrpExpenseLabelInput.text()
-    print(label)
     amount_input = ui.AmountInput.text()
     selected_date = ui.calendarWidget.selectedDate().toString("yyyy-dd-MM")
     payer = ui.PayerInput.text()
@@ -472,6 +470,8 @@ def add_group_expense(ui, main_group: Groups):
             shares = shares
             main_group.add_expenses(label, IRR_amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
         elif split_type == "percentage":
+            for share, percent in shares.items():
+                shares[share] = percent /100
             proportions = shares
             main_group.add_expenses(label, IRR_amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
         else:
@@ -802,13 +802,16 @@ def show_graph(group, ui):
         widget.deleteLater()
     graph = Graph(group)
     graph.plot_graph()
+    balances = graph.Net_balance
+
+    print("CHE", graph.Net_balance, balances)
     ui.graph = QtWidgets.QLabel(ui.scrollAreaWidgetContents_23)
     pixmap = QtGui.QPixmap("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_plot.png")
     ui.graph.setPixmap(pixmap)
     ui.graph.setScaledContents(True)  # Scale the image to fit the frame
 
     # Set a layout for the frame and add the label
-    layout.setContentsMargins(0, 0, 0, 0)  # Optional: Remove margins
+    layout.setContentsMargins(0, 0, 0, 0)  
     layout.addWidget(ui.graph)
     font = QtGui.QFont()
     font.setFamily("Swis721 Blk BT")
@@ -830,6 +833,31 @@ def show_graph(group, ui):
         ui.weight.setFont(font)
         ui.weight.setObjectName(f"{(debtor, creditor)}")
         layout_2.addWidget(ui.weight)
+
+    ui.tableWidget = QtWidgets.QTableWidget(ui.scrollAreaWidgetContents_6)
+    ui.tableWidget.setObjectName("tableWidget")
+    ui.tableWidget.setColumnCount(2)
+    ui.tableWidget.setRowCount(0)
+    item = QtWidgets.QTableWidgetItem()
+    ui.tableWidget.setHorizontalHeaderItem(0, item)
+    item = QtWidgets.QTableWidgetItem()
+    ui.tableWidget.setHorizontalHeaderItem(1, item)
+    ui.verticalLayout_37.addWidget(ui.tableWidget)
+
+    item = ui.tableWidget.horizontalHeaderItem(0)
+    item.setText("Member")
+    item = ui.tableWidget.horizontalHeaderItem(1)
+    item.setText("Net Balance")
+
+    ui.tableWidget.setRowCount(0)
+    header = ui.tableWidget.horizontalHeader()
+    header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+    for member, balance in balances.items():
+        row_position = ui.tableWidget.rowCount()
+        ui.tableWidget.insertRow(row_position)
+        var_to_add = [member, str(balance)]
+        for col, value in enumerate(var_to_add):
+            ui.tableWidget.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
     ui.pushButton.clicked.connect(lambda: show_simplified_graph(group, ui))
 
 def show_simplified_graph(group: Groups, ui):
@@ -845,6 +873,7 @@ def show_simplified_graph(group: Groups, ui):
     pixmap = QtGui.QPixmap("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_plot.png")
     ui.graph.setPixmap(pixmap)
     ui.graph.setScaledContents(True)  # Scale the image to fit the frame
+    balances = debt_simplification.Net_balance
 
     # Set a layout for the frame and add the label
     layout.setContentsMargins(0, 0, 0, 0)  # Optional: Remove margins
@@ -858,6 +887,7 @@ def show_simplified_graph(group: Groups, ui):
     ui.pushButton.setText("")
     ui.pushButton.setFont(font)
     layout_2 = ui.scrollAreaWidgetContents_6.layout()
+
     while layout_2.count():
         item = layout_2.takeAt(0)  # Get the first item
         widget = item.widget()  # Get the widget
@@ -870,6 +900,33 @@ def show_simplified_graph(group: Groups, ui):
             ui.weight.setFont(font)
             ui.weight.setObjectName(f"{(debtor, creditor)}")
             layout_2.addWidget(ui.weight)
+
+    ui.tableWidget = QtWidgets.QTableWidget(ui.scrollAreaWidgetContents_6)
+    ui.tableWidget.setObjectName("tableWidget")
+    ui.tableWidget.setColumnCount(2)
+    ui.tableWidget.setRowCount(0)
+    item = QtWidgets.QTableWidgetItem()
+    ui.tableWidget.setHorizontalHeaderItem(0, item)
+    item = QtWidgets.QTableWidgetItem()
+    ui.tableWidget.setHorizontalHeaderItem(1, item)
+    ui.verticalLayout_37.addWidget(ui.tableWidget)
+
+    item = ui.tableWidget.horizontalHeaderItem(0)
+    item.setText("Member")
+    item = ui.tableWidget.horizontalHeaderItem(1)
+    item.setText("Net Balance")
+
+    ui.tableWidget.setRowCount(0)
+    header = ui.tableWidget.horizontalHeader()
+    header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+    for member, balance in balances.items():
+        row_position = ui.tableWidget.rowCount()
+        ui.tableWidget.insertRow(row_position)
+        var_to_add = [member, str(balance)]
+        for col, value in enumerate(var_to_add):
+            ui.tableWidget.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
+
+
 
     update_group_debts(group.group_id, group.group_name)
 
@@ -901,6 +958,8 @@ def show_expenses_graph(group, ui):
     categories = list(all_expenses.keys())
     amounts = list(all_expenses.values())
 
+    legend  = [f"{label} ({size :.1f} R)" for label, size in zip(categories, amounts)]
+
 
     def autopct_amount(pct, values):
         total = sum(values)
@@ -910,12 +969,12 @@ def show_expenses_graph(group, ui):
     plt.figure(figsize=(8, 6))  # Set figure size
     plt.pie(
         amounts, 
-        labels=categories, 
-        autopct=lambda pct: autopct_amount(pct, amounts),  
         startangle=90,      
         colors=plt.cm.Paired.colors,  
     )
 
+
+    plt.legend(legend, title="Categories", loc="lower center", bbox_to_anchor=(1, 0.5))
     # Add a 
     plt.title("Expense Distribution")
 
@@ -969,84 +1028,81 @@ def safe_disconnect(button, handler):
     
     
 
-def view_all_groups():
-    # Connect to the database
-    connection = sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")  # Use your actual database path
-    cursor = connection.cursor()
+# def view_all_groups():
+#     # Connect to the database
+#     connection = sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")  # Use your actual database path
+#     cursor = connection.cursor()
     
-    # Query to fetch all groups
-    cursor.execute("SELECT * FROM groups")
+#     # Query to fetch all groups
+#     cursor.execute("SELECT * FROM groups")
     
-    # Fetch all results
-    groups = cursor.fetchall()
+#     # Fetch all results
+#     groups = cursor.fetchall()
     
-    # Print all groups
-    if groups:
-        print("Groups in the database:")
-        for group in groups:
-            print(group)  # Print each group record
-    else:
-        print("No groups found in the database.")
+#     # Print all groups
+#     if groups:
+#         print("Groups in the database:")
+#         for group in groups:
+#             print(group)  # Print each group record
+#     else:
+#         print("No groups found in the database.")
     
-    # Close the connection
-    connection.close()
+#     # Close the connection
+#     connection.close()
 
-# Call the function to view all groups
-#view_all_groups()
+# # Call the function to view all groups
+# #view_all_groups()
 
-import sqlite3
+# import sqlite3
 
-def view_user_groups():
-    # Connect to the database
-    connection = sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")  # Use your actual database path
-    cursor = connection.cursor()
+# def view_user_groups():
+#     # Connect to the database
+#     connection = sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")  # Use your actual database path
+#     cursor = connection.cursor()
     
-    # Query to fetch all user-group associations
-    cursor.execute("SELECT * FROM user_group")
+#     # Query to fetch all user-group associations
+#     cursor.execute("SELECT * FROM user_group")
     
-    # Fetch all results
-    user_groups = cursor.fetchall()
+#     # Fetch all results
+#     user_groups = cursor.fetchall()
     
-    # Print all user-group associations
-    if user_groups:
-        print("User-Group Associations:")
-        for user_group in user_groups:
-            print(user_group)  # Print each user-group record
-    else:
-        print("No user-group associations found in the database.")
+#     # Print all user-group associations
+#     if user_groups:
+#         print("User-Group Associations:")
+#         for user_group in user_groups:
+#             print(user_group)  # Print each user-group record
+#     else:
+#         print("No user-group associations found in the database.")
     
-    # Close the connection
-    connection.close()
+#     # Close the connection
+#     connection.close()
 
-# Call the function to view user-group associations
-#view_user_groups()
-
-
-
-def group_expenses():
-    # Connect to the database
-    connection = sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")  # Use your actual database path
-    cursor = connection.cursor()
-    
-    # Query to fetch all user-group associations
-    cursor.execute("SELECT * FROM group_expenses")
-    
-    # Fetch all results
-    group_expense = cursor.fetchall()
-    
-    # Print all user-group associations
-    if group_expense:
-        print("group_expenses Associations:")
-        for user_group in group_expense:
-            print(user_group)  # Print each user-group record
-    else:
-        print("No group_expenses associations found in the database.")
-    
-    # Close the connection
-    connection.close()
-
-# Call the function to view user-group associations
-#group_expenses()
+# # Call the function to view user-group associations
+# #view_user_groups()
 
 
-#commit
+
+# def group_expenses():
+#     # Connect to the database
+#     connection = sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")  # Use your actual database path
+#     cursor = connection.cursor()
+    
+#     # Query to fetch all user-group associations
+#     cursor.execute("SELECT * FROM group_expenses")
+    
+#     # Fetch all results
+#     group_expense = cursor.fetchall()
+    
+#     # Print all user-group associations
+#     if group_expense:
+#         print("group_expenses Associations:")
+#         for user_group in group_expense:
+#             print(user_group)  # Print each user-group record
+#     else:
+#         print("No group_expenses associations found in the database.")
+    
+#     # Close the connection
+#     connection.close()
+
+# # Call the function to view user-group associations
+# #group_expenses()

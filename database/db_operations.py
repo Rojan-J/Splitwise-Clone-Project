@@ -1,8 +1,8 @@
 import sqlite3
 
 def get_connection():
-    # connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")
-    connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")
+    connection=sqlite3.connect("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database.db")
+    # connection=sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")
 
     connection.execute("PRAGMA foreign_keys=ON")  #enable foreign key support
     
@@ -279,13 +279,13 @@ def add_simplified_debt_friend(group_id, group_name, debtor_name,creditor_name,a
     connection.commit()
     connection.close()
 
-def add_recurrent_expense(username, user_id, label, amount, days, category, paid = "Paid"):
+def add_recurrent_expense(username, user_id, label, amount, days, category, paid = "Not Paid!"):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
-        INSERT INTO recurrent_expenses (username, user_id, label, days_of_month, amount, category, paid)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    ''', (username, user_id, label, days, amount, category, paid))
+        INSERT INTO recurrent_expenses (username, user_id, label, days_of_month, month,  amount, category, paid)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (username, user_id, label, days, datetime.now().month, amount, category, paid))
     connection.commit()
     connection.close()
     
@@ -574,7 +574,29 @@ def update_notification_status(username):
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
-        UPDATE user_notification SET check = ? WHERE username = ?
+        UPDATE user_notification SET checked = ? WHERE username = ?
     ''', (1, username, ))
     connection.commit()
     connection.close()
+
+from datetime import datetime
+
+def update_month_of_recurrent():
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        UPDATE recurrent_expenses SET month = ?  and paid = ?
+    ''', (datetime.now().month, "Not Paid!", ))
+    connection.commit()
+    connection.close()
+
+def update_recurrent_status(username, label):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute('''
+        UPDATE recurrent_expenses SET  paid = ? WHERE username= ? AND label = ?
+    ''', ("Paid", username, label ))
+    connection.commit()
+    connection.close()
+
+

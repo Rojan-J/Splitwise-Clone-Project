@@ -5,13 +5,13 @@ import sys
 import os
 import json
 
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
-# sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/database"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Models"))
 
 import matplotlib.pyplot as plt
 
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Models"))
 
 
 from db_operations import *
@@ -356,7 +356,7 @@ def add_friend_expense(ui, friend, username):
             split_type = SplitTypeBtn.text()
 
     if split_type == "share" or split_type == "percentage":
-            shares = get_shares_friend(ui, "add_expense")
+        shares = get_shares_friend(ui, "add_expense")
 
 
     if split_type == "default split":
@@ -461,6 +461,8 @@ def add_friend_expense(ui, friend, username):
             shares = shares
             friend.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, shares=shares)
         elif split_type == "percentage":
+            for share, percent in shares.items():
+                shares[share] = percent /100
             proportions = shares
             friend.add_expenses(label, amount, payer, contributers, selected_date, category,description, split_type, proportions=proportions)
         else:

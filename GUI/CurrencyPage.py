@@ -6,7 +6,9 @@ import sys
 import os
 import json
 
-sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils\currency_conversion"))
+# sys.path.append(os.path.abspath(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\Utils\currency_conversion"))
+sys.path.append(os.path.abspath("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Utils/currency_conversion"))
+
 from currency_conversion_all_currencies import convert_to_IRR
 
 #Gui objects: LineEdit to get the expense: AmountCurrencyInput - lineEdit to get the currency:Currency - pushbotton: ConvertCurrencyBtn -Label to show the result= ConversionResult

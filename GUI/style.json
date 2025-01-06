@@ -172,13 +172,11 @@
 				{
 					"navigationButtons":[
 						{
-							"AddMembersBtn_7": "AddNewMemberPage",
 							"addGrpBtn": "AddGrpPage", 
 							"AddExpensesBtn" : "AddExpensePage",
 							"AddFriendsBtn" : "AddNewFriendPage", 
 							"AddFriendExpenseBtn": "AddFriendExpensePage", 
 							"EditFriendBtn" : "EditFriendPage", 
-							"EditGrpBtn" : "AddGrpPage",
 							"AddRExpenseBtn": "AddRecurrentExpense",
 							"SearchBtn" : "SearchPage"
 						}
