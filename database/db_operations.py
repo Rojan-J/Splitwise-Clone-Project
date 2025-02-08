@@ -290,12 +290,28 @@ def add_recurrent_expense(username, user_id, label, amount, days, category, paid
     connection.close()
     
 
-def update_debt_status(debt_id,status):
+def update_debt_status(debt,status):
+    debt_id = debt[0]
+    debt_for_what = debt[1]
+    debt_for_what_id = debt[2]
+    debtor = debt[-4]
+    creditor = debt[-3]
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
         UPDATE simplified_debts SET status = ? WHERE debt_id = ?
     ''', (status, debt_id))
+
+    if debt_for_what == "friend":
+        cursor.execute('''
+        UPDATE friend_debts SET status = ? WHERE friendship_id = ?
+    ''', (status, debt_for_what_id))
+        
+    elif debt_for_what == "group":
+        cursor.execute('''
+        UPDATE debts SET status = ? WHERE group_id = ? and debtor_name = ? and creditor_name = ?
+    ''', (status, debt_for_what_id, debtor, creditor, ))
+
     connection.commit()
     connection.close()
 
@@ -477,8 +493,8 @@ def get_friend_debts_by_group_id(friendship_id):
     connection=get_connection()
     cursor=connection.cursor()
     cursor.execute('''
-        SELECT * FROM friend_debts WHERE friendship_id = ?
-    ''', (friendship_id, ))
+        SELECT * FROM friend_debts WHERE friendship_id = ? and status = ?
+    ''', (friendship_id, "Not Paid!"))
     
     #fetch the first matching row
     debts=cursor.fetchall()

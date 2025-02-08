@@ -74,6 +74,14 @@ def show_all_notifications(user, ui):
 
 def verified_payment(ui, btn, debt, username):
     debt_id, debtor, amount = debt
+    connection=get_connection()
+    cursor=connection.cursor()
+    cursor.execute('''
+        SELECT * FROM simplified_debts WHERE debt_id = ?
+    ''', (debt_id, ))
+
+    debt=cursor.fetchone()
+    connection.close()
     Verified_btn, Unverified_btn, btns_frame, message = btn
     layout = btns_frame.layout()
     while layout.count():
@@ -84,7 +92,7 @@ def verified_payment(ui, btn, debt, username):
 
     message.setText("Verified")
 
-    update_debt_status(debt_id,"Paid")
+    update_debt_status(debt,"Paid")
     current_balance = get_balance(username)[0]
     new_balance = current_balance + amount
 
@@ -106,7 +114,7 @@ def unverified_payment(ui, btn, debt, user):
     message.setText("Denied")
 
 
-    update_debt_status(debt_id,"Not Paid!")
+    update_debt_status(debt,"Not Paid!")
     current_balance = get_balance(debtor)[0]
     new_balance = current_balance + amount
 

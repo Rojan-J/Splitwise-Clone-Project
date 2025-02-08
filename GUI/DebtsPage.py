@@ -120,7 +120,7 @@ def pay_cash(ui, btn, debt, username):
     ui.CashPaidLabel.setObjectName("CashPaidLabel")
     layout.addWidget(ui.CashPaidLabel)
     ui.CashPaidLabel.setText("Paid by cash!")
-    update_debt_status(debt_id,"Paid")
+    update_debt_status(debt,"Paid")
     
 
 
@@ -155,7 +155,7 @@ def pay_online(ui, btn, debt, username):
         print("Cur_bal is" , current_balance)
         new_balance = current_balance - debt_amount
         if new_balance >= 0:
-            update_debt_status(debt_id,"Paid")
+            update_debt_status(debt,"Paid")
             update_balance(username, new_balance)
             ui.CashPaidLabel.setText("Paid Online!")
         else:
@@ -175,7 +175,7 @@ def pay_online(ui, btn, debt, username):
         if new_balance >= 0:
             update_balance(username, new_balance)
             add_notification(creditor, username, debt_id, debt_amount)
-            update_debt_status(debt_id,"pending")
+            update_debt_status(debt,"pending")
         else:
             ui.CashPaidLabel.setText("You don't have enough Money!")
 
