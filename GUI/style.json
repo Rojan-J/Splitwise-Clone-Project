@@ -144,7 +144,9 @@
 							"FriendsBtn" : "FriendsPage", 
 							"ProfileBtn": "ProfilePage", 
 							"SearchBtn" : "SearchPage2", 
-							"ConversionIcon" : "page"
+							"ConversionIcon" : "page",
+							"GroupPageBackBtn" :  "GroupsPage",
+							"FriendPageBackBtn" : "FriendsPage"
 
 						}
 					]
