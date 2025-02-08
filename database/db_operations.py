@@ -180,7 +180,7 @@ def get_group_expenses_by_group_id(group_id):
     connection=get_connection()
     cursor=connection.cursor()
     cursor.execute('''
-        SELECT * FROM group_expenses WHERE group_id = ?
+        SELECT * FROM group_expenses WHERE group_id = ? 
     ''', (group_id, ))
     
     #fetch the first matching row
@@ -304,8 +304,8 @@ def update_debt_status(debt,status):
 
     if debt_for_what == "friend":
         cursor.execute('''
-        UPDATE friend_debts SET status = ? WHERE friendship_id = ?
-    ''', (status, debt_for_what_id))
+        UPDATE friend_debts SET status = ? WHERE friendship_id = ? and (status = ? or status = ?)
+    ''', (status, debt_for_what_id, "Not Paid!", "pending", ))
         
     elif debt_for_what == "group":
         cursor.execute('''
@@ -480,8 +480,8 @@ def get_groups_debts_by_group_id(group_id):
     connection=get_connection()
     cursor=connection.cursor()
     cursor.execute('''
-        SELECT * FROM debts WHERE group_id = ?
-    ''', (group_id, ))
+        SELECT * FROM debts WHERE group_id = ? and status = ?
+    ''', (group_id, "Not Paid!", ))
     
     #fetch the first matching row
     debts=cursor.fetchall()

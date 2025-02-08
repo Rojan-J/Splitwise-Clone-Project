@@ -117,7 +117,7 @@ def initialize_database():
         CREATE TABLE IF NOT EXISTS simplified_debts (
             debt_id INTEGER PRIMARY KEY AUTOINCREMENT,
             for_what TEXT NOT NULL,
-            id Integer TEXT NOT NULL,
+            debt_specific_id INTEGER,
             name TEXT NOT NULL, 
             debtor_name TEXT NOT NULL, 
             creditor_name TEXT,

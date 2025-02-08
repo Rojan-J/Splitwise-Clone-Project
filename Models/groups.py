@@ -67,7 +67,7 @@ class Groups:
             print("LoadMembers", self.members)
             print("LoadId", self.group_id)
             
-            all_expenses  =get_group_expenses_by_group_id(self.group_id)
+            all_expenses  = get_group_expenses_by_group_id(self.group_id)
             for expense in all_expenses:
                 self.expenses.append([expense[1],expense[5], expense[3], expense[4], expense[7], expense[6], expense[8], expense[9], expense[10], expense[11]])
             print()
