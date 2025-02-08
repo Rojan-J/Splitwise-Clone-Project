@@ -66,8 +66,6 @@ def perform_search(ui):
         query += " AND date = ?"
         query_params.append(date_input)
 
-    print(f"Query: {query}")
-    print(f"Parameters: {query_params}")
     try:
         connection = get_connection()
         cursor = connection.cursor()

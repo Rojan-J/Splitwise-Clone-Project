@@ -28,10 +28,7 @@ def add_user(name, username,email,password_hash,profile=0, is_registered=True, b
 #     ''', (email,username, ))
 
 def get_user_by_email(email, username):
-    try:
-        # Debugging output
-        print(f"Debugging `get_user_by_email`: email={email}, type={type(email)}, username={username}, type={type(username)}")
-        
+    try:        
         # Ensure parameters are strings
         email = str(email) if email is not None else ""
         username = str(username) if username is not None else ""
@@ -45,7 +42,6 @@ def get_user_by_email(email, username):
         
         # Fetch the first matching row
         user = cursor.fetchone()
-        print(f"Query result: {user}")
         return user
 
     except sqlite3.InterfaceError as e:
@@ -467,7 +463,6 @@ def get_friends_profile_by_friendship_id(friendship_id):
     return friend
 
 def edit_friend_database(friendship_id, friend_profile, default_split, default_share, default_prop):
-    print("Profile is:", friend_profile)
     connection=get_connection()
     cursor=connection.cursor()
     cursor.execute('''

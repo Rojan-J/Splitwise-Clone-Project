@@ -18,7 +18,6 @@ def show_all_debts(username, ui):
     process_recurring_expenses(username)
     all_debts = total_user_owes(username)
     
-    print(all_debts, "ALL DEBTS ARE")
     debts_radio_buttons = dict()
     layout =  ui.widget_23.layout()
     while layout.count():
@@ -81,7 +80,6 @@ def show_all_debts(username, ui):
             debts_radio_buttons[debt] = [ui.radioButton_49, ui.radioButton_50, ui.widget_23]
         
         elif debt[-1] =="pending":
-            print("I see this")
             layout = ui.frame_109.layout()
             ui.pendingLabel = QtWidgets.QLabel(ui.frame_109)
             font = QtGui.QFont()
@@ -152,7 +150,6 @@ def pay_online(ui, btn, debt, username):
         layout.addWidget(ui.CashPaidLabel)
         
         current_balance = get_balance(username)[0]
-        print("Cur_bal is" , current_balance)
         new_balance = current_balance - debt_amount
         if new_balance >= 0:
             update_debt_status(debt,"Paid")

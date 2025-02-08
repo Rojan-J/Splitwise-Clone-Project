@@ -20,7 +20,6 @@ def show_all_notifications(user, ui):
         if widget:
             widget.deleteLater()
     notifications = get_user_notifications(user)
-    print(notifications)
     notification_btns = dict()
     for notif in notifications:
         debtor, debt_id, amount = notif[2:5]

@@ -160,7 +160,6 @@ def upload_group_excel(ui,user):
             import_from_excel(ui.uploaded_file_path)  
             ui.GExcelLabel.setText("Transactions imported successfully!")
             ui.GExcelLabel.setStyleSheet("color: green;")
-            print("finish importing fro excel")
             show_all_existing_groups(ui, user)
             
         except ValueError as ve:
@@ -216,7 +215,6 @@ def create_group(ui, user):
         show_all_existing_groups(ui, user)
     error  = 0 
     widgets = [ui.GrpNameLabel, ui.NoMembersLabel, ui.GrpMembersLabel, ui.DefaultSplitLabel]
-    print([group_name, group_no, members, split])
     for widget, data in enumerate([group_name, group_no, members, split]):
         if data == "" or data == [] or data == 0:
             widgets[widget].setStyleSheet("color: red;")
@@ -371,7 +369,6 @@ def add_group_expense(ui, main_group: Groups):
 
     if split_type == "share" or split_type == "percentage":
             shares = get_shares(ui, "add_expense")
-            print("COUNT", ui.verticalLayout_25.count())
 
     if split_type == "default split":
         default = True
@@ -399,8 +396,6 @@ def add_group_expense(ui, main_group: Groups):
             else:
                 shares = default_proportions
             if sum(shares.values()) != 100:
-                print("No")
-                print(shares.values())
                 return False
         return True
         
@@ -510,10 +505,8 @@ def add_group_expense(ui, main_group: Groups):
 def add_shares(ui, split_type, page):
     if page=="add_expense":
         layout = ui.scrollAreaWidgetContents_9.layout()
-        print(layout == ui.verticalLayout_25)
     else:
         layout = ui.scrollAreaWidgetContents_10.layout()
-        print(layout == ui.verticalLayout_27)
     while layout.count():
         item = layout.takeAt(0)  # Get the first item
         widget = item.widget()  # Get the widget
@@ -574,7 +567,6 @@ def add_shares(ui, split_type, page):
                 ui.spinBox.setValue(0)
                 ui.verticalLayout_27.addWidget(ui.spinBox)
 
-        print(layout.count())
 
 
 def isfloat(value):
@@ -619,7 +611,6 @@ def get_shares(ui, page):
         shares[label] = share
         i += 2
 
-    print(shares)
     return shares
 
 def take_group(ui):
@@ -641,13 +632,9 @@ def get_group_expenses(group_id):
             WHERE group_id = ?
         """, (group_id,))
         expenses = cursor.fetchall()
-        print(f"Debug: Group ID being passed: {group_id}")
-
-        print(f"Fetched expenses for group {group_id}: {expenses}")
         
         return expenses
     except sqlite3.Error as e:
-        print(f"Database Error: {str(e)}")
         return []
     finally:
         if 'connection' in locals() and connection:
@@ -697,8 +684,6 @@ def add_new_member_to_group(ui):
             widget = item.widget()
             if widget:
                 widget.deleteLater()
-
-        print(f"Debug: Group ID being used hereeeee: {group.group_id}")
         
         existing_expenses=get_group_expenses(group.group_id)
         expense_layout=ui.scrollAreaWidgetContents_19.layout()
@@ -804,7 +789,6 @@ def show_graph(group, ui):
     graph.plot_graph()
     balances = graph.Net_balance
 
-    print("CHE", graph.Net_balance, balances)
     ui.graph = QtWidgets.QLabel(ui.scrollAreaWidgetContents_23)
     pixmap = QtGui.QPixmap("C:/Users/niloo/Term7/AP/Project/Splitwise-Clone-Project/Core/graph_plot.png")
     ui.graph.setPixmap(pixmap)
@@ -1027,82 +1011,3 @@ def safe_disconnect(button, handler):
     
     
     
-
-# def view_all_groups():
-#     # Connect to the database
-#     connection = sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")  # Use your actual database path
-#     cursor = connection.cursor()
-    
-#     # Query to fetch all groups
-#     cursor.execute("SELECT * FROM groups")
-    
-#     # Fetch all results
-#     groups = cursor.fetchall()
-    
-#     # Print all groups
-#     if groups:
-#         print("Groups in the database:")
-#         for group in groups:
-#             print(group)  # Print each group record
-#     else:
-#         print("No groups found in the database.")
-    
-#     # Close the connection
-#     connection.close()
-
-# # Call the function to view all groups
-# #view_all_groups()
-
-# import sqlite3
-
-# def view_user_groups():
-#     # Connect to the database
-#     connection = sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")  # Use your actual database path
-#     cursor = connection.cursor()
-    
-#     # Query to fetch all user-group associations
-#     cursor.execute("SELECT * FROM user_group")
-    
-#     # Fetch all results
-#     user_groups = cursor.fetchall()
-    
-#     # Print all user-group associations
-#     if user_groups:
-#         print("User-Group Associations:")
-#         for user_group in user_groups:
-#             print(user_group)  # Print each user-group record
-#     else:
-#         print("No user-group associations found in the database.")
-    
-#     # Close the connection
-#     connection.close()
-
-# # Call the function to view user-group associations
-# #view_user_groups()
-
-
-
-# def group_expenses():
-#     # Connect to the database
-#     connection = sqlite3.connect(r"C:\Users\LENOVO\OneDrive\Documents\GitHub\Splitwise-Clone-Project\database.db")  # Use your actual database path
-#     cursor = connection.cursor()
-    
-#     # Query to fetch all user-group associations
-#     cursor.execute("SELECT * FROM group_expenses")
-    
-#     # Fetch all results
-#     group_expense = cursor.fetchall()
-    
-#     # Print all user-group associations
-#     if group_expense:
-#         print("group_expenses Associations:")
-#         for user_group in group_expense:
-#             print(user_group)  # Print each user-group record
-#     else:
-#         print("No group_expenses associations found in the database.")
-    
-#     # Close the connection
-#     connection.close()
-
-# # Call the function to view user-group associations
-# #group_expenses()

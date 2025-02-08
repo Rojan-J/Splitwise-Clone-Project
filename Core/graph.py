@@ -33,15 +33,11 @@ class Graph():
         count = 0
         if self.graph_type == "Original": graph = self.graph
         else: graph = self.simplified_graph
-
-        print("GRAPH", graph)
         pos = nx.spring_layout(graph)
         plt.figure(figsize=(8, 6))
         in_degree_centrality = nx.in_degree_centrality(graph)
         weighted_in_degree = dict(graph.in_degree(weight='capacity'))
-        print(in_degree_centrality, weighted_in_degree)
         central_node = max(weighted_in_degree, key=weighted_in_degree.get)
-        print(central_node)
         label_colors = {node: 'black' for node in graph.nodes()}
         label_colors[central_node] = "red"
 
@@ -50,10 +46,6 @@ class Graph():
             out_weight = sum(float(f"{d['capacity']:.2f}" )for _, _, d in graph.out_edges(node, data=True))
             in_weight = sum(float(f"{d['capacity']:.2f}") for _, _, d in graph.in_edges(node, data=True))
             self.Net_balance[node] = in_weight - out_weight
-
-        print("balances", self.Net_balance)
-
-
 
 
         for node, (x, y) in pos.items():

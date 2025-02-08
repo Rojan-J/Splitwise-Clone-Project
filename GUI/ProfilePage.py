@@ -217,7 +217,6 @@ def add_recurrent(ui, user):
         row_position = ui.tableWidget_2.rowCount()
         ui.tableWidget_2.insertRow(row_position)
         for col, value in enumerate(var_to_add):
-            print(col, value)
             ui.tableWidget_2.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
 
         ui.LabelInput.setText("")
@@ -269,11 +268,7 @@ def process_recurring_expenses(username):
 
         cursor.execute("SELECT * FROM simplified_debts WHERE id=  ?", (expense_id, ))
         duplicated_expense = cursor.fetchall()
-        print("PAID", paid)
-        
-
-
-
+   
         if paid == "Not Paid!" :
             
             # Check if today is a recurring day

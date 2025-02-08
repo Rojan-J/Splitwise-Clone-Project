@@ -64,16 +64,12 @@ class Groups:
             for member in members:
                 self.members.append(member[0])  #name=key, email=value
             
-            print("LoadMembers", self.members)
-            print("LoadId", self.group_id)
             
             all_expenses  = get_group_expenses_by_group_id(self.group_id)
             for expense in all_expenses:
                 self.expenses.append([expense[1],expense[5], expense[3], expense[4], expense[7], expense[6], expense[8], expense[9], expense[10], expense[11]])
-            print()
 
             all_debts = get_groups_debts_by_group_id(self.group_id)
-            print(all_debts, "all_debts")
             for debt in all_debts:
                 debtor = debt[2]
                 creditor = debt[3]
@@ -88,10 +84,8 @@ class Groups:
             cursor.execute("INSERT INTO groups (group_name, group_owner) VALUES (?, ?)", (self.group_name, self.group_owner, ))
             
             self.group_id = cursor.lastrowid
-            print(f"Group '{self.group_name}' created with group_id: {self.group_id}")
         connection.commit()
         connection.close()
-        print(self.debts, "Still in load")  
         return
 
         
@@ -124,7 +118,6 @@ class Groups:
             
 
     def add_expenses(self,label, expense, payer, contributors, expense_date = date.today(), category="etc.",description=None, split_type="equally", proportions=None, shares=None, currency = "IRR"):
-        print(self.debts, "before_add")
         #contributors is a list of users represented by their ids who are sharing the expense
         #contributions is a list that hold each contributor's share
         #contributor represents the user's id who contributed
@@ -134,9 +127,7 @@ class Groups:
         cursor = connection.cursor()
 
         
-        #check if expenses are added correctly:
-        print(f"Adding expense: group_id={self.group_id}, payer_id={payer}, amount={expense}, category={category}, date={expense_date}, shares={shares}, proportions={proportions}")
-
+        #check if expenses are added correctly
         json_shares = json.dumps(shares)
         json_proportions = json.dumps(proportions)
 
@@ -146,8 +137,6 @@ class Groups:
             VALUES (?, ?, ?, ?, ?, ?,?,?,?, ?, ?, ?, ?)
         """, (label, self.group_id, self.group_name, payer, ",".join(contributors), expense, category, str(expense_date), description , split_type, json_proportions, json_shares, currency))
         expense_id = cursor.lastrowid
-
-        print(f"Expense added with ID: {expense_id}")
         
         contributions=[]
         if split_type=="equally":
@@ -155,9 +144,7 @@ class Groups:
             contributions=[(contributor, amount_per_user) for contributor in contributors]
             
         elif split_type=="percentage":
-            
             contributions=[(contributor,float(expense)*(percentage)) for contributor, percentage in proportions.items()]
-            print(contributions)
             
         elif split_type=="share":
             if not shares or len(shares)!=len(contributors):
@@ -189,9 +176,7 @@ class Groups:
 
         connection.commit()
         connection.close()
-        print(self.debts, "before_cal_debts")     
         self.cal_debts(contributions, payer)
-        print("Before Simplification: ", self.group_name, self.debts)
         debt_simplification = Debtsimplification(self)
         debt_simplification.creating_simplified_graph()
         update_group_debts(self.group_id, self.group_name)
@@ -209,9 +194,7 @@ class Groups:
         category_expenses={}
         connection=get_connection()
         cursor=connection.cursor()
-        
-        print(f"Retrieving expenses for group_id={self.group_id} and categorizing them.")
-       
+               
         cursor.execute("""
             SELECT category, SUM(amount)
             FROM group_expenses
@@ -219,9 +202,7 @@ class Groups:
             GROUP BY category
         """, (self.group_id, self.group_name,))
         
-        expense_by_category=cursor.fetchall()
-        print("Expenses retrieved:", expense_by_category)
-        
+        expense_by_category=cursor.fetchall()        
         for category, total_amount in expense_by_category:
             category_expenses[category] = total_amount
         
@@ -233,9 +214,7 @@ class Groups:
 
         connection=get_connection()
         cursor=connection.cursor()
-        
-        print(f"Retrieving expenses for group_id={self.group_id} and categorizing them.")
-       
+               
         cursor.execute("""
             SELECT SUM(amount)
             FROM group_expenses
@@ -260,7 +239,6 @@ class Groups:
 
                 add_debt(self.group_id, contributor,payer,contribution)
                 
-        print(self.debts, "In cal_debts")
         return
                 
                 
@@ -269,8 +247,6 @@ class Groups:
             return
         
         current_debt=self.debts[(debtor,creditor)]
-        if amount>current_debt["capacity"]-current_debt["flow"]:
-            print("Error: Amount exceeds the debt")
             
         current_debt["flow"]+=amount
         
@@ -278,20 +254,6 @@ class Groups:
             self.debts.pop((debtor,creditor))
         return
 
-def print_table_columns(table_name):
-    connection = get_connection()
-    cursor = connection.cursor()
-    
-    # Query the table's metadata
-    cursor.execute(f"PRAGMA table_info({table_name})")
-    columns = cursor.fetchall()
-    
-    print(f"Columns in the table '{table_name}':")
-    for column in columns:
-        print(f"Column Name: {column[1]}, Data Type: {column[2]}")
-    
-    connection.close()
-    return
 
 
     

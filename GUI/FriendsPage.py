@@ -113,12 +113,10 @@ def specific_friend_page(ui, friend: Friends, username):
     ui.mainPages.setCurrentWidget(ui.FriendPage)
     ui.FriendName.setText(friend.friend_name)
     profile = friend.friend_profile
-    print("New Prof:", profile)
     icon22 = QtGui.QIcon()
     if profile == 0:
         icon22.addPixmap(QtGui.QPixmap(":/images/219969.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
     else:
-        print("HEY")
         icon22.addPixmap(QtGui.QPixmap(":/images/219986.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)  
     ui.FriendProfile.setIcon(icon22)
     ui.FriendProfile.setIconSize(QtCore.QSize(80, 80))  
@@ -127,7 +125,6 @@ def specific_friend_page(ui, friend: Friends, username):
     header = ui.TableOfExpenses.horizontalHeader()
     header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
     for expense in expenses:
-        print(expense)
         row_position = ui.TableOfExpenses.rowCount()
         ui.TableOfExpenses.insertRow(row_position)
         var_to_add = [expense[1], expense[3],str(expense[5]), expense[4], expense[7], expense[6], expense[9], expense[8]]
@@ -180,11 +177,9 @@ def create_friend(ui, user):
         friend_profile = 0
 
     layout = ui.split_frame.layout()
-    print(layout)
     count = layout.count()
     for SplitBtnNo in range(count):
         Split = layout.itemAt(SplitBtnNo).widget()
-        print(Split)
         if isinstance(Split, QtWidgets.QRadioButton) and Split.isChecked():
             split = Split.text()
     if split != "equally":
@@ -199,9 +194,7 @@ def create_friend(ui, user):
     if split == "percentage":
         if sum(default_shares.values()) != 100:
             percent_total = False
-    print([friend_name, friend_email, re.match(email_regex, friend_email), split, percent_total, friend_profile])
     if friend_name != ""  and friend_email != "" and re.match(email_regex, friend_email) and split !=""  and percent_total:
-        print("Yes")
         add_friend_to_dataset(friend_name, friend_email, user, split, default_shares_j, default_prop_j, friend_profile)
         ui.GrpNameInput.setText("")
         ui.NoMembersInput.setValue(0)
@@ -216,7 +209,6 @@ def create_friend(ui, user):
         show_all_existing_friends(ui, user)
     error  = 0 
     widgets = [ui.NameLabel, ui.EmailLabel]
-    print([friend_name, friend_email])
     for widget, data in enumerate([friend_name, friend_email]):
         if data == "" :
             widgets[widget].setStyleSheet("color: red;")
@@ -243,7 +235,6 @@ def create_friend(ui, user):
     return
 
 def add_friend_to_dataset(friend_name, friend_email, user, split, default_shares_j, default_prop_j, friend_profile):
-    print(friend_profile)
     friend = Friends(user[2], friend_name, friend_email, friend_profile)
     friend.add_friend(user[2], user[3], split , default_shares_j, default_prop_j)
 
@@ -371,7 +362,6 @@ def add_friend_expense(ui, friend, username):
             default_proportions = json.loads(default_proportions)
         split_type = default_split
         if split_type == "share":
-            print(default_shares)
             shares = dict()
             for contributer in contributers:
                 shares[contributer] = default_shares[contributer]
@@ -501,7 +491,6 @@ def edit_friend(ui, friend, username):
     default_shares_j = None
     default_prop_j = None
     split = ""
-    print(friend.friendship_id)
     percent_total = True
     if ui.MaleProfileBtn_2.isChecked():
         friend_profile = 1
@@ -513,11 +502,9 @@ def edit_friend(ui, friend, username):
     count = layout.count()
     for SplitBtnNo in range(count):
         Split = layout.itemAt(SplitBtnNo).widget()
-        print(Split)
         if isinstance(Split, QtWidgets.QRadioButton) and Split.isChecked():
             split = Split.text()
 
-    print(split)
     if split != "equally":
         default_shares = get_shares_friend(ui, "edit_friend")
         if split == "share":
@@ -532,8 +519,6 @@ def edit_friend(ui, friend, username):
             percent_total = False
 
     if  split !=""  and percent_total:
-        print(friend_profile)
-        print("Yes")
         edit_friend_database(friend.friendship_id, friend_profile, split, default_shares_j, default_prop_j)
         for SplitBtnNo in range(count):
             Split = layout.itemAt(SplitBtnNo).widget()

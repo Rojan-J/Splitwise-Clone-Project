@@ -71,7 +71,6 @@ def get_expenses_report_group_by(username, group_by, start_date = None, end_date
         """, (username, group_by, start_date, end_date, ))
         
             expense_by_group=cursor.fetchall()
-            print("Expenses retrieved:", expense_by_group)
             
             for group, total_amount in expense_by_group:
                 grouped_expenses[group] = total_amount
@@ -85,7 +84,6 @@ def get_expenses_report_group_by(username, group_by, start_date = None, end_date
             """, (username, group_by, ))
             
             expense_by_group=cursor.fetchall()
-            print("Expenses retrieved:", expense_by_group)
             
             for group, total_amount in expense_by_group:
                 grouped_expenses[group] = total_amount
@@ -123,7 +121,6 @@ def get_expenses_by_category_report(username, start_date =None, end_date= None):
         """, (username,))
         
         expense_by_category=cursor.fetchall()
-        print("Expenses retrieved:", expense_by_category)
         
         for category, total_amount in expense_by_category:
             category_expenses[category] = total_amount
