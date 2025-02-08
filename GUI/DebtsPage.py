@@ -81,15 +81,18 @@ def show_all_debts(username, ui):
             debts_radio_buttons[debt] = [ui.radioButton_49, ui.radioButton_50, ui.widget_23]
         
         elif debt[-1] =="pending":
+            print("I see this")
             layout = ui.frame_109.layout()
-            ui.CashPaidLabel = QtWidgets.QLabel(ui.frame_109)
+            ui.pendingLabel = QtWidgets.QLabel(ui.frame_109)
             font = QtGui.QFont()
             font.setFamily("Swis721 Blk BT")
             font.setPointSize(10)
-            ui.CashPaidLabel.setFont(font)
-            ui.CashPaidLabel.setObjectName("CashPaidLabel")
-            layout.addWidget(ui.CashPaidLabel)
-            ui.CashPaidLabel.setText("Pending")
+            ui.pendingLabel.setFont(font)
+            ui.pendingLabel.setObjectName("CashPaidLabel")
+            ui.verticalLayout_177.addWidget(ui.pendingLabel)
+            ui.verticalLayout_176.addWidget(ui.frame_109, 0, QtCore.Qt.AlignHCenter)
+            ui.verticalLayout_175.addWidget(ui.widget_23)
+            ui.pendingLabel.setText("Pending")
 
     for debt, btn in debts_radio_buttons.items():
         btn[1].clicked.connect(lambda _, b=btn, d= debt: pay_cash(ui,b, d, username))
