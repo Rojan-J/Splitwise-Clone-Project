@@ -3679,7 +3679,7 @@ class Ui_MainWindow(object):
         item = self.tableWidget_2.horizontalHeaderItem(2)
         item.setText(_translate("MainWindow", "Days of month"))
         item = self.tableWidget_2.horizontalHeaderItem(3)
-        item.setText(_translate("MainWindow", "Current Month"))
+        item.setText(_translate("MainWindow", "Paid in Current Month"))
         item = self.tableWidget_2.horizontalHeaderItem(4)
         item.setText(_translate("MainWindow", "Category"))
         self.AddRExpenseBtn.setText(_translate("MainWindow", "Add Recurrent Expense"))

@@ -36,7 +36,7 @@ def set_user(ui, username):
     for expense in recurrents:
         row_position = ui.tableWidget_2.rowCount()
         ui.tableWidget_2.insertRow(row_position)
-        var_to_add = [expense[2], str(expense[5]), expense[4], expense[-4], expense[-2]]
+        var_to_add = [expense[2], str(expense[-3]), expense[4], expense[-4], expense[-2]]
         for col, value in enumerate(var_to_add):
             ui.tableWidget_2.setItem(row_position, col, QtWidgets.QTableWidgetItem(value))
 
@@ -277,7 +277,7 @@ def process_recurring_expenses(username):
         if paid == "Not Paid!" :
             
             # Check if today is a recurring day
-            if today_day in days_list:
+            if today_day in days_list and not duplicated_expense:
                 # Insert expense into the debts or expenses table
                 cursor.execute("""
                     INSERT INTO simplified_debts (for_what, id, name, debtor_name, amount)

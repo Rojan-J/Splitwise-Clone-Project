@@ -81,8 +81,8 @@ def show_all_debts(username, ui):
             debts_radio_buttons[debt] = [ui.radioButton_49, ui.radioButton_50, ui.widget_23]
         
         elif debt[-1] =="pending":
-            layout = ui.widget_23.layout()
-            ui.CashPaidLabel = QtWidgets.QLabel(ui.widget_23)
+            layout = ui.frame_109.layout()
+            ui.CashPaidLabel = QtWidgets.QLabel(ui.frame_109)
             font = QtGui.QFont()
             font.setFamily("Swis721 Blk BT")
             font.setPointSize(10)
