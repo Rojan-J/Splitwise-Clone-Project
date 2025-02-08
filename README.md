@@ -99,7 +99,6 @@ This project is a simplified clone of **Splitwise**, designed to help users mana
 - **Verify or deny payments**:  
   - If verified, the amount is **added to your balance**.  
 
----
 
 💡 **Run the program and explore more features yourself!** 🎉  
 
