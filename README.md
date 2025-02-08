@@ -38,5 +38,31 @@ This project is a simplified clone of **Splitwise**, designed to help users mana
 - The corrected version is available in the **"Correction"** branch.  
 
 ---
+## Project Features:
+
+### Groups:
+- - Add new groups with customized default splits (equal, percentage, split)
+  - See all of the groups you are in, and the total expenses
+  - Add new expenses for each group (expenses can be in other currencies, all or some be contributed in the expense, use customized splits, enter the date and category of your expense)
+  -  See the debts graph; who owes whom?(Before simplification)
+  -  Simplify the debts grph and visualised it.
+  -  See the group expenses classified by their category!
+  -  Add new groups from excel file!
+    
+### Friends:
+- - See all of the friends you have excahnged money with and total expenses for each.
+  - Add new friends with customized default splits (equal, percentage, split)
+  - Add new expenses for each friend ( with all options same as group expenses!)
+  - See all expenses with each friend classified by their category!
+  - Debts will be simplified and showed in debts page.
+
+### Currency Conversion
+- Convert any currency to any other you wish!
+
+### Reports:
+- - 
+
+
+---
 
 Feel free to contribute, report issues, or suggest improvements!
