@@ -296,6 +296,7 @@ def update_debt_status(debt,status):
     debt_for_what_id = debt[2]
     debtor = debt[-4]
     creditor = debt[-3]
+    payment=debt[-2]
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute('''
@@ -308,9 +309,18 @@ def update_debt_status(debt,status):
     ''', (status, debt_for_what_id, "Not Paid!", "pending", ))
         
     elif debt_for_what == "group":
+        
         cursor.execute('''
         UPDATE debts SET status = ? WHERE group_id = ? and debtor_name = ? and creditor_name = ?
     ''', (status, debt_for_what_id, debtor, creditor, ))
+        
+        if status == "Paid":
+        
+            cursor.execute('''
+                UPDATE debts 
+                SET amount = amount - ? 
+                WHERE group_id = ? and debtor_name = ? and creditor_name = ?
+            ''', (payment, debt_for_what_id, debtor, creditor, ))
 
     connection.commit()
     connection.close()
@@ -480,8 +490,8 @@ def get_groups_debts_by_group_id(group_id):
     connection=get_connection()
     cursor=connection.cursor()
     cursor.execute('''
-        SELECT * FROM debts WHERE group_id = ? and status = ?
-    ''', (group_id, "Not Paid!", ))
+        SELECT * FROM debts WHERE group_id = ? and amount <> ?
+    ''', (group_id, 0, ))
     
     #fetch the first matching row
     debts=cursor.fetchall()
@@ -493,8 +503,8 @@ def get_friend_debts_by_group_id(friendship_id):
     connection=get_connection()
     cursor=connection.cursor()
     cursor.execute('''
-        SELECT * FROM friend_debts WHERE friendship_id = ? and status = ?
-    ''', (friendship_id, "Not Paid!"))
+        SELECT * FROM friend_debts WHERE friendship_id = ? and amount <> ?
+    ''', (friendship_id, 0, ))
     
     #fetch the first matching row
     debts=cursor.fetchall()

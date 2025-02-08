@@ -33,6 +33,8 @@ class Graph():
         count = 0
         if self.graph_type == "Original": graph = self.graph
         else: graph = self.simplified_graph
+
+        print("GRAPH", graph)
         pos = nx.spring_layout(graph)
         plt.figure(figsize=(8, 6))
         in_degree_centrality = nx.in_degree_centrality(graph)
