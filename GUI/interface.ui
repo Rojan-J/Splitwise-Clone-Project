@@ -404,14 +404,14 @@ QCalendarWidget QToolButton:hover {
     <item>
      <widget class="QCustomSlideMenu" name="centerMenuContainer" native="true">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
       <property name="minimumSize">
        <size>
-        <width>200</width>
+        <width>300</width>
         <height>0</height>
        </size>
       </property>
@@ -434,14 +434,14 @@ QCalendarWidget QToolButton:hover {
        <item alignment="Qt::AlignLeft">
         <widget class="QWidget" name="centerMenuSubContainer" native="true">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>250</width>
+           <width>300</width>
            <height>0</height>
           </size>
          </property>
@@ -538,7 +538,7 @@ QCalendarWidget QToolButton:hover {
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>222</width>
+                   <width>272</width>
                    <height>991</height>
                   </rect>
                  </property>
@@ -2813,12 +2813,18 @@ QCalendarWidget QToolButton:hover {
                         </item>
                         <item row="0" column="0" alignment="Qt::AlignLeft">
                          <widget class="QPushButton" name="FriendPageBackBtn">
+                          <property name="font">
+                           <font>
+                            <family>Swis721 Blk BT</family>
+                            <pointsize>10</pointsize>
+                           </font>
+                          </property>
                           <property name="text">
-                           <string/>
+                           <string>Back to Friends Page</string>
                           </property>
                           <property name="icon">
                            <iconset resource="resource2.qrc">
-                            <normaloff>:/icons2/icons2/arrow-left.svg</normaloff>:/icons2/icons2/arrow-left.svg</iconset>
+                            <normaloff>:/icons2/icons2/arrow-left-circle.svg</normaloff>:/icons2/icons2/arrow-left-circle.svg</iconset>
                           </property>
                           <property name="iconSize">
                            <size>
@@ -3172,12 +3178,18 @@ QCalendarWidget QToolButton:hover {
                           <layout class="QVBoxLayout" name="verticalLayout_33">
                            <item alignment="Qt::AlignLeft">
                             <widget class="QPushButton" name="GroupPageBackBtn">
+                             <property name="font">
+                              <font>
+                               <family>Swis721 Blk BT</family>
+                               <pointsize>10</pointsize>
+                              </font>
+                             </property>
                              <property name="text">
-                              <string/>
+                              <string>Back to Groups Page</string>
                              </property>
                              <property name="icon">
                               <iconset resource="resource2.qrc">
-                               <normaloff>:/icons2/icons2/arrow-left.svg</normaloff>:/icons2/icons2/arrow-left.svg</iconset>
+                               <normaloff>:/icons2/icons2/arrow-left-circle.svg</normaloff>:/icons2/icons2/arrow-left-circle.svg</iconset>
                              </property>
                              <property name="iconSize">
                               <size>
@@ -6620,7 +6632,7 @@ p, li { white-space: pre-wrap; }
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>948</width>
+                     <width>870</width>
                      <height>69</height>
                     </rect>
                    </property>
