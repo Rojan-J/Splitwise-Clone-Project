@@ -8,7 +8,7 @@
 - [Step 4: Database Setup](#step-4-database-setup)
 - [Final Integration](#final-integration)
 - [Bug Fixes](#bug-fixes)
-- [Project_Features](#project_features)
+- [Project_Features](#project-features)
 
 ## Introduction
 This project is a simplified clone of **Splitwise**, designed to help users manage group expenses efficiently. It allows users to create groups, add expenses, track balances, and visualize financial data.  
