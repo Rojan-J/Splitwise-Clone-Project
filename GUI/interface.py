@@ -306,22 +306,22 @@ class Ui_MainWindow(object):
         self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.informationPage)
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
-        self.label_3 = QtWidgets.QLabel(self.informationPage)
+        self.scrollArea_24 = QtWidgets.QScrollArea(self.informationPage)
+        self.scrollArea_24.setWidgetResizable(True)
+        self.scrollArea_24.setObjectName("scrollArea_24")
+        self.scrollAreaWidgetContents_27 = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents_27.setGeometry(QtCore.QRect(0, 0, 272, 991))
+        self.scrollAreaWidgetContents_27.setObjectName("scrollAreaWidgetContents_27")
+        self.horizontalLayout_15 = QtWidgets.QHBoxLayout(self.scrollAreaWidgetContents_27)
+        self.horizontalLayout_15.setObjectName("horizontalLayout_15")
+        self.textBrowser_2 = QtWidgets.QTextBrowser(self.scrollAreaWidgetContents_27)
         font = QtGui.QFont()
-        font.setFamily("Swis721 Blk BT")
-        font.setPointSize(10)
-        self.label_3.setFont(font)
-        self.label_3.setStyleSheet("*{\n"
-"    border: none;\n"
-"    background-color: transparent;\n"
-"    background: none;\n"
-"    padding: 0;\n"
-"    margin: 0;\n"
-"    color: #fff;\n"
-"}")
-        self.label_3.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_3.setObjectName("label_3")
-        self.verticalLayout_7.addWidget(self.label_3)
+        font.setFamily("Swis721 BT")
+        self.textBrowser_2.setFont(font)
+        self.textBrowser_2.setObjectName("textBrowser_2")
+        self.horizontalLayout_15.addWidget(self.textBrowser_2)
+        self.scrollArea_24.setWidget(self.scrollAreaWidgetContents_27)
+        self.verticalLayout_7.addWidget(self.scrollArea_24)
         self.centerMenupages.addWidget(self.informationPage)
         self.verticalLayout_3.addWidget(self.centerMenupages)
         self.horizontalLayout_3.addWidget(self.centerMenuSubContainer, 0, QtCore.Qt.AlignLeft)
@@ -2146,7 +2146,7 @@ class Ui_MainWindow(object):
         self.ExpensesInput.setWidgetResizable(True)
         self.ExpensesInput.setObjectName("ExpensesInput")
         self.scrollAreaWidgetContents_19 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_19.setGeometry(QtCore.QRect(0, 0, 156, 50))
+        self.scrollAreaWidgetContents_19.setGeometry(QtCore.QRect(0, 0, 226, 67))
         self.scrollAreaWidgetContents_19.setObjectName("scrollAreaWidgetContents_19")
         self.gridLayout_5 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_19)
         self.gridLayout_5.setObjectName("gridLayout_5")
@@ -2278,7 +2278,7 @@ class Ui_MainWindow(object):
         self.scrollArea_14.setWidgetResizable(True)
         self.scrollArea_14.setObjectName("scrollArea_14")
         self.scrollAreaWidgetContents_17 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_17.setGeometry(QtCore.QRect(0, 0, 100, 30))
+        self.scrollAreaWidgetContents_17.setGeometry(QtCore.QRect(0, 0, 64, 18))
         self.scrollAreaWidgetContents_17.setObjectName("scrollAreaWidgetContents_17")
         self.verticalLayout_86 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_17)
         self.verticalLayout_86.setObjectName("verticalLayout_86")
@@ -2313,7 +2313,7 @@ class Ui_MainWindow(object):
         self.scrollArea_16.setWidgetResizable(True)
         self.scrollArea_16.setObjectName("scrollArea_16")
         self.scrollAreaWidgetContents_22 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_22.setGeometry(QtCore.QRect(0, 0, 330, 469))
+        self.scrollAreaWidgetContents_22.setGeometry(QtCore.QRect(0, 0, 330, 485))
         self.scrollAreaWidgetContents_22.setObjectName("scrollAreaWidgetContents_22")
         self.verticalLayout_95 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_22)
         self.verticalLayout_95.setObjectName("verticalLayout_95")
@@ -2533,7 +2533,7 @@ class Ui_MainWindow(object):
         self.scrollArea_12.setWidgetResizable(True)
         self.scrollArea_12.setObjectName("scrollArea_12")
         self.scrollAreaWidgetContents_11 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_11.setGeometry(QtCore.QRect(0, 0, 100, 30))
+        self.scrollAreaWidgetContents_11.setGeometry(QtCore.QRect(0, 0, 192, 63))
         self.scrollAreaWidgetContents_11.setObjectName("scrollAreaWidgetContents_11")
         self.verticalLayout_29 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_11)
         self.verticalLayout_29.setObjectName("verticalLayout_29")
@@ -2653,7 +2653,7 @@ class Ui_MainWindow(object):
         self.scrollArea_11.setWidgetResizable(True)
         self.scrollArea_11.setObjectName("scrollArea_11")
         self.scrollAreaWidgetContents_10 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_10.setGeometry(QtCore.QRect(0, 0, 100, 30))
+        self.scrollAreaWidgetContents_10.setGeometry(QtCore.QRect(0, 0, 46, 18))
         self.scrollAreaWidgetContents_10.setObjectName("scrollAreaWidgetContents_10")
         self.verticalLayout_27 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_10)
         self.verticalLayout_27.setObjectName("verticalLayout_27")
@@ -3115,7 +3115,7 @@ class Ui_MainWindow(object):
         self.ContributersInput.setWidgetResizable(True)
         self.ContributersInput.setObjectName("ContributersInput")
         self.scrollAreaWidgetContents_7 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_7.setGeometry(QtCore.QRect(0, 0, 100, 30))
+        self.scrollAreaWidgetContents_7.setGeometry(QtCore.QRect(0, 0, 351, 69))
         self.scrollAreaWidgetContents_7.setObjectName("scrollAreaWidgetContents_7")
         self.verticalLayout_23 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_7)
         self.verticalLayout_23.setObjectName("verticalLayout_23")
@@ -3246,7 +3246,7 @@ class Ui_MainWindow(object):
         self.scrollArea_10.setWidgetResizable(True)
         self.scrollArea_10.setObjectName("scrollArea_10")
         self.scrollAreaWidgetContents_9 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_9.setGeometry(QtCore.QRect(0, 0, 100, 30))
+        self.scrollAreaWidgetContents_9.setGeometry(QtCore.QRect(0, 0, 333, 69))
         self.scrollAreaWidgetContents_9.setObjectName("scrollAreaWidgetContents_9")
         self.verticalLayout_25 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_9)
         self.verticalLayout_25.setObjectName("verticalLayout_25")
@@ -3385,7 +3385,7 @@ class Ui_MainWindow(object):
         self.ContributersInput_4.setWidgetResizable(True)
         self.ContributersInput_4.setObjectName("ContributersInput_4")
         self.scrollAreaWidgetContents_14 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_14.setGeometry(QtCore.QRect(0, 0, 123, 31))
+        self.scrollAreaWidgetContents_14.setGeometry(QtCore.QRect(0, 0, 351, 69))
         self.scrollAreaWidgetContents_14.setObjectName("scrollAreaWidgetContents_14")
         self.gridLayout_12 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_14)
         self.gridLayout_12.setObjectName("gridLayout_12")
@@ -3516,7 +3516,7 @@ class Ui_MainWindow(object):
         self.scrollArea_15.setWidgetResizable(True)
         self.scrollArea_15.setObjectName("scrollArea_15")
         self.scrollAreaWidgetContents_21 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_21.setGeometry(QtCore.QRect(0, 0, 100, 30))
+        self.scrollAreaWidgetContents_21.setGeometry(QtCore.QRect(0, 0, 351, 69))
         self.scrollAreaWidgetContents_21.setObjectName("scrollAreaWidgetContents_21")
         self.verticalLayout_92 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_21)
         self.verticalLayout_92.setObjectName("verticalLayout_92")
@@ -3648,7 +3648,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.centerMenupages.setCurrentIndex(0)
+        self.centerMenupages.setCurrentIndex(1)
         self.mainPages.setCurrentIndex(0)
         self.rightMenuPages.setCurrentIndex(5)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -3667,7 +3667,62 @@ class Ui_MainWindow(object):
         self.InfoBtn.setText(_translate("MainWindow", "Info"))
         self.label_2.setText(_translate("MainWindow", "More Menu"))
         self.closeCenterMenuBtn.setToolTip(_translate("MainWindow", "Close Menu"))
-        self.label_3.setText(_translate("MainWindow", "Information"))
+        self.textBrowser_2.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Swis721 BT\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-weight:600;\">Groups</span></p>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Add new groups with <span style=\" font-weight:600;\">customized default splits</span> (equal, percentage, custom split).</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">View all the groups you are in, along with <span style=\" font-weight:600;\">total expenses</span>.</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Add new expenses for each group, with features including:</li>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;\"><li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Multi-currency support</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Selective contributors for an expense</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Customized splits</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Expense <span style=\" font-weight:600;\">date</span> and <span style=\" font-weight:600;\">category</span> selection</li></ul>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">View the <span style=\" font-weight:600;\">debts graph</span>, showing who owes whom (before simplification).</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Simplify</span> the debts graph and visualize it.</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">View <span style=\" font-weight:600;\">group expenses categorized</span> by type.</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Import groups from an Excel file</span>.</li></ul>\n"
+"<p style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-weight:600;\">Friends</span></p>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:8pt;\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">View all friends with whom you have exchanged money and the <span style=\" font-weight:600;\">total expenses</span> for each.</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Add new friends with <span style=\" font-weight:600;\">customized default splits</span> (equal, percentage, custom split).</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Add new expenses for each friend (with the same options as <span style=\" font-weight:600;\">group expenses</span>).</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">View <span style=\" font-weight:600;\">categorized expenses</span> for each friend.</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Simplified debts</span> are displayed on the <span style=\" font-weight:600;\">Debts Page</span>.</li></ul>\n"
+"<p style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-weight:600;\">Currency Conversion</span></p>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:8pt;\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Convert <span style=\" font-weight:600;\">any currency</span> to another with ease.</li></ul>\n"
+"<p style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-weight:600;\">Reports</span></p>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:8pt;\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">View your expenses in multiple categories:</li>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;\"><li style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Total expenses</span></li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Group expenses</span></li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Friend expenses</span></li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Current month\'s expenses</span></li></ul>\n"
+"<li style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">View <span style=\" font-weight:600;\">total amount owed and due</span>.</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Visualize reports</span> with the option to:</li></ul>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;\"><li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Set a <span style=\" font-weight:600;\">time duration</span></li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Filter by <span style=\" font-weight:600;\">group, friends, or category</span></li></ul>\n"
+"<p style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-weight:600;\">Profile</span></p>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:8pt;\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">View <span style=\" font-weight:600;\">your account information</span>.</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Edit your <span style=\" font-weight:600;\">name</span> or <span style=\" font-weight:600;\">balance</span>.</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Add <span style=\" font-weight:600;\">recurring expenses</span> (set specific dates for automatic payments).</li></ul>\n"
+"<p style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-weight:600;\">Debts Page</span></p>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:8pt;\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">View and pay</span> your simplified debts.</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Payment methods:</li>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;\"><li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Cash Payments:</span> The debt is marked as paid instantly.</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Online Payments:</span></li></ul>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 3;\"><li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If the creditor has an account in our app, they must <span style=\" font-weight:600;\">verify</span> your payment before it is finalized.</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If the creditor <span style=\" font-weight:600;\">does not</span> have an account, the payment is <span style=\" font-weight:600;\">automatically approved</span> (we cannot request verification from external users).</li></ul>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Manage and pay <span style=\" font-weight:600;\">recurring expenses</span> as well.</li></ul>\n"
+"<p style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-weight:600;\">Search Page</span></p>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:8pt;\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Search for any expense</span> by:</li></ul>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;\"><li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Label</span></li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">User (payer)</span></li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Date</span></li></ul>\n"
+"<p style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-weight:600;\">Notification Bar</span></p>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:8pt;\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">View <span style=\" font-weight:600;\">payment notifications</span> when someone pays their debt to you.</li>\n"
+"<li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Verify or deny payments</span>:</li></ul>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;\"><li style=\" font-size:8pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If verified, the amount is <span style=\" font-weight:600;\">added to your balance</span>.</li></ul>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">💡 </span><span style=\" font-size:8pt; font-weight:600;\">Run the program and explore more features yourself!</span><span style=\" font-size:8pt;\"> 🎉</span></p></body></html>"))
         self.label_6.setText(_translate("MainWindow", "RONIL-Split-Wise"))
         self.NotificationBtn.setToolTip(_translate("MainWindow", "Notifications"))
         self.SearchBtn.setToolTip(_translate("MainWindow", "Search"))
